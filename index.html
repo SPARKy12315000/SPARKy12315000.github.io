@@ -4,60 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>星火通证 (SPARK) - 官方网站</title>
-    <!-- 已使用您提供的正确、完整的IPFS链接作为网站图标 -->
-    <link rel="icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" type="image/x-icon">
+    <!-- 使用您提供的IPFS链接作为网站图标 -->
+    <link rel="icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxxakctcmw5xzzgvqu6xednm" type="image/x-icon">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
-        body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #f0f0f0; min-height: 100vh; padding: 20px; line-height: 1.6; }
-        .container { max-width: 800px; margin: 20px auto; background: rgba(30, 30, 46, 0.9); border-radius: 20px; padding: 30px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 215, 0, 0.1); }
+        body { background: #0a0e17; color: #f0f0f0; min-height: 100vh; padding: 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: 20px auto; background: rgba(20, 25, 40, 0.95); border-radius: 24px; padding: 30px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 215, 0, 0.15); }
         .header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
-        .logo { width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 5px solid rgba(255, 215, 0, 0.4); background: #fff; }
-        /* 核心修正：确保Logo图片强制显示并正确填充 */
-        .logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
-        h1 { font-size: 2.8rem; margin-bottom: 8px; background: linear-gradient(90deg, #FFD700, #FF8C00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .symbol { font-size: 1.8rem; color: #FFD700; font-weight: bold; letter-spacing: 2px; margin-bottom: 15px; }
-        /* 项目简介样式优化，使其更醒目 */
-        .project-intro { background: rgba(255, 215, 0, 0.05); border-radius: 15px; padding: 25px; margin: 25px 0; border-left: 4px solid #FFD700; font-size: 1.05rem; }
-        .project-intro p { margin-bottom: 15px; }
-        .project-intro strong { color: #FFD700; }
-        .section { margin-bottom: 30px; }
-        .section-title { font-size: 1.5rem; color: #4FC3F7; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid rgba(79, 195, 247, 0.3); }
+        .logo-container { width: 140px; height: 140px; margin: 0 auto 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 6px solid rgba(255, 215, 0, 0.5); background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 5px; }
+        .logo-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+        h1 { font-size: 3rem; margin-bottom: 10px; background: linear-gradient(90deg, #FFD700, #FF8C00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .symbol { font-size: 1.8rem; color: #FFD700; font-weight: bold; letter-spacing: 3px; margin-bottom: 10px; }
+        .tagline { font-size: 1.1rem; opacity: 0.85; max-width: 600px; margin: 0 auto 30px; }
+        /* 项目简介板块样式 */
+        .intro-box { background: rgba(255, 215, 0, 0.05); border-radius: 18px; padding: 28px; margin: 30px 0; border-left: 5px solid #FFD700; }
+        .intro-box p { margin-bottom: 18px; font-size: 1.08rem; line-height: 1.8; }
+        .intro-box strong { color: #FFD700; }
+        .section { margin-bottom: 35px; }
+        .section-title { font-size: 1.6rem; color: #4FC3F7; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid rgba(79, 195, 247, 0.3); }
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 15px; }
-        .info-card { background: rgba(40, 40, 60, 0.7); border-radius: 12px; padding: 20px; border-left: 4px solid #FFD700; }
-        .card-title { font-size: 1rem; color: #FFD700; margin-bottom: 10px; font-weight: bold; }
-        .card-content { font-size: 1.1rem; word-break: break-all; font-family: 'Courier New', monospace; }
-        .contract-address { background: rgba(0, 0, 0, 0.4); padding: 18px; border-radius: 10px; font-family: 'Courier New', monospace; word-break: break-all; font-size: 1rem; border: 1px solid rgba(255, 215, 0, 0.3); position: relative; margin-top: 10px; }
-        .copy-btn { position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.2); color: #FFD700; border: 1px solid #FFD700; border-radius: 5px; padding: 6px 12px; cursor: pointer; font-size: 0.85rem; }
-        .tax-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
-        .tax-card { background: rgba(255, 215, 0, 0.08); border-radius: 10px; padding: 18px; text-align: center; border: 1px solid rgba(255, 215, 0, 0.2); }
-        .tax-rate { font-size: 2rem; font-weight: bold; color: #FFD700; margin-bottom: 5px; }
-        .tax-desc { font-size: 0.85rem; opacity: 0.9; }
-        .button-group { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 30px; justify-content: center; }
-        .button { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #FF8C00, #FFD700); color: #1a1a2e; padding: 14px 28px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1rem; min-width: 160px; }
+        .info-card { background: rgba(40, 45, 70, 0.8); border-radius: 14px; padding: 22px; border-left: 5px solid #FFD700; }
+        .card-title { font-size: 1rem; color: #FFD700; margin-bottom: 12px; font-weight: bold; }
+        .card-content { font-size: 1.15rem; word-break: break-all; font-family: 'Courier New', monospace; }
+        .contract-address { background: rgba(0, 0, 0, 0.4); padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; word-break: break-all; font-size: 1.05rem; border: 1px solid rgba(255, 215, 0, 0.3); position: relative; margin-top: 10px; }
+        .copy-btn { position: absolute; top: 18px; right: 18px; background: rgba(255, 215, 0, 0.2); color: #FFD700; border: 1px solid #FFD700; border-radius: 6px; padding: 8px 16px; cursor: pointer; font-size: 0.9rem; }
+        .tax-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; margin-top: 20px; }
+        .tax-card { background: rgba(255, 215, 0, 0.08); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid rgba(255, 215, 0, 0.25); }
+        .tax-rate { font-size: 2.2rem; font-weight: bold; color: #FFD700; margin-bottom: 8px; }
+        .tax-desc { font-size: 0.9rem; opacity: 0.9; }
+        .button-group { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 40px; justify-content: center; }
+        .button { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #FF8C00, #FFD700); color: #1a1a2e; padding: 16px 32px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem; min-width: 180px; transition: transform 0.3s; }
+        .button:hover { transform: translateY(-3px); }
+        .button i { margin-right: 10px; }
         .button.secondary { background: rgba(255, 255, 255, 0.1); color: #f0f0f0; border: 1px solid rgba(255, 255, 255, 0.3); }
-        .footer { margin-top: 40px; text-align: center; font-size: 0.85rem; opacity: 0.6; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-        .alert { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; padding: 18px; margin: 20px 0; text-align: center; }
+        .footer { margin-top: 50px; text-align: center; font-size: 0.9rem; opacity: 0.6; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .alert { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- 头部：Logo与标题 - Logo地址已100%修正 -->
+        <!-- 头部：Logo与标题 -->
         <div class="header">
-            <div class="logo">
-                <!-- 已使用您消息中提供的完整、正确的IPFS链接 -->
-                <img src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" alt="SPARK Logo">
+            <div class="logo-container">
+                <!-- Logo图片 - 已修复，使用您提供的IPFS链接 -->
+                <img class="logo-img" src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxxakctcmw5xzzgvqu6xednm" alt="SPARK Logo" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
             </div>
             <h1>星火通证</h1>
             <div class="symbol">SPARK</div>
+            <p class="tagline">基于以太坊的创新型营销回流代币，构建透明、公平、可持续的社区价值生态。</p>
         </div>
 
-        <!-- 新增：独立的、醒目的项目介绍板块 -->
-        <div class="project-intro">
+        <!-- 【已添加】项目简介板块 -->
+        <div class="intro-box">
             <p><strong>【项目简介】</strong></p>
-            <p><strong>星火通证 (SPARK)</strong> 是一个以“流动的文化之火”为理念的创新型营销回流代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个“星火流转，价值共生”的可持续生态。</p>
-            <p>项目采用独特的经济模型，所有买卖交易产生的税费（各5%）将<strong>100%自动注入资金池用于回流</strong>，旨在支撑币价长期稳定，形成内生的价值增长飞轮。</p>
-            <p>我们坚信，价值生于共识，成于流通。SPARK 是连接理念、技术与社区的桥梁。</p>
+            <p><strong>星火通证 (SPARK)</strong> 是一个以“流动的文化之火”为核心理念的创新型代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个<strong>“星火流转，价值共生”</strong>的可持续生态。</p>
+            <p>项目采用独特的<strong>营销回流经济模型</strong>，所有买卖交易产生的税费（各5%）将<strong>100%自动注入资金池用于回流</strong>，旨在支撑币价长期稳定，形成内生的价值增长飞轮。</p>
+            <p>我们坚信，价值生于共识，成于流通。SPARK 是连接理念、技术与社区的桥梁，旨在与所有共建者一同，让价值的星火汇聚成光。</p>
         </div>
 
         <!-- 核心信息 -->
@@ -73,9 +76,18 @@
                     <div class="card-content">9,999,999,999,999,999,999,999,999 枚</div>
                 </div>
                 <div class="info-card">
-                    <div class="card-title">合约地址</div>
-                    <div class="card-content">0xD580C7C9Cde5ce776fEed844310330A2a40078d9</div>
+                    <div class="card-title">代币模式</div>
+                    <div class="card-content">营销回流代币</div>
                 </div>
+            </div>
+        </div>
+
+        <!-- 智能合约 -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-file-contract"></i> 智能合约</div>
+            <div class="contract-address">
+                0xD580C7C9Cde5ce776fEed844310330A2a40078d9
+                <button class="copy-btn" onclick="copyContract()"><i class="far fa-copy"></i> 复制地址</button>
             </div>
         </div>
 
@@ -85,21 +97,21 @@
             <div class="tax-grid">
                 <div class="tax-card">
                     <div class="tax-rate">5%</div>
-                    <div class="tax-desc">买入税<br>自动回流资金池</div>
+                    <div class="tax-desc">买入税<br>自动回流</div>
                 </div>
                 <div class="tax-card">
                     <div class="tax-rate">5%</div>
-                    <div class="tax-desc">卖出税<br>自动回流资金池</div>
+                    <div class="tax-desc">卖出税<br>自动回流</div>
                 </div>
                 <div class="tax-card">
                     <div class="tax-rate">0%</div>
                     <div class="tax-desc">转账税</div>
                 </div>
             </div>
-            <p style="margin-top:15px; opacity:0.9;"><strong>机制：</strong>买卖交易产生的5%税费将100%自动注入资金池回流，用于支撑币价长期稳定。</p>
+            <p style="margin-top:20px; opacity:0.9; font-size:1rem;"><strong>机制：</strong>买卖交易产生的5%税费将100%自动注入资金池回流，用于支撑币价长期稳定。</p>
         </div>
 
-        <!-- 交易与流动性 - 已按您要求，移除了“管理员权限”行 -->
+        <!-- 交易与流动性 - 【已修改】移除了“管理员权限”项 -->
         <div class="section">
             <div class="section-title"><i class="fas fa-university"></i> 交易与流动性</div>
             <div class="info-grid">
@@ -109,9 +121,9 @@
                 </div>
                 <div class="info-card">
                     <div class="card-title">流动性状态</div>
-                    <div class="card-content"><span style="color:#4FC3F7;">已锁定</span></div>
+                    <div class="card-content"><span style="color:#4FC3F7; font-weight:bold;">已锁定</span></div>
                 </div>
-                <!-- 已移除“管理员权限”卡片 -->
+                <!-- 已按您要求，移除了“管理员权限”卡片 -->
             </div>
         </div>
 
@@ -121,25 +133,28 @@
             <strong>风险提示：</strong>加密货币投资具有高波动性与风险。本页面信息仅供参考，不构成任何投资建议。
         </div>
 
-        <!-- 功能按钮 -->
+        <!-- 功能按钮 - 【已添加】V2交易链接 -->
         <div class="button-group">
             <a href="https://etherscan.io/token/0xd580c7c9cde5ce776feed844310330a2a40078d9" target="_blank" class="button">
                 <i class="fas fa-external-link-alt"></i> 区块浏览器
+            </a>
+            <!-- 已添加：Uniswap V2 交易链接 -->
+            <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank" class="button secondary">
+                <i class="fas fa-exchange-alt"></i> 交易 SPARK (V2)
             </a>
             <a href="https://m.debox.pro/group?id=myeuvj3y&code=av5sqqr3" target="_blank" class="button secondary">
                 <i class="fas fa-users"></i> 官方社区
             </a>
         </div>
 
-        <!-- 页脚 - 添加了Logo地址 -->
+        <!-- 页脚 -->
         <div class="footer">
             <p>© 2025 星火通证 (SPARK) 项目. 本页面为项目唯一官方网站。</p>
-            <p>官网: <strong>https://sparky12315000.github.io</strong> | IPFS Logo: <strong>已永久存储</strong></p>
+            <p>官网: <strong>https://sparky12315000.github.io</strong> | Logo已通过IPFS永久存储</p>
         </div>
     </div>
 
     <script>
-        // 复制合约地址功能
         function copyContract() {
             const addr = '0xD580C7C9Cde5ce776fEed844310330A2a40078d9';
             navigator.clipboard.writeText(addr).then(() => {
@@ -157,6 +172,12 @@
                 }
             });
         }
+        // 确保页面加载平滑
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s';
+            setTimeout(() => { document.body.style.opacity = '1'; }, 100);
+        });
     </script>
 </body>
-</html>
+    </html>
