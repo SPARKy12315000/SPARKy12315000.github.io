@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>星火通证 (SPARK) - 官方网站</title>
-    <!-- 已修复：使用正确的IPFS链接作为网站图标和Logo -->
-    <link rel="icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxxakctcmw5xzzgvqu6xednm" type="image/x-icon">
+    <!-- 已使用您提供的正确、完整的IPFS链接作为网站图标 -->
+    <link rel="icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" type="image/x-icon">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
         body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #f0f0f0; min-height: 100vh; padding: 20px; line-height: 1.6; }
         .container { max-width: 800px; margin: 20px auto; background: rgba(30, 30, 46, 0.9); border-radius: 20px; padding: 30px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 215, 0, 0.1); }
         .header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
-        .logo { width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 5px solid rgba(255, 215, 0, 0.4); background: white; }
-        /* 已修复：确保Logo图片正常显示 */
-        .logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; display: block; }
+        .logo { width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 5px solid rgba(255, 215, 0, 0.4); background: #fff; }
+        /* 核心修正：确保Logo图片强制显示并正确填充 */
+        .logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
         h1 { font-size: 2.8rem; margin-bottom: 8px; background: linear-gradient(90deg, #FFD700, #FF8C00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .symbol { font-size: 1.8rem; color: #FFD700; font-weight: bold; letter-spacing: 2px; margin-bottom: 15px; }
-        .tagline { font-size: 1.1rem; opacity: 0.85; max-width: 600px; margin: 0 auto 30px; }
+        /* 项目简介样式优化，使其更醒目 */
+        .project-intro { background: rgba(255, 215, 0, 0.05); border-radius: 15px; padding: 25px; margin: 25px 0; border-left: 4px solid #FFD700; font-size: 1.05rem; }
+        .project-intro p { margin-bottom: 15px; }
+        .project-intro strong { color: #FFD700; }
         .section { margin-bottom: 30px; }
         .section-title { font-size: 1.5rem; color: #4FC3F7; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid rgba(79, 195, 247, 0.3); }
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 15px; }
@@ -39,15 +42,22 @@
 </head>
 <body>
     <div class="container">
-        <!-- 头部：Logo与标题 - 头像已修复 -->
+        <!-- 头部：Logo与标题 - Logo地址已100%修正 -->
         <div class="header">
             <div class="logo">
-                <!-- 已使用您提供的正确IPFS链接 -->
-                <img src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxxakctcmw5xzzgvqu6xednm" alt="SPARK Logo">
+                <!-- 已使用您消息中提供的完整、正确的IPFS链接 -->
+                <img src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" alt="SPARK Logo">
             </div>
             <h1>星火通证</h1>
             <div class="symbol">SPARK</div>
-            <p class="tagline">基于以太坊的创新型营销回流代币，致力于构建透明、公平、可持续的社区价值生态。</p>
+        </div>
+
+        <!-- 新增：独立的、醒目的项目介绍板块 -->
+        <div class="project-intro">
+            <p><strong>【项目简介】</strong></p>
+            <p><strong>星火通证 (SPARK)</strong> 是一个以“流动的文化之火”为理念的创新型营销回流代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个“星火流转，价值共生”的可持续生态。</p>
+            <p>项目采用独特的经济模型，所有买卖交易产生的税费（各5%）将<strong>100%自动注入资金池用于回流</strong>，旨在支撑币价长期稳定，形成内生的价值增长飞轮。</p>
+            <p>我们坚信，价值生于共识，成于流通。SPARK 是连接理念、技术与社区的桥梁。</p>
         </div>
 
         <!-- 核心信息 -->
@@ -59,27 +69,17 @@
                     <div class="card-content">18</div>
                 </div>
                 <div class="info-card">
-                    <!-- 已修复：总量显示 -->
                     <div class="card-title">发行总量</div>
                     <div class="card-content">9,999,999,999,999,999,999,999,999 枚</div>
                 </div>
                 <div class="info-card">
-                    <div class="card-title">代币模式</div>
-                    <div class="card-content">营销回流代币</div>
+                    <div class="card-title">合约地址</div>
+                    <div class="card-content">0xD580C7C9Cde5ce776fEed844310330A2a40078d9</div>
                 </div>
             </div>
         </div>
 
-        <!-- 智能合约 -->
-        <div class="section">
-            <div class="section-title"><i class="fas fa-file-contract"></i> 智能合约</div>
-            <div class="contract-address">
-                0xD580C7C9Cde5ce776fEed844310330A2a40078d9
-                <button class="copy-btn" onclick="copyContract()"><i class="far fa-copy"></i> 复制</button>
-            </div>
-        </div>
-
-        <!-- 经济模型（税率）- 已修正为5%自动回流 -->
+        <!-- 经济模型（税率） -->
         <div class="section">
             <div class="section-title"><i class="fas fa-chart-pie"></i> 经济模型（税率）</div>
             <div class="tax-grid">
@@ -99,7 +99,7 @@
             <p style="margin-top:15px; opacity:0.9;"><strong>机制：</strong>买卖交易产生的5%税费将100%自动注入资金池回流，用于支撑币价长期稳定。</p>
         </div>
 
-        <!-- 交易与流动性 - 已修正，移除营销地址，明确流动性池 -->
+        <!-- 交易与流动性 - 已按您要求，移除了“管理员权限”行 -->
         <div class="section">
             <div class="section-title"><i class="fas fa-university"></i> 交易与流动性</div>
             <div class="info-grid">
@@ -108,14 +108,10 @@
                     <div class="card-content">WETH / Uniswap V2</div>
                 </div>
                 <div class="info-card">
-                    <!-- 已按您要求，取消营销地址显示 -->
                     <div class="card-title">流动性状态</div>
                     <div class="card-content"><span style="color:#4FC3F7;">已锁定</span></div>
                 </div>
-                <div class="info-card">
-                    <div class="card-title">管理员权限</div>
-                    <div class="card-content">未放弃 (所有者可调整参数)</div>
-                </div>
+                <!-- 已移除“管理员权限”卡片 -->
             </div>
         </div>
 
@@ -135,27 +131,30 @@
             </a>
         </div>
 
-        <!-- 页脚 -->
+        <!-- 页脚 - 添加了Logo地址 -->
         <div class="footer">
             <p>© 2025 星火通证 (SPARK) 项目. 本页面为项目唯一官方网站。</p>
-            <p>官网: <strong>https://sparky12315000.github.io</strong></p>
+            <p>官网: <strong>https://sparky12315000.github.io</strong> | IPFS Logo: <strong>已永久存储</strong></p>
         </div>
     </div>
 
     <script>
+        // 复制合约地址功能
         function copyContract() {
             const addr = '0xD580C7C9Cde5ce776fEed844310330A2a40078d9';
             navigator.clipboard.writeText(addr).then(() => {
                 const btn = document.querySelector('.copy-btn');
-                const originalHTML = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check"></i> 已复制';
-                btn.style.background = 'rgba(76, 175, 80, 0.3)';
-                btn.style.borderColor = '#4CAF50';
-                setTimeout(() => {
-                    btn.innerHTML = originalHTML;
-                    btn.style.background = '';
-                    btn.style.borderColor = '';
-                }, 2000);
+                if(btn){
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                    btn.style.background = 'rgba(76, 175, 80, 0.3)';
+                    btn.style.borderColor = '#4CAF50';
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.style.background = '';
+                        btn.style.borderColor = '';
+                    }, 2000);
+                }
             });
         }
     </script>
