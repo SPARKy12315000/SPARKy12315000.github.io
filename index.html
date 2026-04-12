@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>星火通证 (SPARK) - 官方网站</title>
-    <!-- 使用您提供的IPFS链接作为网站图标 -->
-    <link rel="icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxxakctcmw5xzzgvqu6xednm" type="image/x-icon">
+    <!-- 关键修改1：网站图标已使用您提供的徽章Logo IPFS链接 -->
+    <link rel="icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" type="image/x-icon">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
         body { background: #0a0e17; color: #f0f0f0; min-height: 100vh; padding: 20px; line-height: 1.6; }
         .container { max-width: 800px; margin: 20px auto; background: rgba(20, 25, 40, 0.95); border-radius: 24px; padding: 30px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 215, 0, 0.15); }
         .header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
-        .logo-container { width: 140px; height: 140px; margin: 0 auto 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 6px solid rgba(255, 215, 0, 0.5); background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 5px; }
-        .logo-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+        .logo-container { width: 160px; height: 160px; margin: 0 auto 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 6px solid rgba(255, 215, 0, 0.5); background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 8px; }
+        /* 关键修改2：优化图片显示，确保徽章Logo完美填充 */
+        .logo-img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; display: block; }
         h1 { font-size: 3rem; margin-bottom: 10px; background: linear-gradient(90deg, #FFD700, #FF8C00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .symbol { font-size: 1.8rem; color: #FFD700; font-weight: bold; letter-spacing: 3px; margin-bottom: 10px; }
         .tagline { font-size: 1.1rem; opacity: 0.85; max-width: 600px; margin: 0 auto 30px; }
-        /* 项目简介板块样式 */
         .intro-box { background: rgba(255, 215, 0, 0.05); border-radius: 18px; padding: 28px; margin: 30px 0; border-left: 5px solid #FFD700; }
         .intro-box p { margin-bottom: 18px; font-size: 1.08rem; line-height: 1.8; }
         .intro-box strong { color: #FFD700; }
@@ -47,15 +47,15 @@
         <!-- 头部：Logo与标题 -->
         <div class="header">
             <div class="logo-container">
-                <!-- Logo图片 - 已修复，使用您提供的IPFS链接 -->
-                <img class="logo-img" src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxxakctcmw5xzzgvqu6xednm" alt="SPARK Logo" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                <!-- 关键修改3：网站主头像已替换为您提供的徽章Logo IPFS链接 -->
+                <img class="logo-img" src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" alt="SPARK Logo">
             </div>
             <h1>星火通证</h1>
             <div class="symbol">SPARK</div>
             <p class="tagline">基于以太坊的创新型营销回流代币，构建透明、公平、可持续的社区价值生态。</p>
         </div>
 
-        <!-- 【已添加】项目简介板块 -->
+        <!-- 项目简介板块 -->
         <div class="intro-box">
             <p><strong>【项目简介】</strong></p>
             <p><strong>星火通证 (SPARK)</strong> 是一个以“流动的文化之火”为核心理念的创新型代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个<strong>“星火流转，价值共生”</strong>的可持续生态。</p>
@@ -111,7 +111,7 @@
             <p style="margin-top:20px; opacity:0.9; font-size:1rem;"><strong>机制：</strong>买卖交易产生的5%税费将100%自动注入资金池回流，用于支撑币价长期稳定。</p>
         </div>
 
-        <!-- 交易与流动性 - 【已修改】移除了“管理员权限”项 -->
+        <!-- 交易与流动性 -->
         <div class="section">
             <div class="section-title"><i class="fas fa-university"></i> 交易与流动性</div>
             <div class="info-grid">
@@ -123,7 +123,6 @@
                     <div class="card-title">流动性状态</div>
                     <div class="card-content"><span style="color:#4FC3F7; font-weight:bold;">已锁定</span></div>
                 </div>
-                <!-- 已按您要求，移除了“管理员权限”卡片 -->
             </div>
         </div>
 
@@ -133,12 +132,11 @@
             <strong>风险提示：</strong>加密货币投资具有高波动性与风险。本页面信息仅供参考，不构成任何投资建议。
         </div>
 
-        <!-- 功能按钮 - 【已添加】V2交易链接 -->
+        <!-- 功能按钮 -->
         <div class="button-group">
             <a href="https://etherscan.io/token/0xd580c7c9cde5ce776feed844310330a2a40078d9" target="_blank" class="button">
                 <i class="fas fa-external-link-alt"></i> 区块浏览器
             </a>
-            <!-- 已添加：Uniswap V2 交易链接 -->
             <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank" class="button secondary">
                 <i class="fas fa-exchange-alt"></i> 交易 SPARK (V2)
             </a>
@@ -150,7 +148,8 @@
         <!-- 页脚 -->
         <div class="footer">
             <p>© 2025 星火通证 (SPARK) 项目. 本页面为项目唯一官方网站。</p>
-            <p>官网: <strong>https://sparky12315000.github.io</strong> | Logo已通过IPFS永久存储</p>
+            <!-- 关键修改4：在页脚单独、明确地列出了Logo的IPFS永久地址 -->
+            <p>官网: <strong>https://sparky12315000.github.io</strong> | IPFS永久Logo地址: <strong><a href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" target="_blank" style="color:#FFD700; word-break: break-all;">点击查看/验证</a></strong></p>
         </div>
     </div>
 
@@ -172,7 +171,6 @@
                 }
             });
         }
-        // 确保页面加载平滑
         window.addEventListener('load', () => {
             document.body.style.opacity = '0';
             document.body.style.transition = 'opacity 0.5s';
