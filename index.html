@@ -7,12 +7,12 @@
     <link rel="icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" type="image/x-icon">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
-        /* 核心修改：将您提供的横版宣传图设置为官网背景 */
+        /* 背景图片 */
         body { 
             background: 
-                linear-gradient(rgba(10, 14, 23, 0.75), rgba(10, 14, 23, 0.85)), /* 深色遮罩层，确保文字可读 */
-                url('https://s2.loli.net/2024/08/20/9dZgRvXHxN8h4Qq.png') no-repeat center center fixed; /* 请替换此处的图片链接 */
-            background-size: cover; /* 确保背景图覆盖整个屏幕 */
+                linear-gradient(rgba(10, 14, 23, 0.75), rgba(10, 14, 23, 0.85)), 
+                url('https://s2.loli.net/2024/08/20/9dZgRvXHxN8h4Qq.png') no-repeat center center fixed;
+            background-size: cover; 
             color: #f0f0f0; 
             min-height: 100vh; 
             padding: 20px; 
@@ -21,17 +21,16 @@
         .container { 
             max-width: 800px; 
             margin: 20px auto; 
-            background: rgba(20, 25, 40, 0.7); /* 内容区背景更透明，以透出背景图 */
+            background: rgba(20, 25, 40, 0.7);
             border-radius: 24px; 
             padding: 30px; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); 
             border: 1px solid rgba(255, 215, 0, 0.25);
-            backdrop-filter: blur(8px); /* 背景模糊效果，增强可读性和层次感 */
+            backdrop-filter: blur(8px);
         }
         .header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
-        /* 修改点1: Logo头像从200px增大到220px */
         .logo-container { 
-            width: 220px; /* 增大尺寸 */
+            width: 220px; 
             height: 220px; 
             margin: 0 auto 25px; 
             border-radius: 50%; 
@@ -39,10 +38,10 @@
             align-items: center; 
             justify-content: center; 
             overflow: hidden; 
-            border: 6px solid rgba(255, 215, 0, 0.6); /* 边框颜色加深，更突出 */
-            background: rgba(26, 26, 46, 0.7); /* 背景色半透明，与背景图融合 */
+            border: 6px solid rgba(255, 215, 0, 0.6);
+            background: rgba(26, 26, 46, 0.7);
             padding: 10px; 
-            box-shadow: 0 0 30px rgba(255, 140, 0, 0.3); /* 添加发光效果 */
+            box-shadow: 0 0 30px rgba(255, 140, 0, 0.3);
         }
         .logo-img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; display: block; }
         h1 { font-size: 3.2rem; margin-bottom: 10px; background: linear-gradient(90deg, #FFD700, #FF8C00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
@@ -74,7 +73,7 @@
         .footer-links a:hover { border-bottom: 1px solid #FFD700; }
         .alert { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
         
-        /* ========== 新增：多语言切换样式 ========== */
+        /* 简化版语言切换按钮 */
         .lang-switcher {
             position: fixed;
             top: 20px;
@@ -96,46 +95,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .lang-btn:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-        }
-        .lang-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 10px;
-            background: rgba(20, 25, 40, 0.95);
-            border-radius: 12px;
-            min-width: 180px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            display: none;
-            backdrop-filter: blur(10px);
-        }
-        .lang-dropdown.show {
-            display: block;
-        }
-        .lang-option {
-            padding: 12px 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.2s;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .lang-option:last-child {
-            border-bottom: none;
-        }
-        .lang-option:hover {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-        }
-        .lang-flag {
-            width: 24px;
-            height: 16px;
-            border-radius: 2px;
-            object-fit: cover;
+            background: rgba(255, 215, 0, 0.2);
         }
         @media (max-width: 768px) {
             .lang-switcher {
@@ -151,39 +111,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- 语言切换器（固定在右上角） -->
+    <!-- 简化版语言切换按钮（右上角） -->
     <div class="lang-switcher">
-        <div class="lang-btn" onclick="toggleLangDropdown()">
+        <button class="lang-btn" onclick="toggleLanguage()">
             <i class="fas fa-globe"></i>
             <span id="current-lang">中文</span>
-            <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="lang-dropdown" id="langDropdown">
-            <div class="lang-option" onclick="changeLanguage('zh', '中文')">
-                <img src="https://flagcdn.com/w20/cn.png" class="lang-flag" alt="中文"> 中文
-            </div>
-            <div class="lang-option" onclick="changeLanguage('en', 'English')">
-                <img src="https://flagcdn.com/w20/us.png" class="lang-flag" alt="English"> English
-            </div>
-            <div class="lang-option" onclick="changeLanguage('ja', '日本語')">
-                <img src="https://flagcdn.com/w20/jp.png" class="lang-flag" alt="日本語"> 日本語
-            </div>
-            <div class="lang-option" onclick="changeLanguage('ko', '한국어')">
-                <img src="https://flagcdn.com/w20/kr.png" class="lang-flag" alt="한국어"> 한국어
-            </div>
-            <div class="lang-option" onclick="changeLanguage('ru', 'Русский')">
-                <img src="https://flagcdn.com/w20/ru.png" class="lang-flag" alt="Русский"> Русский
-            </div>
-            <div class="lang-option" onclick="changeLanguage('fr', 'Français')">
-                <img src="https://flagcdn.com/w20/fr.png" class="lang-flag" alt="Français"> Français
-            </div>
-            <div class="lang-option" onclick="changeLanguage('es', 'Español')">
-                <img src="https://flagcdn.com/w20/es.png" class="lang-flag" alt="Español"> Español
-            </div>
-            <div class="lang-option" onclick="changeLanguage('ar', 'العربية')">
-                <img src="https://flagcdn.com/w20/sa.png" class="lang-flag" alt="العربية"> العربية
-            </div>
-        </div>
+        </button>
     </div>
 
     <div class="container">
@@ -200,7 +133,7 @@
         <!-- 项目简介板块 -->
         <div class="intro-box">
             <p><strong id="intro-title">【项目简介】</strong></p>
-            <p id="intro-text1"><strong>星火通证 (SPARK)</strong> 是一个以“流动的文化之火”为核心理念的创新型代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个<strong>“星火流转，价值共生”</strong>的可持续生态。</p>
+            <p id="intro-text1"><strong>星火通证 (SPARK)</strong> 是一个以"流动的文化之火"为核心理念的创新型代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个<strong>"星火流转，价值共生"</strong>的可持续生态。</p>
             <p id="intro-text2">项目采用独特的<strong>营销回流经济模型</strong>，所有买卖交易产生的税费（各5%）将<strong>100%自动注入资金池用于回流</strong>，旨在支撑币价长期稳定，形成内生的价值增长飞轮。</p>
             <p id="intro-text3">我们坚信，价值生于共识，成于流通。SPARK 是连接理念、技术与社区的桥梁，旨在与所有共建者一同，让价值的星火汇聚成光。</p>
         </div>
@@ -301,14 +234,17 @@
     </div>
 
     <script>
-        // ========== 多语言翻译数据 ==========
+        // ========== 简化版语言切换功能 ==========
+        let currentLang = 'zh'; // 默认中文
+        
+        // 中英文翻译数据
         const translations = {
             zh: {
                 title: "星火通证",
                 symbol: "SPARK",
                 tagline: "基于以太坊的创新型营销回流代币，构建透明、公平、可持续的社区价值生态。",
                 introTitle: "【项目简介】",
-                introText1: "<strong>星火通证 (SPARK)</strong> 是一个以“流动的文化之火”为核心理念的创新型代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个<strong>“星火流转，价值共生”</strong>的可持续生态。",
+                introText1: "<strong>星火通证 (SPARK)</strong> 是一个以'流动的文化之火'为核心理念的创新型代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个<strong>'星火流转，价值共生'</strong>的可持续生态。",
                 introText2: "项目采用独特的<strong>营销回流经济模型</strong>，所有买卖交易产生的税费（各5%）将<strong>100%自动注入资金池用于回流</strong>，旨在支撑币价长期稳定，形成内生的价值增长飞轮。",
                 introText3: "我们坚信，价值生于共识，成于流通。SPARK 是连接理念、技术与社区的桥梁，旨在与所有共建者一同，让价值的星火汇聚成光。",
                 coreInfoTitle: "核心信息",
@@ -372,137 +308,108 @@
                 footerWebsite: "Website",
                 footerLogo: "IPFS Permanent Logo Address",
                 footerLinkText: "Click to View/Verify"
-            },
-            ja: {
-                title: "スパークトークン",
-                symbol: "SPARK",
-                tagline: "イーサリアム上の革新的なマーケティングリフロートークン。透明、公平、持続可能なコミュニティ価値エコシステムを構築します。",
-                introTitle: "【プロジェクト紹介】",
-                introText1: "<strong>スパークトークン (SPARK)</strong> は、「流動する文化の炎」を核心理念とする革新的なトークンです。ブロックチェーン技術を通じて文化価値を再構築・流通させ、<strong>「火花の流転、価値の共生」</strong>という持続可能なエコシステムの構築を目指します。",
-                introText2: "本プロジェクトは独自の<strong>マーケティングリフロー経済モデル</strong>を採用しています。すべての取引手数料（売買各5％）は<strong>100％自動的に流動性プールに注入されリフローされます</strong。これにより長期的な価格安定を支え、内生的な価値成長の好循環を形成します。",
-                introText3: "私たちは、価値は合意から生まれ、流通によって成就されると信じています。SPARKは、理念、技術、コミュニティを結ぶ架け橋であり、すべての共創者とともに、価値の火花を光へと集めることを目指します。",
-                coreInfoTitle: "基本情報",
-                cardTitle1: "トークン精度",
-                cardTitle2: "総発行量",
-                cardTitle3: "トークンモデル",
-                cardContent3: "マーケティングリフロートークン",
-                contractTitle: "スマートコントラクト",
-                copyBtnText: "アドレスをコピー",
-                taxTitle: "経済モデル（税率）",
-                taxDesc1: "購入税<br>自動リフロー",
-                taxDesc2: "売却税<br>自動リフロー",
-                taxDesc3: "送金税",
-                taxMechanismTitle: "仕組み：",
-                taxMechanism: "売買取引で発生する5％の手数料は、100％自動的に流動性プールに注入されリフローされ、長期的な価格安定を支えます。",
-                tradeTitle: "取引と流動性",
-                tradeCardTitle1: "基盤資産 / DEX",
-                tradeCardTitle2: "流動性状態",
-                liquidityStatus: "ロック済み",
-                riskTitle: "リスク警告：",
-                riskText: "暗号通貨投資は高い変動性とリスクを伴います。本ページの情報は参考のみを目的としており、投資助言を構成するものではありません。",
-                button1Text: "ブロックエクスプローラー",
-                button2Text: "SPARKを取引(V2)",
-                button3Text: "公式コミュニティ",
-                footerCopyright: "© 2026 スパークトークン (SPARK) プロジェクト。本ページはプロジェクトの公式ウェブサイトです。",
-                footerWebsite: "公式サイト",
-                footerLogo: "IPFS永久ロゴアドレス",
-                footerLinkText: "表示/確認"
-            },
-            ko: {
-                title: "스파크 토큰",
-                symbol: "SPARK",
-                tagline: "이더리움 기반의 혁신적인 마케팅 환류 토큰. 투명, 공정, 지속 가능한 커뮤니티 가치 생태계를 구축합니다.",
-                introTitle: "【프로젝트 소개】",
-                introText1: "<strong>스파크 토큰 (SPARK)</strong>은 '유동하는 문화의 불꽃'을 핵심 이념으로 하는 혁신적인 토큰입니다. 블록체인 기술을 통해 문화 가치를 재형성하고 유통시켜 <strong>'불꽃의 유전, 가치의 공생'</strong>이라는 지속 가능한 생태계 구축을 목표로 합니다.",
-                introText2: "본 프로젝트는 독자적인 <strong>마케팅 환류 경제 모델</strong>을 채택합니다. 모든 거래 수수료(매매 각 5%)는 <strong>100% 자동으로 유동성 풀에 주입되어 환류</strong>되며, 장기적인 가격 안정을 지원하고 내생적 가치 성장의 선순환을 형성합니다.",
-                introText3: "우리는 가치가 합의에서 태어나고 유통을 통해 성취된다고 믿습니다. SPARK는 이념, 기술, 커뮤니티를 잇는 다리로서, 모든 공동 창작자와 함께 가치의 불꽃을 빛으로 모으는 것을 목표로 합니다.",
-                coreInfoTitle: "기본 정보",
-                cardTitle1: "토큰 정밀도",
-                cardTitle2: "총 발행량",
-                cardTitle3: "토큰 모델",
-                cardContent3: "마케팅 환류 토큰",
-                contractTitle: "스마트 계약",
-                copyBtnText: "주소 복사",
-                taxTitle: "경제 모델(세율)",
-                taxDesc1: "매수세<br>자동 환류",
-                taxDesc2: "매도세<br>자동 환류",
-                taxDesc3: "송금세",
-                taxMechanismTitle: "메커니즘:",
-                taxMechanism: "매매 거래에서 발생하는 5%의 수수료는 100% 자동으로 유동성 풀에 주입되어 환류되며, 장기적인 가격 안정을 지원합니다.",
-                tradeTitle: "거래 및 유동성",
-                tradeCardTitle1: "기초 자산 / DEX",
-                tradeCardTitle2: "유동성 상태",
-                liquidityStatus: "잠김",
-                riskTitle: "위험 경고:",
-                riskText: "암호화폐 투자는 높은 변동성과 위험을 수반합니다. 본 페이지의 정보는 참고용으로만 제공되며, 투자 조언을 구성하지 않습니다.",
-                button1Text: "블록 탐색기",
-                button2Text: "SPARK 거래(V2)",
-                button3Text: "공식 커뮤니티",
-                footerCopyright: "© 2026 스파크 토큰 (SPARK) 프로젝트. 본 페이지는 프로젝트의 공식 웹사이트입니다.",
-                footerWebsite: "공식 사이트",
-                footerLogo: "IPFS 영구 로고 주소",
-                footerLinkText: "보기/확인"
-            },
-            ru: {
-                title: "Spark Token",
-                symbol: "SPARK",
-                tagline: "Инновационный токен с рефлоу-маркетингом на Ethereum, создающий прозрачную, справедливую и устойчивую экосистему сообщества.",
-                introTitle: "【Введение в проект】",
-                introText1: "<strong>Spark Token (SPARK)</strong> — это инновационный токен с основной концепцией «текущего культурного огня». Мы стремимся преобразовывать и распространять культурные ценности с помощью технологии блокчейн, создавая устойчивую экосистему <strong>«циркуляции искр, симбиоза ценностей»</strong>.",
-                introText2: "Проект использует уникальную <strong>экономическую модель рефлоу-маркетинга</strong>. Все комиссии за транзакции (по 5% за покупку/продажу) <strong>на 100% автоматически поступают в пул ликвидности для рефлоу</strong>, что обеспечивает долгосрочную стабильность цены и формирует эндогенный маховик роста стоимости.",
-                introText3: "Мы верим, что ценность рождается из консенсуса и достигается через обращение. SPARK — это мост, соединяющий идеи, технологии и сообщество, стремящийся вместе со всеми соучастниками собрать искры ценности в свет.",
-                coreInfoTitle: "Основная информация",
-                cardTitle1: "Точность токена",
-                cardTitle2: "Общее предложение",
-                cardTitle3: "Модель токена",
-                cardContent3: "Токен с рефлоу-маркетингом",
-                contractTitle: "Смарт-контракт",
-                copyBtnText: "Копировать адрес",
-                taxTitle: "Экономическая модель (Налоги)",
-                taxDesc1: "Налог на покупку<br>Авто-рефлоу",
-                taxDesc2: "Налог на продажу<br>Авто-рефлоу",
-                taxDesc3: "Налог на перевод",
-                taxMechanismTitle: "Механизм:",
-                taxMechanism: "5% комиссии от сделок покупки/продажи на 100% автоматически поступают в пул ликвидности для рефлоу, поддерживая долгосрочную стабильность цены.",
-                tradeTitle: "Торговля и ликвидность",
-                tradeCardTitle1: "Базовый актив / DEX",
-                tradeCardTitle2: "Статус ликвидности",
-                liquidityStatus: "Заблокировано",
-                riskTitle: "Предупреждение о рисках:",
-                riskText: "Инвестиции в криптовалюты сопряжены с высокой волатильностью и риском. Информация на этой странице предназначена только для ознакомления и не является инвестиционной рекомендацией.",
-                button1Text: "Обозреватель блоков",
-                button2Text: "Торговать SPARK (V2)",
-                button3Text: "Официальное сообщество",
-                footerCopyright: "© 2026 Проект Spark Token (SPARK). Эта страница является официальным сайтом проекта.",
-                footerWebsite: "Сайт",
-                footerLogo: "Постоянный адрес логотипа IPFS",
-                footerLinkText: "Посмотреть/Проверить"
-            },
-            fr: {
-                title: "Spark Token",
-                symbol: "SPARK",
-                tagline: "Un jeton innovant de reflow marketing sur Ethereum, construisant un écosystème de valeur communautaire transparent, équitable et durable.",
-                introTitle: "【Présentation du projet】",
-                introText1: "<strong>Spark Token (SPARK)</strong> est un jeton innovant ayant pour concept central le « feu culturel fluide ». Nous nous engageons à remodeler et faire circuler la valeur culturelle grâce à la technologie blockchain, en construisant un écosystème durable de <strong>« circulation d'étincelles, symbiose de valeurs »</strong>.",
-                introText2: "Le projet adopte un unique <strong>modèle économique de reflow marketing</strong>. Tous les frais de transaction (5% chacun pour achat/vente) seront <strong>automatiquement injectés à 100% dans le pool de liquidité pour reflow</strong>, visant à soutenir la stabilité des prix à long terme et former une croissance endogène de la valeur.",
-                introText3: "Nous croyons que la valeur naît du consensus et s'accomplit par la circulation. SPARK est un pont reliant idées, technologie et communauté, visant à rassembler les étincelles de valeur en lumière avec tous les co-créateurs.",
-                coreInfoTitle: "Informations principales",
-                cardTitle1: "Décimales du jeton",
-                cardTitle2: "Offre totale",
-                cardTitle3: "Modèle de jeton",
-                cardContent3: "Jeton de reflow marketing",
-                contractTitle: "Contrat intelligent",
-                copyBtnText: "Copier l'adresse",
-                taxTitle: "Modèle économique (Taxes)",
-                taxDesc1: "Taxe d'achat<br>Auto-reflow",
-                taxDesc2: "Taxe de vente<br>Auto-reflow",
-                taxDesc3: "Taxe de transfert",
-                taxMechanismTitle: "Mécanisme :",
-                taxMechanism: "Les frais de 5% générés par les transactions d'achat/vente sont injectés à 100% automatiquement dans le pool de liquidité pour reflow, soutenant la stabilité des prix à long terme.",
-                tradeTitle: "Trading & Liquidité",
-                tradeCardTitle1: "Actif de base / DEX",
-                tradeCardTitle2: "Statut de liquidité",
-                liquidityStatus: "Verrouillé",
-                riskTitle: "Avertissement de risque :",
-                riskText: "L'investissement en cryptomonnaies comporte une forte volatilité et des risques. Les informations sur cette page sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement.",
-          
+            }
+        };
+
+        // 切换语言函数
+        function toggleLanguage() {
+            if (currentLang === 'zh') {
+                currentLang = 'en';
+                document.getElementById('current-lang').textContent = 'EN';
+            } else {
+                currentLang = 'zh';
+                document.getElementById('current-lang').textContent = '中文';
+            }
+            
+            // 应用翻译
+            applyTranslation(currentLang);
+            
+            // 保存到本地存储
+            localStorage.setItem('spark_lang', currentLang);
+        }
+
+        // 应用翻译
+        function applyTranslation(lang) {
+            const langData = translations[lang];
+            
+            // 更新所有文本
+            document.getElementById('title').textContent = langData.title;
+            document.getElementById('symbol').textContent = langData.symbol;
+            document.getElementById('tagline').textContent = langData.tagline;
+            document.getElementById('intro-title').textContent = langData.introTitle;
+            document.getElementById('intro-text1').innerHTML = langData.introText1;
+            document.getElementById('intro-text2').innerHTML = langData.introText2;
+            document.getElementById('intro-text3').innerHTML = langData.introText3;
+            document.getElementById('core-info-title').textContent = langData.coreInfoTitle;
+            document.getElementById('card-title1').textContent = langData.cardTitle1;
+            document.getElementById('card-title2').textContent = langData.cardTitle2;
+            document.getElementById('card-title3').textContent = langData.cardTitle3;
+            document.getElementById('card-content3').textContent = langData.cardContent3;
+            document.getElementById('contract-title').textContent = langData.contractTitle;
+            document.getElementById('copy-btn-text').textContent = langData.copyBtnText;
+            document.getElementById('tax-title').textContent = langData.taxTitle;
+            document.getElementById('tax-desc1').innerHTML = langData.taxDesc1;
+            document.getElementById('tax-desc2').innerHTML = langData.taxDesc2;
+            document.getElementById('tax-desc3').innerHTML = langData.taxDesc3;
+            document.getElementById('tax-mechanism-title').textContent = langData.taxMechanismTitle;
+            document.getElementById('tax-mechanism').textContent = langData.taxMechanism;
+            document.getElementById('trade-title').textContent = langData.tradeTitle;
+            document.getElementById('trade-card-title1').textContent = langData.tradeCardTitle1;
+            document.getElementById('trade-card-title2').textContent = langData.tradeCardTitle2;
+            document.getElementById('liquidity-status').textContent = langData.liquidityStatus;
+            document.getElementById('risk-title').textContent = langData.riskTitle;
+            document.getElementById('risk-text').textContent = langData.riskText;
+            document.getElementById('button1-text').textContent = langData.button1Text;
+            document.getElementById('button2-text').textContent = langData.button2Text;
+            document.getElementById('button3-text').textContent = langData.button3Text;
+            document.getElementById('footer-copyright').textContent = langData.footerCopyright;
+            document.getElementById('footer-website').textContent = langData.footerWebsite;
+            document.getElementById('footer-logo').textContent = langData.footerLogo;
+            document.getElementById('footer-link-text').textContent = langData.footerLinkText;
+            
+            // 更新页面语言属性
+            document.documentElement.lang = lang;
+        }
+
+        // 页面加载时检查保存的语言
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('spark_lang') || 'zh';
+            
+            if (savedLang === 'en') {
+                currentLang = 'en';
+                document.getElementById('current-lang').textContent = 'EN';
+                applyTranslation('en');
+            } else {
+                currentLang = 'zh';
+                document.getElementById('current-lang').textContent = '中文';
+                applyTranslation('zh');
+            }
+            
+            // 页面加载动画
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s';
+            setTimeout(() => { document.body.style.opacity = '1'; }, 100);
+        });
+
+        // 复制合约地址功能
+        function copyContract() {
+            const addr = '0xD580C7C9Cde5ce776fEed844310330A2a40078d9';
+            navigator.clipboard.writeText(addr).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                if(btn){
+                    const originalText = btn.innerHTML;
+                    const copiedText = currentLang === 'zh' ? '已复制' : 'Copied';
+                    btn.innerHTML = `<i class="fas fa-check"></i> ${copiedText}`;
+                    btn.style.background = 'rgba(76, 175, 80, 0.3)';
+                    btn.style.borderColor = '#4CAF50';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                        btn.style.borderColor = '';
+                    }, 2000);
+                }
+            });
+        }
+    </script>
+</body>
+    </html>
