@@ -138,10 +138,16 @@
             <p id="intro-text3">我们坚信，价值生于共识，成于流通。SPARK 是连接理念、技术与社区的桥梁，旨在与所有共建者一同，让价值的星火汇聚成光。</p>
         </div>
 
-        <!-- 核心信息 -->
+        <!-- 核心信息 - 已添加"代币名称与符号"卡片 -->
         <div class="section">
             <div class="section-title"><i class="fas fa-info-circle"></i> <span id="core-info-title">核心信息</span></div>
             <div class="info-grid">
+                <!-- 新增：代币名称与符号 -->
+                <div class="info-card">
+                    <div class="card-title" id="card-title-name">代币名称与符号</div>
+                    <div class="card-content" id="card-content-name">星火通证 (SPARK)</div>
+                </div>
+                
                 <div class="info-card">
                     <div class="card-title" id="card-title1">代币精度</div>
                     <div class="card-content">18</div>
@@ -248,6 +254,8 @@
                 introText2: "项目采用独特的<strong>营销回流经济模型</strong>，所有买卖交易产生的税费（各5%）将<strong>100%自动注入资金池用于回流</strong>，旨在支撑币价长期稳定，形成内生的价值增长飞轮。",
                 introText3: "我们坚信，价值生于共识，成于流通。SPARK 是连接理念、技术与社区的桥梁，旨在与所有共建者一同，让价值的星火汇聚成光。",
                 coreInfoTitle: "核心信息",
+                cardTitleName: "代币名称与符号",
+                cardContentName: "星火通证 (SPARK)",
                 cardTitle1: "代币精度",
                 cardTitle2: "发行总量",
                 cardTitle3: "代币模式",
@@ -283,6 +291,8 @@
                 introText2: "The project adopts a unique <strong>marketing reflow economic model</strong>. All transaction fees (5% each for buy/sell) will be <strong>100% automatically injected into the liquidity pool for reflow</strong>, aiming to support long-term price stability and form an endogenous value growth flywheel.",
                 introText3: "We believe that value is born from consensus and achieved through circulation. SPARK is a bridge connecting ideas, technology, and community, aiming to gather the sparks of value into light together with all co-builders.",
                 coreInfoTitle: "Core Information",
+                cardTitleName: "Token Name & Symbol",
+                cardContentName: "Spark Token (SPARK)",
                 cardTitle1: "Token Decimals",
                 cardTitle2: "Total Supply",
                 cardTitle3: "Token Model",
@@ -341,6 +351,8 @@
             document.getElementById('intro-text2').innerHTML = langData.introText2;
             document.getElementById('intro-text3').innerHTML = langData.introText3;
             document.getElementById('core-info-title').textContent = langData.coreInfoTitle;
+            document.getElementById('card-title-name').textContent = langData.cardTitleName;
+            document.getElementById('card-content-name').textContent = langData.cardContentName;
             document.getElementById('card-title1').textContent = langData.cardTitle1;
             document.getElementById('card-title2').textContent = langData.cardTitle2;
             document.getElementById('card-title3').textContent = langData.cardTitle3;
@@ -412,4 +424,4 @@
         }
     </script>
 </body>
-    </html>
+                </html>
