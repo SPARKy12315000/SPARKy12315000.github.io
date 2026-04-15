@@ -7,7 +7,18 @@
     <link rel="icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" type="image/x-icon">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
-        /* 背景图片 */
+        
+        :root {
+            --primary: #FF6B00;
+            --secondary: #FFD700;
+            --accent: #4FC3F7;
+            --success: #4CAF50;
+            --danger: #FF5722;
+            --dark: #0A0E17;
+            --dark-light: #1A1A2E;
+            --light: #f0f0f0;
+        }
+        
         body { 
             background: 
                 linear-gradient(rgba(10, 14, 23, 0.75), rgba(10, 14, 23, 0.85)), 
@@ -18,8 +29,9 @@
             padding: 20px; 
             line-height: 1.6;
         }
+        
         .container { 
-            max-width: 800px; 
+            max-width: 1200px; 
             margin: 20px auto; 
             background: rgba(20, 25, 40, 0.7);
             border-radius: 24px; 
@@ -28,6 +40,7 @@
             border: 1px solid rgba(255, 215, 0, 0.25);
             backdrop-filter: blur(8px);
         }
+        
         .header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
         .logo-container { 
             width: 220px; 
@@ -43,43 +56,92 @@
             padding: 10px; 
             box-shadow: 0 0 30px rgba(255, 140, 0, 0.3);
         }
+        
         .logo-img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; display: block; }
         h1 { font-size: 3.2rem; margin-bottom: 10px; background: linear-gradient(90deg, #FFD700, #FF8C00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
         .symbol { font-size: 1.9rem; color: #FFD700; font-weight: bold; letter-spacing: 3px; margin-bottom: 5px; text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5); }
         .tagline { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto 30px; font-weight: 500; }
+        
         .intro-box { background: rgba(255, 215, 0, 0.07); border-radius: 18px; padding: 28px; margin: 30px 0; border-left: 5px solid #FFD700; }
         .intro-box p { margin-bottom: 18px; font-size: 1.08rem; line-height: 1.8; }
         .intro-box strong { color: #FFD700; }
+        
         .section { margin-bottom: 35px; }
         .section-title { font-size: 1.6rem; color: #4FC3F7; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid rgba(79, 195, 247, 0.3); }
+        
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 15px; }
         .info-card { background: rgba(40, 45, 70, 0.75); border-radius: 14px; padding: 22px; border-left: 5px solid #FFD700; }
         .card-title { font-size: 1rem; color: #FFD700; margin-bottom: 12px; font-weight: bold; }
         .card-content { font-size: 1.15rem; word-break: break-all; font-family: 'Courier New', monospace; }
+        
         .contract-address { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; word-break: break-all; font-size: 1.05rem; border: 1px solid rgba(255, 215, 0, 0.4); position: relative; margin-top: 10px; }
         .copy-btn { position: absolute; top: 18px; right: 18px; background: rgba(255, 215, 0, 0.25); color: #FFD700; border: 1px solid #FFD700; border-radius: 6px; padding: 8px 16px; cursor: pointer; font-size: 0.9rem; }
+        
         .tax-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; margin-top: 20px; }
         .tax-card { background: rgba(255, 215, 0, 0.1); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid rgba(255, 215, 0, 0.3); }
         .tax-rate { font-size: 2.2rem; font-weight: bold; color: #FFD700; margin-bottom: 8px; }
         .tax-desc { font-size: 0.9rem; opacity: 0.9; }
+        
         .button-group { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 40px; justify-content: center; }
         .button { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #FF8C00, #FFD700); color: #1a1a2e; padding: 16px 32px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem; min-width: 180px; transition: all 0.3s; box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3); }
         .button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 140, 0, 0.5); }
         .button i { margin-right: 10px; }
         .button.secondary { background: rgba(255, 255, 255, 0.12); color: #f0f0f0; border: 1px solid rgba(255, 255, 255, 0.35); }
+        
         .footer { margin-top: 50px; text-align: center; font-size: 0.9rem; opacity: 0.8; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
         .footer-links { margin-top: 15px; font-size: 1rem; line-height: 1.8; }
         .footer-links a { color: #FFD700; text-decoration: none; border-bottom: 1px dotted rgba(255, 215, 0, 0.5); transition: border-bottom 0.3s; }
         .footer-links a:hover { border-bottom: 1px solid #FFD700; }
         .alert { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
         
-        /* 简化版语言切换按钮 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid var(--secondary);
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 107, 0, 0.2);
+            color: var(--secondary);
+        }
+        
         .lang-switcher {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
         }
+        
         .lang-btn {
             background: rgba(20, 25, 40, 0.9);
             border: 2px solid #FFD700;
@@ -94,9 +156,307 @@
             transition: all 0.3s;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
+        
         .lang-btn:hover {
             background: rgba(255, 215, 0, 0.2);
         }
+        
+        .airdrop-system {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .claim-section {
+            background: linear-gradient(135deg, rgba(255, 87, 34, 0.2), rgba(255, 107, 0, 0.2));
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .claim-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+        
+        .claim-btn {
+            background: linear-gradient(90deg, var(--danger), var(--primary));
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .claim-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4);
+        }
+        
+        .claim-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .address-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .address-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .invite-code-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .invite-section {
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.2), rgba(103, 58, 183, 0.2));
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+        }
+        
+        .invite-code {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        
+        .copy-invite-btn {
+            background: rgba(156, 39, 176, 0.3);
+            color: #E040FB;
+            border: 1px solid #E040FB;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        .admin-panel {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(33, 150, 243, 0.2));
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 2px solid rgba(76, 175, 80, 0.5);
+        }
+        
+        .admin-title {
+            color: var(--success);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .admin-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .admin-btn {
+            background: rgba(255, 107, 0, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .admin-btn:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .data-table th, .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .data-table th {
+            background: rgba(255, 107, 0, 0.1);
+            color: var(--secondary);
+        }
+        
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .airdrop-user-panel {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .airdrop-user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--secondary);
+            margin: 0 auto 15px;
+            background: var(--dark-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .airdrop-user-address {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+        
+        .airdrop-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .airdrop-stat-card {
+            background: rgba(255, 107, 0, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 107, 0, 0.3);
+        }
+        
+        .airdrop-stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 5px 0;
+        }
+        
+        .airdrop-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .team-section {
+            margin-top: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(103, 58, 183, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .team-member {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .team-role {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .team-bio {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .team-email {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .team-email a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .team-email a:hover {
+            text-decoration: underline;
+        }
+        
         @media (max-width: 768px) {
             .lang-switcher {
                 top: 10px;
@@ -106,12 +466,23 @@
                 padding: 8px 16px;
                 font-size: 0.9rem;
             }
+            .nav-menu {
+                display: none;
+            }
+            .airdrop-stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .admin-controls {
+                flex-direction: column;
+            }
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- 简化版语言切换按钮（右上角） -->
     <div class="lang-switcher">
         <button class="lang-btn" onclick="toggleLanguage()">
             <i class="fas fa-globe"></i>
@@ -120,8 +491,23 @@
     </div>
 
     <div class="container">
-        <!-- 头部：Logo与标题 -->
-        <div class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <img src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" 
+                     alt="SPARK Logo" class="nav-logo">
+                <div class="brand-text">
+                    <h1>星火通证</h1>
+                    <div style="color: var(--accent); font-size: 0.9rem;">SPARK Ecosystem</div>
+                </div>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active"><i class="fas fa-home"></i> 首页</a>
+                <a href="#airdrop" class="nav-link"><i class="fas fa-gift"></i> 空投认领</a>
+                <a href="#admin" class="nav-link"><i class="fas fa-user-shield"></i> 管理员</a>
+            </div>
+        </nav>
+
+        <div class="header" id="home">
             <div class="logo-container">
                 <img class="logo-img" src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" alt="SPARK Logo">
             </div>
@@ -130,7 +516,6 @@
             <p class="tagline" id="tagline">基于以太坊的创新型营销回流代币，构建透明、公平、可持续的社区价值生态。</p>
         </div>
 
-        <!-- 项目简介板块 -->
         <div class="intro-box">
             <p><strong id="intro-title">【项目简介】</strong></p>
             <p id="intro-text1"><strong>星火通证 (SPARK)</strong> 是一个以"流动的文化之火"为核心理念的创新型代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个<strong>"星火流转，价值共生"</strong>的可持续生态。</p>
@@ -138,16 +523,13 @@
             <p id="intro-text3">我们坚信，价值生于共识，成于流通。SPARK 是连接理念、技术与社区的桥梁，旨在与所有共建者一同，让价值的星火汇聚成光。</p>
         </div>
 
-        <!-- 核心信息 - 已添加"代币名称与符号"卡片 -->
         <div class="section">
             <div class="section-title"><i class="fas fa-info-circle"></i> <span id="core-info-title">核心信息</span></div>
             <div class="info-grid">
-                <!-- 新增：代币名称与符号 -->
                 <div class="info-card">
                     <div class="card-title" id="card-title-name">代币名称与符号</div>
                     <div class="card-content" id="card-content-name">星火通证 (SPARK)</div>
                 </div>
-                
                 <div class="info-card">
                     <div class="card-title" id="card-title1">代币精度</div>
                     <div class="card-content">18</div>
@@ -163,7 +545,6 @@
             </div>
         </div>
 
-        <!-- 智能合约 -->
         <div class="section">
             <div class="section-title"><i class="fas fa-file-contract"></i> <span id="contract-title">智能合约</span></div>
             <div class="contract-address">
@@ -172,7 +553,6 @@
             </div>
         </div>
 
-        <!-- 经济模型（税率） -->
         <div class="section">
             <div class="section-title"><i class="fas fa-chart-pie"></i> <span id="tax-title">经济模型（税率）</span></div>
             <div class="tax-grid">
@@ -192,7 +572,159 @@
             <p style="margin-top:20px; opacity:0.9; font-size:1rem;"><strong id="tax-mechanism-title">机制：</strong><span id="tax-mechanism">买卖交易产生的5%税费将100%自动注入资金池回流，用于支撑币价长期稳定。</span></p>
         </div>
 
-        <!-- 交易与流动性 -->
+        <!-- 空投认领系统 -->
+        <div class="airdrop-system" id="airdrop">
+            <div class="claim-section">
+                <h2 style="color: var(--secondary); margin-bottom: 10px;">🎁 SPARK 空投认领</h2>
+                <p>每个地址可免费认领10亿SPARK代币，通过邀请好友可获得额外奖励！</p>
+                
+                <div class="airdrop-user-panel">
+                    <div class="airdrop-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="airdrop-user-address" id="userAddressDisplay">请输入您的钱包地址</div>
+                </div>
+                
+                <div class="airdrop-stats-grid">
+                    <div class="airdrop-stat-card">
+                        <div class="airdrop-stat-label">您的状态</div>
+                        <div class="airdrop-stat-value" id="userStatus">未认领</div>
+                    </div>
+                    <div class="airdrop-stat-card">
+                        <div class="airdrop-stat-label">基础奖励</div>
+                        <div class="airdrop-stat-value" id="claimAmountUser">1,000,000,000</div>
+                        <div style="color: var(--accent); font-size: 0.8rem;">SPARK</div>
+                    </div>
+                    <div class="airdrop-stat-card">
+                        <div class="airdrop-stat-label">邀请奖励</div>
+                        <div class="airdrop-stat-value" id="inviteReward">+200,000,000</div>
+                        <div style="color: var(--accent); font-size: 0.8rem;">每成功邀请1人</div>
+                    </div>
+                </div>
+                
+                <div class="claim-amount" id="claimAmount">1,000,000,000</div>
+                
+                <p style="opacity: 0.8; margin-bottom: 20px; font-size: 1.1rem;">
+                    <strong>已成功提交：</strong><span id="totalSubmitted">0</span> 地址 | 
+                    <strong>已处理：</strong><span id="totalProcessed">0</span> 地址
+                </p>
+                
+                <!-- 地址输入 -->
+                <input type="text" id="walletAddress" class="address-input" placeholder="输入您的以太坊钱包地址 (0x...)" />
+                
+                <!-- 邀请码输入（可选） -->
+                <input type="text" id="inviteCodeInput" class="invite-code-input" placeholder="输入邀请码（可选，可获得额外奖励）" />
+                
+                <button class="claim-btn" id="claimAirdrop">
+                    <i class="fas fa-gift"></i> 提交认领申请
+                </button>
+                
+                <!-- 邀请码生成区域（认领后显示） -->
+                <div class="invite-section" id="inviteSection" style="display:none;">
+                    <h3 style="color: #E040FB; margin-bottom: 10px;">🎯 您的专属邀请码</h3>
+                    <p>分享此邀请码，每成功邀请1人可获得额外200,000,000 SPARK奖励！</p>
+                    <div class="invite-code" id="userInviteCode">加载中...</div>
+                    <button class="copy-invite-btn" onclick="copyInviteCode()">
+                        <i class="fas fa-copy"></i> 复制邀请码
+                    </button>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255, 87, 34, 0.1); border-radius: 10px;">
+                    <i class="fas fa-info-circle" style="color: var(--accent);"></i>
+                    <strong>重要说明：</strong> 
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>每个地址仅限领取一次，不可重复领取</li>
+                        <li>提交后，您的地址将进入空投队列</li>
+                        <li>通过邀请码邀请好友，每成功邀请1人可获得额外200,000,000 SPARK奖励</li>
+                        <li>项目方将在24-48小时内处理空投</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 管理员面板 -->
+            <div class="admin-panel" id="admin">
+                <h2 class="admin-title"><i class="fas fa-user-shield"></i> 管理员控制面板</h2>
+                <p style="text-align: center; margin-bottom: 20px;">项目方专用 - 空投数据处理</p>
+                
+                <div class="airdrop-stats-grid">
+                    <div class="airdrop-stat-card">
+                        <div class="airdrop-stat-label">待处理地址</div>
+                        <div class="airdrop-stat-value" id="pendingCount">0</div>
+                    </div>
+                    <div class="airdrop-stat-card">
+                        <div class="airdrop-stat-label">已处理地址</div>
+                        <div class="airdrop-stat-value" id="processedCount">0</div>
+                    </div>
+                    <div class="airdrop-stat-card">
+                        <div class="airdrop-stat-label">总计地址</div>
+                        <div class="airdrop-stat-value" id="totalCount">0</div>
+                    </div>
+                </div>
+                
+                <div class="admin-controls">
+                    <button class="admin-btn" onclick="downloadAirdropJSON()">
+                        <i class="fas fa-download"></i> 下载JSON格式
+                    </button>
+                    <button class="admin-btn" onclick="downloadAirdropCSV()">
+                        <i class="fas fa-file-csv"></i> 下载CSV格式
+                    </button>
+                    <button class="admin-btn" onclick="downloadAirdropTXT()">
+                        <i class="fas fa-file-alt"></i> 下载地址列表
+                    </button>
+                    <button class="admin-btn" onclick="copyToClipboard()">
+                        <i class="fas fa-copy"></i> 复制到剪贴板
+                    </button>
+                    <button class="admin-btn" onclick="clearAllData()" style="background: rgba(255, 87, 34, 0.2); color: var(--danger); border-color: var(--danger);">
+                        <i class="fas fa-trash"></i> 清除所有数据
+                    </button>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h3 style="color: var(--accent); margin-bottom: 10px;">批量处理工具</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <button class="admin-btn" onclick="markAllAsProcessed()">
+                            <i class="fas fa-check-circle"></i> 标记全部为已处理
+                        </button>
+                        <button class="admin-btn" onclick="exportForDEXTools()">
+                            <i class="fas fa-rocket"></i> DEXTools格式
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 数据表格 -->
+                <div style="margin-top: 30px; max-height: 400px; overflow-y: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>钱包地址</th>
+                                <th>邀请码</th>
+                                <th>邀请人</th>
+                                <th>邀请人数</th>
+                                <th>状态</th>
+                                <th>提交时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="airdropTable">
+                            <!-- 数据将通过JS动态填充 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(33, 150, 243, 0.1); border-radius: 10px;">
+                    <i class="fas fa-lightbulb" style="color: var(--accent);"></i>
+                    <strong>使用说明：</strong> 
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li><strong>JSON格式：</strong> 适用于智能合约批量空投</li>
+                        <li><strong>CSV格式：</strong> 适用于Excel处理和数据分析</li>
+                        <li><strong>地址列表：</strong> 纯文本，每行一个地址</li>
+                        <li><strong>DEXTools格式：</strong> 适用于代币上线推广</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div class="section">
             <div class="section-title"><i class="fas fa-university"></i> <span id="trade-title">交易与流动性</span></div>
             <div class="info-grid">
@@ -207,13 +739,11 @@
             </div>
         </div>
 
-        <!-- 风险提示 -->
         <div class="alert">
             <i class="fas fa-exclamation-triangle" style="color: #FFD700; margin-right: 10px;"></i>
             <strong id="risk-title">风险提示：</strong><span id="risk-text">加密货币投资具有高波动性与风险。本页面信息仅供参考，不构成任何投资建议。</span>
         </div>
 
-        <!-- 功能按钮 -->
         <div class="button-group">
             <a href="https://etherscan.io/token/0xd580c7c9cde5ce776feed844310330a2a40078d9" target="_blank" class="button">
                 <i class="fas fa-external-link-alt"></i> <span id="button1-text">区块浏览器</span>
@@ -226,7 +756,6 @@
             </a>
         </div>
 
-        <!-- 页脚 -->
         <div class="footer">
             <p id="footer-copyright">© 2026 星火通证 (SPARK) 项目. 本页面为项目唯一官方网站。</p>
             <div class="footer-links">
@@ -240,109 +769,56 @@
     </div>
 
     <script>
-        // ========== 简化版语言切换功能 ==========
-        let currentLang = 'zh'; // 默认中文
-        
-        // 中英文翻译数据
+        // ========== 语言切换功能 ==========
+        let currentLang = 'zh';
         const translations = {
             zh: {
-                title: "星火通证",
-                symbol: "SPARK",
+                title: "星火通证", symbol: "SPARK",
                 tagline: "基于以太坊的创新型营销回流代币，构建透明、公平、可持续的社区价值生态。",
                 introTitle: "【项目简介】",
                 introText1: "<strong>星火通证 (SPARK)</strong> 是一个以'流动的文化之火'为核心理念的创新型代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个<strong>'星火流转，价值共生'</strong>的可持续生态。",
                 introText2: "项目采用独特的<strong>营销回流经济模型</strong>，所有买卖交易产生的税费（各5%）将<strong>100%自动注入资金池用于回流</strong>，旨在支撑币价长期稳定，形成内生的价值增长飞轮。",
                 introText3: "我们坚信，价值生于共识，成于流通。SPARK 是连接理念、技术与社区的桥梁，旨在与所有共建者一同，让价值的星火汇聚成光。",
-                coreInfoTitle: "核心信息",
-                cardTitleName: "代币名称与符号",
-                cardContentName: "星火通证 (SPARK)",
-                cardTitle1: "代币精度",
-                cardTitle2: "发行总量",
-                cardTitle3: "代币模式",
-                cardContent3: "营销回流代币",
-                contractTitle: "智能合约",
-                copyBtnText: "复制地址",
-                taxTitle: "经济模型（税率）",
-                taxDesc1: "买入税<br>自动回流",
-                taxDesc2: "卖出税<br>自动回流",
-                taxDesc3: "转账税",
-                taxMechanismTitle: "机制：",
-                taxMechanism: "买卖交易产生的5%税费将100%自动注入资金池回流，用于支撑币价长期稳定。",
-                tradeTitle: "交易与流动性",
-                tradeCardTitle1: "底层资产 / DEX",
-                tradeCardTitle2: "流动性状态",
-                liquidityStatus: "已锁定",
-                riskTitle: "风险提示：",
-                riskText: "加密货币投资具有高波动性与风险。本页面信息仅供参考，不构成任何投资建议。",
-                button1Text: "区块浏览器",
-                button2Text: "交易 SPARK (V2)",
-                button3Text: "官方社区",
+                coreInfoTitle: "核心信息", cardTitleName: "代币名称与符号", cardContentName: "星火通证 (SPARK)",
+                cardTitle1: "代币精度", cardTitle2: "发行总量", cardTitle3: "代币模式", cardContent3: "营销回流代币",
+                contractTitle: "智能合约", copyBtnText: "复制地址",
+                taxTitle: "经济模型（税率）", taxDesc1: "买入税<br>自动回流", taxDesc2: "卖出税<br>自动回流", taxDesc3: "转账税",
+                taxMechanismTitle: "机制：", taxMechanism: "买卖交易产生的5%税费将100%自动注入资金池回流，用于支撑币价长期稳定。",
+                tradeTitle: "交易与流动性", tradeCardTitle1: "底层资产 / DEX", tradeCardTitle2: "流动性状态", liquidityStatus: "已锁定",
+                riskTitle: "风险提示：", riskText: "加密货币投资具有高波动性与风险。本页面信息仅供参考，不构成任何投资建议。",
+                button1Text: "区块浏览器", button2Text: "交易 SPARK (V2)", button3Text: "官方社区",
                 footerCopyright: "© 2026 星火通证 (SPARK) 项目. 本页面为项目唯一官方网站。",
-                footerWebsite: "官网",
-                footerLogo: "IPFS永久Logo地址",
-                footerLinkText: "点击查看/验证"
+                footerWebsite: "官网", footerLogo: "IPFS永久Logo地址", footerLinkText: "点击查看/验证"
             },
             en: {
-                title: "Spark Token",
-                symbol: "SPARK",
+                title: "Spark Token", symbol: "SPARK",
                 tagline: "An innovative marketing-reflow token on Ethereum, building a transparent, fair, and sustainable community value ecosystem.",
                 introTitle: "【Project Introduction】",
                 introText1: "<strong>Spark Token (SPARK)</strong> is an innovative token with the core concept of 'flowing cultural fire'. We are committed to reshaping and circulating cultural value through blockchain technology, building a sustainable ecosystem of <strong>'spark circulation, value symbiosis'</strong>.",
                 introText2: "The project adopts a unique <strong>marketing reflow economic model</strong>. All transaction fees (5% each for buy/sell) will be <strong>100% automatically injected into the liquidity pool for reflow</strong>, aiming to support long-term price stability and form an endogenous value growth flywheel.",
                 introText3: "We believe that value is born from consensus and achieved through circulation. SPARK is a bridge connecting ideas, technology, and community, aiming to gather the sparks of value into light together with all co-builders.",
-                coreInfoTitle: "Core Information",
-                cardTitleName: "Token Name & Symbol",
-                cardContentName: "Spark Token (SPARK)",
-                cardTitle1: "Token Decimals",
-                cardTitle2: "Total Supply",
-                cardTitle3: "Token Model",
-                cardContent3: "Marketing Reflow Token",
-                contractTitle: "Smart Contract",
-                copyBtnText: "Copy Address",
-                taxTitle: "Economic Model (Tax)",
-                taxDesc1: "Buy Tax<br>Auto Reflow",
-                taxDesc2: "Sell Tax<br>Auto Reflow",
-                taxDesc3: "Transfer Tax",
-                taxMechanismTitle: "Mechanism:",
-                taxMechanism: "5% fees generated from buy/sell transactions are 100% automatically injected into the liquidity pool for reflow, supporting long-term price stability.",
-                tradeTitle: "Trading & Liquidity",
-                tradeCardTitle1: "Base Asset / DEX",
-                tradeCardTitle2: "Liquidity Status",
-                liquidityStatus: "Locked",
-                riskTitle: "Risk Warning:",
-                riskText: "Cryptocurrency investment carries high volatility and risk. The information on this page is for reference only and does not constitute investment advice.",
-                button1Text: "Block Explorer",
-                button2Text: "Trade SPARK (V2)",
-                button3Text: "Official Community",
+                coreInfoTitle: "Core Information", cardTitleName: "Token Name & Symbol", cardContentName: "Spark Token (SPARK)",
+                cardTitle1: "Token Decimals", cardTitle2: "Total Supply", cardTitle3: "Token Model", cardContent3: "Marketing Reflow Token",
+                contractTitle: "Smart Contract", copyBtnText: "Copy Address",
+                taxTitle: "Economic Model (Tax)", taxDesc1: "Buy Tax<br>Auto Reflow", taxDesc2: "Sell Tax<br>Auto Reflow", taxDesc3: "Transfer Tax",
+                taxMechanismTitle: "Mechanism:", taxMechanism: "5% fees generated from buy/sell transactions are 100% automatically injected into the liquidity pool for reflow, supporting long-term price stability.",
+                tradeTitle: "Trading & Liquidity", tradeCardTitle1: "Base Asset / DEX", tradeCardTitle2: "Liquidity Status", liquidityStatus: "Locked",
+                riskTitle: "Risk Warning:", riskText: "Cryptocurrency investment carries high volatility and risk. The information on this page is for reference only and does not constitute investment advice.",
+                button1Text: "Block Explorer", button2Text: "Trade SPARK (V2)", button3Text: "Official Community",
                 footerCopyright: "© 2026 Spark Token (SPARK) Project. This page is the official website of the project.",
-                footerWebsite: "Website",
-                footerLogo: "IPFS Permanent Logo Address",
-                footerLinkText: "Click to View/Verify"
+                footerWebsite: "Website", footerLogo: "IPFS Permanent Logo Address", footerLinkText: "Click to View/Verify"
             }
         };
 
-        // 切换语言函数
         function toggleLanguage() {
-            if (currentLang === 'zh') {
-                currentLang = 'en';
-                document.getElementById('current-lang').textContent = 'EN';
-            } else {
-                currentLang = 'zh';
-                document.getElementById('current-lang').textContent = '中文';
-            }
-            
-            // 应用翻译
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            document.getElementById('current-lang').textContent = currentLang === 'zh' ? '中文' : 'EN';
             applyTranslation(currentLang);
-            
-            // 保存到本地存储
             localStorage.setItem('spark_lang', currentLang);
         }
 
-        // 应用翻译
         function applyTranslation(lang) {
             const langData = translations[lang];
-            
-            // 更新所有文本
             document.getElementById('title').textContent = langData.title;
             document.getElementById('symbol').textContent = langData.symbol;
             document.getElementById('tagline').textContent = langData.tagline;
@@ -378,15 +854,326 @@
             document.getElementById('footer-website').textContent = langData.footerWebsite;
             document.getElementById('footer-logo').textContent = langData.footerLogo;
             document.getElementById('footer-link-text').textContent = langData.footerLinkText;
-            
-            // 更新页面语言属性
             document.documentElement.lang = lang;
         }
 
-        // 页面加载时检查保存的语言
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('spark_lang') || 'zh';
+        // ========== 空投数据管理系统 ==========
+        class AirdropManager {
+            constructor() {
+                this.storageKey = 'sparkAirdropData';
+                this.initializeData();
+            }
             
+            initializeData() {
+                if (!localStorage.getItem(this.storageKey)) {
+                    const initialData = {
+                        version: 3,
+                        airdrops: [],
+                        processed: [],
+                        users: {},
+                        metadata: {
+                            totalAirdropAmount: 1000000000,
+                            inviteRewardAmount: 200000000,
+                            startDate: new Date().toISOString(),
+                            lastUpdated: new Date().toISOString()
+                        }
+                    };
+                    this.saveData(initialData);
+                } else {
+                    // 升级旧版本数据
+                    const data = this.getData();
+                    if (!data.version || data.version < 3) {
+                        data.version = 3;
+                        data.users = data.users || {};
+                        data.metadata.inviteRewardAmount = 200000000;
+                        this.saveData(data);
+                    }
+                }
+            }
+            
+            getData() {
+                return JSON.parse(localStorage.getItem(this.storageKey));
+            }
+            
+            saveData(data) {
+                data.metadata.lastUpdated = new Date().toISOString();
+                localStorage.setItem(this.storageKey, JSON.stringify(data));
+                this.updateUI();
+            }
+            
+            // 生成邀请码（基于地址）
+            generateInviteCode(address) {
+                return 'SPARK' + address.slice(2, 8).toUpperCase() + Math.random().toString(36).substr(2, 4).toUpperCase();
+            }
+            
+            // 添加新的认领地址
+            addAirdrop(address, inviteCode = '') {
+                const data = this.getData();
+                
+                // 严格防重复检查：检查地址是否已存在
+                const existsInAirdrops = data.airdrops.some(item => 
+                    item.address.toLowerCase() === address.toLowerCase()
+                );
+                const existsInProcessed = data.processed.some(item => 
+                    item.address.toLowerCase() === address.toLowerCase()
+                );
+                const existsInUsers = data.users[address.toLowerCase()];
+                
+                if (existsInAirdrops || existsInProcessed || existsInUsers) {
+                    return { 
+                        success: false, 
+                        message: "❌ 该地址已提交过认领申请，每个地址只能领取一次！" 
+                    };
+                }
+                
+                // 验证以太坊地址格式
+                if (!this.isValidEthereumAddress(address)) {
+                    return { 
+                        success: false, 
+                        message: "❌ 请输入有效的以太坊地址（0x开头，42位字符）" 
+                    };
+                }
+                
+                // 生成用户邀请码
+                const userInviteCode = this.generateInviteCode(address);
+                
+                // 创建用户记录
+                const userRecord = {
+                    address: address,
+                    inviteCode: userInviteCode,
+                    invitedCount: 0,
+                    totalReward: data.metadata.totalAirdropAmount,
+                    baseReward: data.metadata.totalAirdropAmount,
+                    inviteReward: 0,
+                    invitedBy: '',
+                    referrals: [],
+                    claimTime: new Date().toISOString(),
+                    status: 'pending'
+                };
+                
+                // 处理邀请关系
+                let inviterAddress = '';
+                if (inviteCode && inviteCode.trim() !== '') {
+                    // 查找邀请人
+                    const allUsers = Object.values(data.users);
+                    const inviter = allUsers.find(user => user.inviteCode === inviteCode.trim());
+                    
+                    if (inviter) {
+                        // 更新邀请人信息
+                        inviterAddress = inviter.address;
+                        inviter.invitedCount++;
+                        inviter.inviteReward += data.metadata.inviteRewardAmount;
+                        inviter.totalReward += data.metadata.inviteRewardAmount;
+                        inviter.referrals.push(address.toLowerCase());
+                        
+                        // 更新被邀请人的总奖励
+                        userRecord.totalReward = data.metadata.totalAirdropAmount;
+                        userRecord.invitedBy = inviterAddress;
+                        
+                        data.users[inviter.address.toLowerCase()] = inviter;
+                    } else {
+                        return { 
+                            success: false, 
+                            message: "❌ 邀请码无效，请检查后重新输入" 
+                        };
+                    }
+                }
+                
+                // 保存用户记录
+                data.users[address.toLowerCase()] = userRecord;
+                
+                // 添加到待处理列表
+                const newAirdrop = {
+                    address: address,
+                    amount: userRecord.totalReward,
+                    timestamp: new Date().toISOString(),
+                    status: 'pending',
+                    inviteCode: userInviteCode,
+                    invitedBy: inviterAddress,
+                    invitedCount: 0
+                };
+                
+                data.airdrops.push(newAirdrop);
+                this.saveData(data);
+                
+                return { 
+                    success: true, 
+                    message: "✅ 认领申请提交成功！",
+                    data: newAirdrop,
+                    inviteCode: userInviteCode
+                };
+            }
+            
+            // 验证以太坊地址格式
+            isValidEthereumAddress(address) {
+                return /^0x[a-fA-F0-9]{40}$/.test(address);
+            }
+            
+            // 标记为已处理
+            markAsProcessed(address) {
+                const data = this.getData();
+                const index = data.airdrops.findIndex(item => 
+                    item.address.toLowerCase() === address.toLowerCase()
+                );
+                
+                if (index !== -1) {
+                    const processedItem = data.airdrops[index];
+                    processedItem.status = 'processed';
+                    processedItem.processedAt = new Date().toISOString();
+                    
+                    data.processed.push(processedItem);
+                    data.airdrops.splice(index, 1);
+                    
+                    this.saveData(data);
+                    return { success: true, message: "已标记为已处理" };
+                }
+                
+                return { success: false, message: "未找到该地址" };
+            }
+            
+            // 批量标记为已处理
+            markAllAsProcessed() {
+                const data = this.getData();
+                const now = new Date().toISOString();
+                
+                data.airdrops.forEach(item => {
+                    item.status = 'processed';
+                    item.processedAt = now;
+                    data.processed.push(item);
+                });
+                
+                data.airdrops = [];
+                this.saveData(data);
+                
+                return { success: true, count: data.processed.length };
+            }
+            
+            // 获取统计信息
+            getStats() {
+                const data = this.getData();
+                return {
+                    pending: data.airdrops.length,
+                    processed: data.processed.length,
+                    total: data.airdrops.length + data.processed.length,
+                    totalUsers: Object.keys(data.users).length,
+                    totalInvites: Object.values(data.users).reduce((sum, user) => sum + (user.invitedCount || 0), 0),
+                    lastUpdated: data.metadata.lastUpdated
+                };
+            }
+            
+            // 获取所有数据
+            getAllData() {
+                return this.getData();
+            }
+            
+            // 清空所有数据
+            clearAllData() {
+                const initialData = {
+                    version: 3,
+                    airdrops: [],
+                    processed: [],
+                    users: {},
+                    metadata: {
+                        totalAirdropAmount: 1000000000,
+                        inviteRewardAmount: 200000000,
+                        startDate: new Date().toISOString(),
+                        lastUpdated: new Date().toISOString()
+                    }
+                };
+                this.saveData(initialData);
+                return { success: true, message: "所有数据已清除" };
+            }
+            
+            // 更新UI
+            updateUI() {
+                const data = this.getData();
+                const stats = this.getStats();
+                
+                document.getElementById('pendingCount').textContent = stats.pending;
+                document.getElementById('processedCount').textContent = stats.processed;
+                document.getElementById('totalCount').textContent = stats.total;
+                document.getElementById('totalSubmitted').textContent = stats.total;
+                document.getElementById('totalProcessed').textContent = stats.processed;
+                
+                this.updateTable();
+            }
+            
+            // 更新表格
+            updateTable() {
+                const data = this.getData();
+                const tableBody = document.getElementById('airdropTable');
+                tableBody.innerHTML = '';
+                
+                // 显示待处理地址
+                data.airdrops.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    const date = new Date(item.timestamp);
+                    const formattedDate = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td style="font-family: monospace; font-size: 0.9em;">${item.address}</td>
+                        <td><span style="color: #E040FB; font-weight: bold;">${item.inviteCode}</span></td>
+                        <td style="font-family: monospace; font-size: 0.9em;">${item.invitedBy || '无'}</td>
+                        <td>${item.invitedCount || 0}</td>
+                        <td><span style="color: #FF9800; font-weight: bold;">待处理</span></td>
+                        <td>${formattedDate}</td>
+                        <td>
+                            <button onclick="airdropManager.markAsProcessed('${item.address}')" 
+                                    style="background: rgba(76, 175, 80, 0.2); color: #4CAF50; border: 1px solid #4CAF50; border-radius: 5px; padding: 5px 10px; cursor: pointer;">
+                                <i class="fas fa-check"></i> 标记完成
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                
+                // 显示已处理地址
+                data.processed.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    const date = new Date(item.timestamp);
+                    const processedDate = item.processedAt ? new Date(item.processedAt) : date;
+                    const formattedDate = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+                    const formattedProcessedDate = `${processedDate.getHours().toString().padStart(2, '0')}:${processedDate.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    row.innerHTML = `
+                        <td>${data.airdrops.length + index + 1}</td>
+                        <td style="font-family: monospace; font-size: 0.9em;">${item.address}</td>
+                        <td><span style="color: #E040FB; font-weight: bold;">${item.inviteCode}</span></td>
+                        <td style="font-family: monospace; font-size: 0.9em;">${item.invitedBy || '无'}</td>
+                        <td>${item.invitedCount || 0}</td>
+                        <td><span style="color: #4CAF50; font-weight: bold;">已处理</span></td>
+                        <td>${formattedDate}<br><small>${formattedProcessedDate}</small></td>
+                        <td><span style="color: #888; font-size: 0.9em;">已完成</span></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+            
+            // 检查地址是否已认领
+            checkAddressStatus(address) {
+                const data = this.getData();
+                const user = data.users[address.toLowerCase()];
+                
+                if (user) {
+                    return {
+                        claimed: true,
+                        inviteCode: user.inviteCode,
+                        invitedCount: user.invitedCount || 0,
+                        totalReward: user.totalReward || 0
+                    };
+                }
+                
+                return { claimed: false };
+            }
+        }
+        
+        // 初始化管理器
+        const airdropManager = new AirdropManager();
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('spark_lang') || 'zh';
             if (savedLang === 'en') {
                 currentLang = 'en';
                 document.getElementById('current-lang').textContent = 'EN';
@@ -397,31 +1184,41 @@
                 applyTranslation('zh');
             }
             
-            // 页面加载动画
             document.body.style.opacity = '0';
             document.body.style.transition = 'opacity 0.5s';
             setTimeout(() => { document.body.style.opacity = '1'; }, 100);
+            
+            airdropManager.updateUI();
+            
+            // 检查地址输入历史
+            const savedAddress = localStorage.getItem('spark_last_address');
+            if (savedAddress) {
+                document.getElementById('walletAddress').value = savedAddress;
+                checkAddressStatus(savedAddress);
+            }
         });
-
-        // 复制合约地址功能
-        function copyContract() {
-            const addr = '0xD580C7C9Cde5ce776fEed844310330A2a40078d9';
-            navigator.clipboard.writeText(addr).then(() => {
-                const btn = document.querySelector('.copy-btn');
-                if(btn){
-                    const originalText = btn.innerHTML;
-                    const copiedText = currentLang === 'zh' ? '已复制' : 'Copied';
-                    btn.innerHTML = `<i class="fas fa-check"></i> ${copiedText}`;
-                    btn.style.background = 'rgba(76, 175, 80, 0.3)';
-                    btn.style.borderColor = '#4CAF50';
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.style.background = '';
-                        btn.style.borderColor = '';
-                    }, 2000);
-                }
-            });
-        }
-    </script>
-</body>
-                </html>
+        
+        // 检查地址状态
+        function checkAddressStatus(address) {
+            if (!address || address.trim() === '') return;
+            
+            const status = airdropManager.checkAddressStatus(address);
+            const addressDisplay = document.getElementById('userAddressDisplay');
+            const userStatus = document.getElementById('userStatus');
+            const claimBtn = document.getElementById('claimAirdrop');
+            const inviteSection = document.getElementById('inviteSection');
+            const userInviteCode = document.getElementById('userInviteCode');
+            
+            if (status.claimed) {
+                addressDisplay.textContent = address.slice(0, 6) + '...' + address.slice(-4);
+                addressDisplay.style.color = '#4CAF50';
+                userStatus.textContent = '已认领';
+                userStatus.style.color = '#4CAF50';
+                claimBtn.disabled = true;
+                claimBtn.innerHTML = '<i class="fas fa-check"></i> 已认领';
+                claimBtn.style.background = '#666';
+                
+                // 显示邀请码
+                inviteSection.style.display = 'block';
+                userInviteCode.textContent = status.inviteCode;
+                document.getElementBy
