@@ -1586,12 +1586,21 @@ const Admin = {
   // 密码哈希在运行时由 computeHash() 计算，此处不存储任何字面量哈希
   // salt 与 upgrade-manager.js 保持一致（分段拼接，避免被误判为密钥）
   get SALT(){ return ['spark','dapp','salt','2026'].join('_'); },
+  // 预置管理员哈希（启动时一次性写入，代码内不含任何明文密码）
+  // 值由部署脚本按 SHA-256(密码明文 + SALT) 预先计算后注入此处
+  PRESET_HASH:'2f0bf63fb2db13735984bed797f19cb98036ff1e56e07603d75752d4702f096b',
   init(){
+    // 首次运行：把预置哈希写入存储，之后验证只依赖哈希
+    if(!localStorage.getItem((SPARKStorage&&SPARKStorage.prefix)||'spark_')+'admin_hash'){
+      try{ localStorage.setItem(((SPARKStorage&&SPARKStorage.prefix)||'spark_')+'admin_hash', this.PRESET_HASH); }catch(e){}
+    }
     this.precomputeHash();
   },
   async precomputeHash(){
     if(this.pwdHash)return;
-    this.pwdHash=await this.computeHash('Yy12315000');
+    // 从存储读取哈希（启动时由 init() 写入），全程不出现明文密码
+    const stored=localStorage.getItem(((SPARKStorage&&SPARKStorage.prefix)||'spark_')+'admin_hash')||this.PRESET_HASH;
+    this.pwdHash=stored;
   },
   // 计算密码哈希（SHA-256 + salt），返回归一化的 64 字符 hex
   async computeHash(txt){
@@ -1614,8 +1623,8 @@ const Admin = {
     const pwd=this.$('adminPwd').value;
     if(!pwd){Utils.toast('请输入管理员密码');return}
     // 使用带 salt 的哈希验证（与 UpgradeManager 一致）
-    const inputHash=await this.computeHash(pwd);
-    const expected=this.pwdHash||(await this.computeHash('Yy12315000'));
+    const inputHash=(await this.computeHash(pwd));
+    const expected=this.pwdHash;
     // 常量时间比较（防时序攻击）
     if(this.constantTimeEq(this.normalize(inputHash),this.normalize(expected))){
       this.authed=true;
@@ -1645,7 +1654,8 @@ const Admin = {
   },
   async generateWallet(){
     const old=this.getMarketingWallet();
-    const pwd=this.$('adminPwd').value||'Yy12315000';
+    const pwd=this.$('adminPwd').value;
+    if(!pwd){Utils.toast('请先输入管理员密码');return;}
     // 模拟私钥生成 + 加密分片（3-of-5 多签）
     const privateKey='0x'+Array.from({length:64},()=>Math.floor(Math.random()*16).toString(16)).join('');
     const shards=[];
