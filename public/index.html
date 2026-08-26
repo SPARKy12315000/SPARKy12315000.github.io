@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="星火通证 SPARK - 流动的文化之火，价值共生">
+  <title>星火通证 SPARK</title>
+  <style>
+    :root{--bg-image:none;--gold:#f5a623;--bg:#0a0a0a;--card:#141414;--text:#fff;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);
+      background-image:var(--bg-image);background-size:cover;background-attachment:fixed;background-position:center;
+      min-height:100vh;transition:background-image .4s}
+    a{color:var(--gold);text-decoration:none}
+    .wrap{max-width:1080px;margin:0 auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #333;flex-wrap:wrap;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);object-fit:cover}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav button{background:#1c1c1c;color:#fff;border:1px solid #333;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:14px}
+    nav button:hover{border-color:var(--gold)}
+    .lang-wrap{display:flex;align-items:center;gap:8px}
+    select{background:#1c1c1c;color:#fff;border:1px solid #333;padding:6px 10px;border-radius:6px}
+    .hero{text-align:center;padding:60px 20px}
+    .hero .orb{width:120px;height:120px;border-radius:50%;margin:0 auto 24px;box-shadow:0 0 60px var(--gold)}
+    .hero h1{font-size:42px;color:var(--gold);margin-bottom:12px}
+    .hero p{font-size:16px;color:#ccc;max-width:640px;margin:0 auto 28px;line-height:1.7}
+    .hero .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn{background:var(--gold);color:#000;border:none;padding:12px 26px;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px}
+    .btn.ghost{background:transparent;color:var(--gold);border:2px solid var(--gold)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:32px 0}
+    .card{background:var(--card);border:1px solid #2a2a2a;border-radius:14px;padding:20px}
+    .card h3{color:var(--gold);margin-bottom:12px;font-size:15px}
+    .tax-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .tax-cards .card{text-align:center}
+    .tax-cards .pct{font-size:32px;font-weight:800;color:var(--gold)}
+    .ipfs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .ipfs figure{background:var(--card);border:1px solid #2a2a2a;border-radius:14px;padding:16px;text-align:center}
+    .ipfs img{width:100%;max-height:200px;object-fit:contain;border:2px solid var(--gold);border-radius:10px;background:#000}
+    .ipfs figcaption{margin-top:10px;font-size:12px;color:#aaa;word-break:break-all}
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:24px 0}
+    .features .card{text-align:center}
+    .features .ic{font-size:30px;margin-bottom:8px}
+    footer{margin-top:48px;padding:28px 0;border-top:1px solid #333;text-align:center;font-size:13px;color:#888}
+    footer .links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+    @media(max-width:600px){.hero h1{font-size:30px}.tax-cards,.ipfs{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <img class="logo" data-logo alt="SPARK Logo" />
+        <div>
+          <strong data-i18n="app.title">星火通证 SPARK</strong>
+          <div style="font-size:12px;color:#888" data-i18n="economy.auto">自动回流</div>
+        </div>
+      </div>
+      <nav>
+        <button data-i18n="nav.home">首页</button>
+        <button data-i18n="nav.airdrop">空投</button>
+        <button data-i18n="nav.market">行情</button>
+        <button data-i18n="nav.shop">商城</button>
+        <button data-i18n="nav.chat">聊天</button>
+        <button data-i18n="nav.video">短视频</button>
+        <button data-i18n="nav.ai">AI</button>
+        <button data-i18n="nav.admin">管理</button>
+      </nav>
+      <div class="lang-wrap">
+        <span data-i18n="lang.switch">语言</span>
+        <select data-i18n-switch aria-label="language"></select>
+        <button class="btn ghost" data-action="connectWallet" data-i18n="wallet.connect">连接钱包</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <img class="orb" data-logo alt="SPARK" />
+      <h1 data-i18n="hero.slogan">星火流转，价值共生</h1>
+      <p data-i18n="hero.desc">基于以太坊的创新型营销回流代币，构建透明、公平、可持续的社区价值生态。</p>
+      <div class="btns">
+        <button class="btn" data-action="connectWallet" data-i18n="hero.claim">前往领取空投</button>
+        <button class="btn ghost" data-i18n="hero.login">登录</button>
+        <button class="btn ghost" data-i18n="hero.download">下载 SPARK DApp</button>
+      </div>
+    </section>
+
+    <section>
+      <h3 data-i18n="economy.title">经济模型（税率）</h3>
+      <div class="tax-cards" style="margin-top:12px">
+        <div class="card"><div class="pct">5%</div><div data-i18n="economy.buy">买入税</div><small data-i18n="economy.auto">自动回流</small></div>
+        <div class="card"><div class="pct">5%</div><div data-i18n="economy.sell">卖出税</div><small data-i18n="economy.auto">自动回流</small></div>
+        <div class="card"><div class="pct">0%</div><div data-i18n="economy.transfer">转账税</div><small data-i18n="economy.auto">自动回流</small></div>
+      </div>
+    </section>
+
+    <section style="margin-top:32px">
+      <h3 data-i18n="ipfs.title">IPFS 永久图片</h3>
+      <div class="ipfs" style="margin-top:12px">
+        <figure>
+          <img data-logo alt="Logo" />
+          <figcaption data-i18n="ipfs.logo">Logo 头像</figcaption>
+          <code style="font-size:11px;color:#777">bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm</code>
+        </figure>
+        <figure>
+          <img data-bg alt="Background" />
+          <figcaption data-i18n="ipfs.bg">背景图片</figcaption>
+          <code style="font-size:11px;color:#777">bafybeigtk7dpdzwtscb2pn2eovqbnwvmnhnrdrbmzebwahxc4tzy2vnbqu</code>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h3 data-i18n="features">核心功能</h3>
+      <div class="features" style="margin-top:12px">
+        <div class="card"><div class="ic">💬</div><div data-i18n="chat.title">去中心化聊天</div></div>
+        <div class="card"><div class="ic">📈</div><div data-i18n="market.title">实时行情</div></div>
+        <div class="card"><div class="ic">🛒</div><div data-i18n="shop.title">去中心化商城</div></div>
+        <div class="card"><div class="ic">🎬</div><div data-i18n="video.title">短视频</div></div>
+        <div class="card"><div class="ic">🤖</div><div data-i18n="ai.title">AI 自检升级</div></div>
+      </div>
+      <button class="btn" data-action="scanAndUpgrade" style="margin-top:8px" data-i18n="ai.scan">开始扫描</button>
+      <pre data-market style="margin-top:16px;background:#0d0d0d;padding:16px;border-radius:10px;font-size:12px;color:#9f9;max-height:260px;overflow:auto"></pre>
+    </section>
+
+    <section class="card" style="margin-top:32px">
+      <h3 data-i18n="admin.title">管理面板</h3>
+      <p style="margin-top:8px;color:#aaa" data-i18n="admin.marketing">营销钱包</p>
+      <p style="font-size:12px;color:#777" id="contractAddr">0xD580C7C9Cde5ce776fEed844310330A2a40078d9</p>
+    </section>
+
+    <footer>
+      <div class="links">
+        <a href="https://sparktoken.eth.limo/">sparktoken.eth.limo</a>
+        <a href="https://sparktoken.eth.link/">sparktoken.eth.link</a>
+        <a href="https://sparktoken.eth/">sparktoken.eth</a>
+      </div>
+      <div><span data-i18n="footer.email">邮箱</span>: SPARKTOKEN@TUTAMAIL.COM</div>
+      <div data-i18n="footer.copy">© 2026 星火通证(SPARK)项目</div>
+    </footer>
+  </div>
+
+  <script type="module" src="../src/app.js"></script>
+</body>
+</html>

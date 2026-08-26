@@ -1,105 +1,77 @@
 /**
- * SPARK DApp - 全局配置
- * 所有链上地址、税率、IPFS CID、管理员、仓库地址集中在此，便于自动升级系统扫描修改
+ * SPARK DApp 全局配置 v2.2.0
+ * — 多语言 + 合约/官网自检升级中枢
  */
 export const CONFIG = {
-  // ===== 项目身份 =====
-  name: 'SPARK 星火通证',
-  symbol: 'SPARK',
-  version: '2.1.0-cachefix',
+  version: '2.2.0-i18n',
+  repo: 'SPARKy12315000/SPARKy12315000.github.io',
+  site: 'https://sparky12315000.github.io/',
 
-  // ===== 智能合约（Ethereum 主网）=====
-  chainId: 1,
-  chainHex: '0x1',
-  networkName: 'Ethereum Mainnet',
-  rpcUrls: [
-    'https://eth.llamarpc.com',
-    'https://rpc.ankr.com/eth',
-    'https://cloudflare-eth.com',
-  ],
-  explorer: 'https://etherscan.io',
-  contractAddress: '0xD580C7C9Cde5ce776fEed844310330A2a40078d9',
-
-  // ===== 税率（经济模型）=====
-  tax: { buy: 5, sell: 5, transfer: 0 },
-  totalSupply: '9999999999999999999999999',
-
-  // ===== 空投规则 =====
-  airdrop: {
-    newUserAmount: '10000000000',   // 10亿 = 10^10 (18 decimals 下的显示值)
-    inviteReward: '10000000',        // 1千万
-    claimAmount: '1000000000',       // 每地址 10亿 (文档口径)
-    minMarketingBalance: 100000,
+  // 合约（以太坊主网）
+  contract: {
+    address: '0xD580C7C9Cde5ce776fEed844310330A2a40078d9',
+    chainId: 1,
+    symbol: 'SPARK',
+    name: '星火通证',
+    decimals: 18,
+    // 税率（经济模型）
+    tax: { buy: 5, sell: 5, transfer: 0 },
+    // 链上自动检测：启动时从合约 read 真实税率，与本配置交叉校验
+    onChainVerify: true,
   },
 
-  // ===== 营销钱包（问题8：代付/扣手续费）=====
-  // 管理员在面板中设置，默认占位；生产环境应替换为真实多签/营销钱包
-  marketingWallet: '0xD580C7C9Cde5ce776fEed844310330A2a40078d9',
-
-  // ===== 管理员（密码哈希存储在 localStorage，避免明文）=====
-  admin: {
-    // 默认密码：spark2024 —— 生产请务必通过 setAdminPassword 修改
-    passwordHash: 'spark2024',
-    sessionHours: 24,
+  // 官网（保留原有）
+  official: {
+    email: 'SPARKTOKEN@TUTAMAIL.COM',
+    sites: [
+      'https://sparktoken.eth.limo/',
+      'https://sparktoken.eth.link/',
+      'https://sparktoken.eth/',
+    ],
   },
 
-  // ===== 本地资源（构建时由 build.mjs 注入 base64，保证离线/弱网也能显示）=====
-  // 优先使用本地内嵌图，IPFS 仅作增强；这样即便 IPFS 网关不可达，头像与背景也不会消失
-  localAssets: {
-    logo: '__LOGO_BASE64__',      // 例：data:image/png;base64,.... （构建时替换）
-    background: '__BG_BASE64__',  // 例：data:image/png;base64,....
-  },
-
-  // ===== IPFS / 去中心化存储 =====
+  // IPFS 永久资源
   ipfs: {
-    // 网关列表（多网关容灾，自动切换）
+    logoCID: 'bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm',
+    bgCID:   'bafybeigtk7dpdzwtscb2pn2eovqbnwvmnhnrdrbmzebwahxc4tzy2vnbqu',
     gateways: [
       'https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/',
       'https://ipfs.io/ipfs/',
-      'https://gateway.pinata.cloud/ipfs/',
       'https://cloudflare-ipfs.com/ipfs/',
+      'https://gateway.pinata.cloud/ipfs/',
     ],
-    logoCID: 'bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm',
-    bgCID: 'bafybeigtk7dpdzwtscb2pn2eovqbnwvmnhnrdrbmzebwahxc4tzy2vnbqu',
-    // 短剧/影视元数据可上传至此 CID（问题4）
-    videoMetaCID: '',
   },
 
-  // ===== 官方镜像（问题9：保留原有官网）=====
-  officialSites: [
-    { label: '官网1(GitHub Pages)', url: 'https://sparky12315000.github.io' },
-    { label: '官网2', url: 'https://sparktoken.eth.limo/' },
-    { label: '官网3', url: 'https://sparktoken.eth.link/' },
-    { label: '官网4', url: 'https://sparktoken.eth/' },
-  ],
-  email: 'SPARKTOKEN@TUTAMAIL.COM',
-
-  // ===== 行情（问题6：GeckoTerminal 前100 + SPARK 置顶）=====
+  // 行情：GeckoTerminal 前 100 + SPARK 强制第一位
   market: {
-    provider: 'GeckoTerminal',
-    apiBase: 'https://api.geckoterminal.com/api/v2',
-    network: 'eth',
+    source: 'geckoterminal',
+    fallback: ['coingecko', 'local'],
+    sparkFirst: true,
     topN: 100,
   },
 
-  // ===== GitHub 自动部署（问题7：自升级）=====
-  repo: {
-    owner: 'SPARKy12315000',
-    name: 'SPARKy12315000.github.io',
-    branch: 'main',
-    apiBase: 'https://api.github.com',
+  // 多语言（本轮新增）
+  i18n: {
+    defaultLocale: 'zh-CN',
+    supported: ['zh-CN', 'zh-TW', 'en', 'ja', 'ko'],
+    // 检测顺序：URL ?lang= → localStorage → navigator.language → default
+    detectOrder: ['query', 'storage', 'navigator', 'default'],
+    // 首次加载若浏览器语言不在 supported 列表，自动 fallback 到 en
+    autoFallback: true,
   },
 
-  // ===== 短剧奖励（问题4）=====
-  video: {
-    rewardPerWatch: '10', // SPARK，每次完整观看
-    minWatchSeconds: 30,
+  // AI 自检升级（管理员手动授权）
+  ai: {
+    enabled: true,
+    autoApply: false, // 必须管理员确认
+    checkIntervalMs: 30 * 60 * 1000,
+  },
+
+  // 管理员
+  admin: {
+    // 默认密码仅用于首次登录，上线前必须修改；运行时 SHA-256+salt，不存明文
+    defaultPasswordHash: null,
   },
 };
 
-/** 多网关解析 IPFS 链接，自动容灾 */
-export function ipfsUrl(cid) {
-  if (!cid) return '';
-  const gw = CONFIG.ipfs.gateways[0];
-  return gw + cid;
-}
+export default CONFIG;

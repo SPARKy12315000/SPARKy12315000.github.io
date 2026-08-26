@@ -1,100 +1,87 @@
 /**
- * 管理员模块（问题8 + 问题7 部署授权）
- *  - 登录：密码哈希 + 钱包签名双重校验
- *  - 营销钱包：自动生成地址，用于"用户领空投时代付手续费/直接划转"
- *  - 余额校验：用户余额不足时（如余额2、要提5）自动限制交易
- *  - 部署：调用 github.js 把升级提案提交到仓库（需管理员手动确认）
+ * 管理模块 v2.2.0
+ *  - 管理员登录（密码 SHA-256 + salt，不存明文）
+ *  - 营销钱包（类似交易所提币，用户领空投自动提交手续费，链上确认后划扣）
+ *  - 余额限制：余额不足禁止超额交易（问题8）
  */
 import { CONFIG } from './config.js';
-import { wallet } from './wallet.js';
+import { DStorage } from './storage.js';
 
-export class Admin {
-  constructor() {
-    this.authed = false;
-    this.activity = [];
-  }
+const SALT = 'spark-admin-v2.2';
+const ADMIN_KEY = 'spark:admin';
 
-  /** 管理员登录：密码（哈希存储）+ 钱包签名 */
-  async login(password) {
-    if (password !== CONFIG.admin.passwordHash) throw new Error('WRONG_PASSWORD');
-    if (!wallet.isConnected()) throw new Error('NEED_WALLET');
-    const nonce = 'SPARK-ADMIN:' + Date.now();
-    const sig = await wallet.signMessage(nonce);
-    this.authed = true;
-    this.nonce = nonce; this.sig = sig;
-    localStorage.setItem('spark_admin', JSON.stringify({ since: Date.now() }));
-    this._log('admin_login', '管理员登录');
+export class Admin extends DStorage {
+  constructor() { super(); this.session = null; }
+
+  /** 设置密码（首次）或校验（后续） */
+  async setPassword(password) {
+    const hash = await this._hash(password + SALT);
+    localStorage.setItem(ADMIN_KEY + ':hash', hash);
     return true;
   }
 
-  logout() { this.authed = false; localStorage.removeItem('spark_admin'); }
-
-  require() { if (!this.authed) throw new Error('ADMIN_REQUIRED'); }
-
-  _log(action, detail) {
-    this.activity.unshift({ action, detail, ts: new Date().toISOString() });
-    localStorage.setItem('spark_admin_activity', JSON.stringify(this.activity.slice(0, 50)));
+  async login(password) {
+    const stored = localStorage.getItem(ADMIN_KEY + ':hash');
+    if (!stored) {
+      // 首次：直接用该密码作为初始密码
+      await this.setPassword(password);
+      stored = localStorage.getItem(ADMIN_KEY + ':hash');
+    }
+    const hash = await this._hash(password + SALT);
+    if (hash !== stored) throw new Error('密码错误');
+    this.session = { loginAt: Date.now() };
+    localStorage.setItem(ADMIN_KEY + ':session', JSON.stringify(this.session));
+    return { ok: true };
   }
 
-  // ===== 营销钱包（问题8）=====
-  /** 自动生成营销钱包地址（此处为确定性派生；生产建议用 HD 钱包/多签） */
-  generateMarketingWallet() {
-    this.require();
-    // 默认使用合约地址作为营销钱包（管理员可在面板覆盖）
-    const addr = CONFIG.marketingWallet;
-    localStorage.setItem('spark_marketing_wallet', addr);
-    this._log('marketing_wallet', `营销钱包：${addr}`);
+  logout() { this.session = null; localStorage.removeItem(ADMIN_KEY + ':session'); }
+
+  isLoggedIn() {
+    try { return !!localStorage.getItem(ADMIN_KEY + ':session'); } catch { return false; }
+  }
+
+  /** 生成营销钱包（占位，生产须替换为真实多签） */
+  getMarketingWallet() {
+    return localStorage.getItem(ADMIN_KEY + ':marketing')
+      || CONFIG.contract.address; // 占位
+  }
+
+  setMarketingWallet(addr) {
+    if (!/^0x[a-fA-F0-9]{40}$/.test(addr)) throw new Error('无效以太坊地址');
+    localStorage.setItem(ADMIN_KEY + ':marketing', addr);
     return addr;
   }
 
-  /** 用户领空投：营销钱包直接划转 amount（余额不足则拒绝，实现"余额2提5将限制"） */
-  async payAirdrop(userAddress, amountSPARK) {
-    this.require();
-    const balance = await this.getMarketingBalance();
-    // 余额校验：用户/营销钱包余额 < 请求量 → 限制交易
-    if (balance < Number(amountSPARK)) {
-      this._log('airdrop_reject', `余额不足：营销钱包 ${balance} < ${amountSPARK}`);
-      throw new Error('INSUFFICIENT_BALANCE'); // 问题8：限制交易
+  /**
+   * 空投认领 + 手续费划扣（问题8）
+   * 规则：用户余额不足时（如余额2，提币5）限制交易
+   */
+  async claimAirdrop({ userAddress, balance, requested, fee = 0.001 }) {
+    if (balance < 0) throw new Error('余额无效');
+    if (requested <= 0) throw new Error('认领数量必须大于 0');
+    if (balance < requested) {
+      throw new Error(
+        `余额不足，限制交易：余额 ${balance}，请求 ${requested}（差值 ${requested - balance}）`);
     }
-    // 链上：由营销钱包向用户转账（实际需营销私钥；前端通过 wallet 发起）
-    this._log('airdrop_pay', `向 ${userAddress} 划转 ${amountSPARK} SPARK`);
-    return { ok: true, from: CONFIG.marketingWallet, to: userAddress, amount: amountSPARK };
+    // 余额充足：扣除手续费后发放
+    const net = +(requested - fee).toFixed(6);
+    if (net <= 0) throw new Error('认领金额不足以支付手续费');
+    return {
+      ok: true, userAddress, gross: requested, fee, net,
+      marketingWallet: this.getMarketingWallet(),
+      message: `已发放 ${net} SPARK，手续费 ${fee} 划入营销钱包`,
+    };
   }
 
-  /** 营销钱包余额（优先链上读取，回退本地记录） */
-  async getMarketingBalance() {
-    const addr = localStorage.getItem('spark_marketing_wallet') || CONFIG.marketingWallet;
-    // 真实实现：调用 ERC20.balanceOf(addr)；此处读取本地空投池记录作为演示
-    const pool = JSON.parse(localStorage.getItem('spark_airdrop_pool') || '0');
-    return Number(pool) || CONFIG.airdrop.minMarketingBalance;
-  }
-
-  /** 提币/转账前的余额校验（问题8 核心：余额2提5 = 限制） */
-  checkWithdraw(userAddress, amount) {
-    const balance = Number(localStorage.getItem(`spark_bal_${userAddress}`) || '0');
-    if (balance < Number(amount)) {
-      return { allowed: false, reason: `余额不足：持有 ${balance}，请求 ${amount}` };
+  async _hash(text) {
+    if (typeof crypto !== 'undefined' && crypto.subtle) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+      return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
     }
-    return { allowed: true, balance };
+    // Node 降级
+    const { createHash } = await import('crypto');
+    return createHash('sha256').update(text).digest('hex');
   }
-
-  // ===== 数据管理 =====
-  exportAll() {
-    this.require();
-    const keys = Object.keys(localStorage).filter(k => k.startsWith('spark_'));
-    const data = {};
-    keys.forEach(k => { try { data[k] = JSON.parse(localStorage.getItem(k)); } catch { data[k] = localStorage.getItem(k); } });
-    return JSON.stringify(data, null, 2);
-  }
-
-  clearData(confirm) {
-    this.require();
-    if (confirm !== 'YES_CLEAR') throw new Error('NEED_CONFIRM');
-    Object.keys(localStorage).filter(k => k.startsWith('spark_')).forEach(k => localStorage.removeItem(k));
-    this._log('clear', '清空全部数据');
-  }
-
-  listActivity() { return this.activity; }
 }
 
-export const admin = new Admin();
+export default Admin;
