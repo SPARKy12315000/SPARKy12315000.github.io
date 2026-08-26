@@ -10,8 +10,15 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const SRC = join(ROOT, 'src');
+const ASSETS = join(ROOT, 'assets');
 
 function read(p) { return readFileSync(join(SRC, p), 'utf8'); }
+function b64(p) {
+  const buf = readFileSync(join(ASSETS, p));
+  // 根据扩展名推断 mime
+  const ext = p.endsWith('.png') ? 'image/png' : p.endsWith('.svg') ? 'image/svg+xml' : 'image/jpeg';
+  return `data:${ext};base64,${buf.toString('base64')}`;
+}
 
 // 按依赖顺序拼接 JS（避免 CDN/打包工具依赖）
 const modules = [
@@ -37,22 +44,42 @@ for (const m of modules) {
   js += `\n/* ====== ${m} ====== */\n` + code;
 }
 
-// 注入 __source 用于 AI 自检（问题7）
-js = js.replace(/sources\[`src\/\${f}\.js`\] = m\.__source \|\| '';/g, "sources[`src/${f}.js`] = __SOURCES__[f] || '';");
+// 注入 __source 引用（指向外部对象，避免内联大 JSON 撑爆主 script）
+js = js.replace(/sources\[`src\/\${f}\.js`\] = m\.__source \|\| '';/g, "sources[`src/${f}.js`] = (window.__SPARK_SOURCES__ && window.__SPARK_SOURCES__[f]) || '';");
 
 const css = existsSync(join(SRC, 'styles.css')) ? readFileSync(join(SRC, 'styles.css'), 'utf8') : '';
 
 // 读取 HTML 骨架，注入 css/js
 let html = readFileSync(join(SRC, 'index.html'), 'utf8');
-html = html.replace('/* __INLINE_CSS__ */', css);
-html = html.replace('/* __INLINE_JS__ */', js);
+// 用 split/join 注入（绝不用 .replace，避免替换串中的 $` $' $& 被特殊解释破坏代码）
+html = html.split('/* __INLINE_CSS__ */').join(css);
+html = html.split('/* __INLINE_JS__ */').join(js);
 
-// 注入各模块源码原文（供 UpgradeAgent.scan 使用）
+// 源码快照 → 独立 sources.js（主路径，绝不内联进主 HTML，彻底规避 script 闭合问题）
+// 占位 script 仅声明命名空间；运行时优先读 sources.js，缺失时降级为空对象。
 const sourcesObj = {};
 modules.forEach(m => { sourcesObj[m.replace('.js', '')] = read(m); });
-html = html.replace('const __SOURCES__ = {};', `const __SOURCES__ = ${JSON.stringify(sourcesObj)};`);
-
+const sourcesJs = `/* 构建期生成：各模块源码快照，供 AI 自检/升级扫描 */\nwindow.__SPARK_SOURCES__ = ${JSON.stringify(sourcesObj)};\n`;
 const dist = join(ROOT, 'dist');
+mkdirSync(dist, { recursive: true });
+writeFileSync(join(dist, 'sources.js'), sourcesJs);
+// 占位 script：仅确保命名空间存在（sources.js 加载后会覆盖填充）
+html = html.split('<script>const __SOURCES__ = {};</script>').join('<script>window.__SPARK_SOURCES__ = window.__SPARK_SOURCES__ || {};</script>');
+// 将 sources.js 插入到文档中【唯一】的 </body> 之前（精确匹配带前导空白的整行 </body>）
+const bodyClose = html.lastIndexOf('</body>');
+if (bodyClose > 0 && !html.includes('src="sources.js"')) {
+  html = html.slice(0, bodyClose) + '  <script src="sources.js"></script>\n' + html.slice(bodyClose);
+}
+
+// 注入本地图片 base64（保证头像/背景在 IPFS 不可达时也必显示）
+const logoB64 = existsSync(join(ASSETS, 'logo.png')) ? b64('logo.png') : '';
+const bgB64 = existsSync(join(ASSETS, 'background.png')) ? b64('background.png') : '';
+// 占位符可能是单引号或双引号包裹，统一用正则替换
+html = html.replace(/['"]__LOGO_BASE64__['"]/, JSON.stringify(logoB64));
+html = html.replace(/['"]__BG_BASE64__['"]/, JSON.stringify(bgB64));
+if (!logoB64) console.warn('⚠️ assets/logo.png 缺失，Logo 将退化为 IPFS');
+if (!bgB64) console.warn('⚠️ assets/background.png 缺失，背景将退化为 IPFS');
+
 mkdirSync(dist, { recursive: true });
 writeFileSync(join(dist, 'index.html'), html);
 console.log('✅ Built dist/index.html');

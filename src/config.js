@@ -6,7 +6,7 @@ export const CONFIG = {
   // ===== 项目身份 =====
   name: 'SPARK 星火通证',
   symbol: 'SPARK',
-  version: '2.0.0',
+  version: '2.1.0-cachefix',
 
   // ===== 智能合约（Ethereum 主网）=====
   chainId: 1,
@@ -41,6 +41,13 @@ export const CONFIG = {
     // 默认密码：spark2024 —— 生产请务必通过 setAdminPassword 修改
     passwordHash: 'spark2024',
     sessionHours: 24,
+  },
+
+  // ===== 本地资源（构建时由 build.mjs 注入 base64，保证离线/弱网也能显示）=====
+  // 优先使用本地内嵌图，IPFS 仅作增强；这样即便 IPFS 网关不可达，头像与背景也不会消失
+  localAssets: {
+    logo: '__LOGO_BASE64__',      // 例：data:image/png;base64,.... （构建时替换）
+    background: '__BG_BASE64__',  // 例：data:image/png;base64,....
   },
 
   // ===== IPFS / 去中心化存储 =====

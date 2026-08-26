@@ -13,6 +13,37 @@
   <link rel="apple-touch-icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm">
   <link rel="manifest" href="manifest.json">
   <title>SPARK 星火通证 - 去中心化应用 DApp</title>
+
+  <!-- 强制清理旧 Service Worker / 缓存，确保新版（带头像+背景）必然生效，无需手动 Ctrl+Shift+R -->
+  <script>
+    (function () {
+      try {
+        if (navigator.serviceWorker) {
+          navigator.serviceWorker.getRegistrations().then(function (r) { (r || []).forEach(function (x) { x.unregister(); }); });
+          navigator.serviceWorker.ready.then(function (r) { r && r.unregister(); }).catch(function () {});
+        }
+      } catch (e) {}
+      try { if (window.caches) { window.caches.keys().then(function (k) { (k || []).forEach(function (x) { window.caches.delete(x); }); }); } } catch (e) {}
+      try {
+        var v = 'spark-v2.1.0-cachefix';
+        if (localStorage.getItem('spark_version') !== v) {
+          localStorage.setItem('spark_version', v);
+          localStorage.setItem('spark_force_reload', '1');
+          sessionStorage.removeItem('spark_reloaded');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script>
+    // 仅首次进入旧缓存页面时，强制整页刷新一次（之后不再重复刷新）
+    (function () {
+      try {
+        if (sessionStorage.getItem('spark_reloaded')) return;
+        sessionStorage.setItem('spark_reloaded', '1');
+        setTimeout(function () { window.location.reload(true); }, 120);
+      } catch (e) {}
+    })();
+  </script>
   <style>
     /* __INLINE_CSS__ */
   </style>
@@ -66,9 +97,10 @@
         <div class="card">
           <div class="card-title"><i class="fas fa-info-circle"></i> <span data-i18n="project_intro">项目简介</span></div>
           <p style="margin-bottom:12px;font-size:.9rem" data-i18n="project_desc">SPARK 是基于以太坊的营销回流代币，"星火流转，价值共生"。买卖各 5% 自动回流，支撑币价长期稳定。</p>
-          <div class="grid grid-2" style="margin-top:15px">
-            <div style="background:rgba(255,215,0,.05);padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.5rem;color:var(--secondary)">5%</div><div style="font-size:.75rem;color:#aaa" data-i18n="buy_tax">买入税·自动回流</div></div>
-            <div style="background:rgba(255,215,0,.05);padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.5rem;color:var(--secondary)">5%</div><div style="font-size:.75rem;color:#aaa" data-i18n="sell_tax">卖出税·自动回流</div></div>
+          <div class="grid grid-3" style="margin-top:15px">
+            <div style="background:rgba(255,215,0,.05);padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.5rem;color:var(--secondary)">5%</div><div style="font-size:.75rem;color:#aaa" data-i18n="buy_tax">买入税<br>自动回流</div></div>
+            <div style="background:rgba(255,215,0,.05);padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.5rem;color:var(--secondary)">5%</div><div style="font-size:.75rem;color:#aaa" data-i18n="sell_tax">卖出税<br>自动回流</div></div>
+            <div style="background:rgba(255,215,0,.05);padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.5rem;color:var(--secondary)">0%</div><div style="font-size:.75rem;color:#aaa" data-i18n="transfer_tax">转账税</div></div>
           </div>
           <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
             <a href="https://etherscan.io/token/0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank" class="btn btn-secondary btn-sm"><i class="fas fa-external-link-alt"></i> <span data-i18n="explorer">浏览器</span></a>
@@ -82,6 +114,22 @@
             <div style="font-size:.85rem;color:#aaa">👥 <span data-i18n="invite_reward">每邀请1人奖励</span> <strong style="color:var(--accent)">1千万 SPARK</strong></div>
           </div>
           <button class="btn btn-primary" onclick="location.hash='airdrop'" style="width:100%"><i class="fas fa-rocket"></i> <span data-i18n="go_airdrop">前往领取空投</span></button>
+        </div>
+      </div>
+      <!-- IPFS 永久图片（问题9：保留原有 Logo 头像 + 背景图） -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-images"></i> <span data-i18n="ipfs_images">IPFS永久图片</span></div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center">
+          <div style="text-align:center;background:rgba(0,0,0,.3);padding:10px;border-radius:10px;max-width:200px">
+            <img data-logo src="" alt="SPARK Logo" style="width:100px;height:100px;object-fit:cover;border-radius:50%;border:2px solid var(--secondary);margin-bottom:10px">
+            <div><strong data-i18n="logo_image">Logo头像</strong></div>
+            <div style="font-size:.75rem;margin-top:5px;word-break:break-all;color:#aaa">IPFS CID:<br>bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm</div>
+          </div>
+          <div style="text-align:center;background:rgba(0,0,0,.3);padding:10px;border-radius:10px;max-width:200px">
+            <img id="ipfsBgThumb" src="" alt="SPARK 背景" style="width:160px;height:100px;object-fit:cover;border-radius:10px;border:2px solid var(--secondary);margin-bottom:10px">
+            <div><strong data-i18n="background_image">背景图片</strong></div>
+            <div style="font-size:.75rem;margin-top:5px;word-break:break-all;color:#aaa">IPFS CID:<br>bafybeigtk7dpdzwtscb2pn2eovqbnwvmnhnrdrbmzebwahxc4tzy2vnbqu</div>
+          </div>
         </div>
       </div>
       <div class="grid grid-3" style="margin-top:10px">

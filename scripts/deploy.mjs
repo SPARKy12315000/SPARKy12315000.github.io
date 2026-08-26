@@ -29,8 +29,10 @@ execSync('node scripts/build.mjs', { cwd: ROOT, stdio: 'inherit' });
 
 const distFile = join(ROOT, 'dist', 'index.html');
 if (!existsSync(distFile)) { console.error('❌ 构建失败：dist/index.html 不存在'); process.exit(1); }
+// 显式以 UTF-8 解码，再按 UTF-8 重新编码为 base64，杜绝编码错乱/乱码
 const content = readFileSync(distFile, 'utf8');
-const b64 = Buffer.from(content).toString('base64');
+if (content.includes('\uFFFD')) { console.error('❌ 产物含非法字符(U+FFFD)，疑似编码损坏，终止上传'); process.exit(1); }
+const b64 = Buffer.from(content, 'utf8').toString('base64');
 
 // 2) 获取当前文件 SHA（更新必需）
 const ghFetch = (path) => `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}`;

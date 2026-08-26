@@ -13,6 +13,14 @@ import { AIChat, UpgradeAgent } from './ai.js';
 import { admin } from './admin.js';
 import { GitHubDeploy } from './github.js';
 
+// 读取构建期注入的源码快照（独立 script[type=application/json]，避免破坏主 script）
+try {
+  const el = document.getElementById('spark-sources');
+  if (el) window.__SPARK_SOURCES__ = JSON.parse(el.textContent || '{}');
+} catch (e) {
+  window.__SPARK_SOURCES__ = {};
+}
+
 export class App {
   constructor() {
     this.lang = localStorage.getItem('spark_lang') || 'zh';
@@ -65,8 +73,51 @@ export class App {
     }
     // 语言按钮
     document.getElementById('langText').textContent = this.lang === 'zh' ? 'EN' : '中文';
-    // 导航 IPFS Logo
-    document.querySelectorAll('[data-logo]').forEach(el => el.src = ipfsUrl(CONFIG.ipfs.logoCID));
+
+    // ===== 头像 & 背景图：本地 base64 优先，IPFS 作增强（根治头像消失/乱码）=====
+    const localLogo = CONFIG.localAssets && CONFIG.localAssets.logo && !String(CONFIG.localAssets.logo).includes('__LOGO_BASE64__')
+      ? CONFIG.localAssets.logo : '';
+    const localBg = CONFIG.localAssets && CONFIG.localAssets.background && !String(CONFIG.localAssets.background).includes('__BG_BASE64__')
+      ? CONFIG.localAssets.background : '';
+    const ipfsLogo = ipfsUrl(CONFIG.ipfs.logoCID);
+    const ipfsBg = ipfsUrl(CONFIG.ipfs.bgCID);
+
+    // Logo：先设本地内嵌图（必定成功），再尝试 IPFS 高清原图覆盖
+    document.querySelectorAll('[data-logo]').forEach(el => {
+      if (localLogo) el.src = localLogo;           // 本地兜底，永不失联
+      el.onerror = () => { if (localLogo) el.src = localLogo; }; // IPFS 失败回到本地
+      if (ipfsLogo) {
+        const t = new Image();
+        t.onload = () => { el.src = ipfsLogo; };   // IPFS 成功则用原图
+        t.src = ipfsLogo;
+      }
+    });
+
+    // 背景图：本地内嵌优先写入 CSS 变量，IPFS 成功后再覆盖
+    const root = document.documentElement;
+    const applyBg = (url) => root.style.setProperty('--bg-image', `url("${url}")`);
+    if (localBg) applyBg(localBg);
+    if (ipfsBg) {
+      const probe = new Image();
+      probe.onload = () => applyBg(ipfsBg);        // 主网关成功则用 IPFS 原图
+      probe.onerror = () => {                       // 主网关失败：遍历其余网关
+        for (const gw of CONFIG.ipfs.gateways) {
+          if (gw.includes('ivory-cautious-stoat-562')) continue;
+          const tryUrl = gw + CONFIG.ipfs.bgCID;
+          const p2 = new Image();
+          p2.onload = () => applyBg(tryUrl);
+          p2.src = tryUrl;
+        }
+      };
+      probe.src = ipfsBg;
+    }
+
+    // IPFS 区块里的背景图缩略图：与全站背景同源（本地 base64 优先）
+    const bgThumb = document.getElementById('ipfsBgThumb');
+    if (bgThumb) {
+      bgThumb.src = localBg || ipfsBg;
+      bgThumb.onerror = () => { if (localBg) bgThumb.src = localBg; };
+    }
   }
 
   bindEvents() {
@@ -123,8 +174,8 @@ export class App {
     body.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px"><div class="loading"></div></td></tr>`;
     try {
       const { list, source } = await getMarketList();
-      const sparkStats = await getSPARKStats();
-      this.updateHeroStats(sparkStats);
+      const sparkStats = await getSPARKStats().catch(() => null);
+      this.updateHeroStats(sparkStats || { price: null, marketCap: null });
       setText('marketSource', `${this.t('market_source')} · ${source}`); // 显示当前数据源
       body.innerHTML = list.map(t => `
         <tr class="${t.isSPARK ? 'spark-row market-pinned' : ''}">
@@ -141,8 +192,8 @@ export class App {
   }
 
   updateHeroStats(s) {
-    setText('statPrice', '$' + formatNum(s.price));
-    setText('statMarketCap', '$' + formatNum(s.marketCap));
+    setText('statPrice', '$' + formatNum(s && s.price != null ? s.price : '—'));
+    setText('statMarketCap', '$' + formatNum(s && s.marketCap != null ? s.marketCap : '—'));
   }
 
   // ===== 问题2：商城 =====
