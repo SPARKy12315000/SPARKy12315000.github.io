@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星火通证 (SPARK) - 去中心化应用</title>
+<meta name="description" content="SPARK 星火通证：聊天、空投、Web3 AI、商城一体化去中心化应用。">
+<link rel="icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--primary:#0A0E17;--secondary:#FFD700;--accent:#4FC3F7;--light:#E0E0E0;--dark:#0A0E17;--ok:#4CAF50;--warn:#FF9800;--danger:#f44336;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#0A0E17 0%,#1a1a2e 50%,#16213e 100%);color:var(--light);line-height:1.6;min-height:100vh;overflow-x:hidden;position:relative;}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 5s infinite alternate;}
+.star:nth-child(1){top:10%;left:20%;width:2px;height:2px;}.star:nth-child(2){top:30%;left:50%;width:3px;height:3px;animation-delay:1s;}.star:nth-child(3){top:50%;left:80%;width:1px;height:1px;animation-delay:2s;}.star:nth-child(4){top:70%;left:10%;width:2px;height:2px;animation-delay:3s;}.star:nth-child(5){top:20%;left:70%;width:1px;height:1px;animation-delay:4s;}.star:nth-child(6){top:80%;left:40%;width:2px;height:2px;animation-delay:.5s;}.star:nth-child(7){top:40%;left:30%;width:1px;height:1px;animation-delay:1.5s;}.star:nth-child(8){top:60%;left:60%;width:3px;height:3px;animation-delay:2.5s;}
+@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes pulse{0%,100%{box-shadow:0 0 30px rgba(255,215,0,.3)}50%{box-shadow:0 0 50px rgba(255,215,0,.6)}}
+@keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.container{max-width:1200px;margin:0 auto;padding:20px;position:relative;z-index:1;}
+.header{text-align:center;padding:30px 0;border-bottom:1px solid rgba(255,215,0,.2);margin-bottom:20px;}
+.logo-container{width:110px;height:110px;margin:0 auto 15px;border-radius:50%;background:linear-gradient(135deg,rgba(255,215,0,.2),rgba(255,107,0,.2));padding:8px;animation:pulse 3s infinite;}
+.logo-img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid rgba(255,215,0,.3);}
+h1{font-size:2.8rem;background:linear-gradient(90deg,#FFD700,#FF8C00,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:gradient 3s ease infinite;}
+.symbol{font-size:1.5rem;color:#FFD700;font-weight:bold;letter-spacing:3px;}
+.tagline{font-size:1rem;opacity:.9;max-width:800px;margin:10px auto;background:rgba(0,0,0,.3);padding:12px 20px;border-radius:10px;border-left:4px solid #FFD700;}
+
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-bottom:15px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,215,0,.1);}
+.nav-brand{display:flex;align-items:center;gap:12px;}
+.nav-logo{width:44px;height:44px;border-radius:50%;border:2px solid var(--secondary);}
+.nav-menu{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.nav-link{color:var(--light);text-decoration:none;padding:8px 14px;border-radius:25px;transition:.3s;cursor:pointer;background:none;border:none;font-size:.95rem;}
+.nav-link:hover,.nav-link.active{background:linear-gradient(135deg,rgba(255,107,0,.3),rgba(255,215,0,.3));color:var(--secondary);}
+.wallet-btn{background:linear-gradient(135deg,#FF8C00,#FFD700)!important;color:#1a1a2e!important;font-weight:bold;border:none;padding:8px 16px;border-radius:20px;cursor:pointer;}
+.language-switcher{position:absolute;top:15px;right:15px;z-index:100;}
+
+.section-content{display:none;animation:fade .4s;}
+.section-content.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.section-title{font-size:1.4rem;color:var(--accent);margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid rgba(79,195,247,.3);display:flex;align-items:center;gap:10px;}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;}
+.info-card{background:linear-gradient(135deg,rgba(40,45,70,.6),rgba(30,35,60,.6));border-radius:12px;padding:18px;border-left:4px solid #FFD700;backdrop-filter:blur(5px);transition:.3s;}
+.info-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(255,215,0,.2);}
+.contract-address{background:rgba(0,0,0,.5);padding:15px;border-radius:12px;font-family:'Courier New',monospace;word-break:break-all;border:2px solid rgba(255,215,0,.3);margin-top:10px;}
+.contract-copy-container{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;}
+.contract-address-text{background:rgba(0,0,0,.3);padding:8px 12px;border-radius:8px;font-family:'Courier New',monospace;word-break:break-all;flex-grow:1;}
+.copy-btn{background:linear-gradient(135deg,rgba(255,107,0,.8),rgba(255,215,0,.8));color:#0A0E17;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:bold;}
+
+/* 钱包状态卡 */
+.wallet-card{background:linear-gradient(135deg,rgba(79,195,247,.1),rgba(33,150,243,.1));border:2px solid var(--accent);border-radius:15px;padding:20px;margin:15px 0;text-align:center;}
+.wallet-card .addr{font-family:'Courier New',monospace;font-size:1.1rem;color:var(--accent);word-break:break-all;}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8rem;background:rgba(255,215,0,.2);color:#FFD700;margin-left:6px;}
+
+/* 空投 */
+.claim-section{background:linear-gradient(135deg,rgba(255,87,34,.1),rgba(255,152,0,.1));border-radius:15px;padding:25px;margin:15px 0;text-align:center;border:2px solid rgba(255,152,0,.3);}
+.input-field{width:100%;padding:12px 15px;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);border-radius:10px;color:#fff;font-size:1rem;margin:8px 0;}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:15px 0;}
+.stat-card{background:rgba(255,107,0,.1);border-radius:10px;padding:12px;text-align:center;border:1px solid rgba(255,107,0,.2);}
+.stat-label{font-size:.8rem;color:#FFD700;}
+.stat-value{font-size:1.3rem;font-weight:bold;margin-top:4px;}
+.invite-box{background:rgba(0,0,0,.3);border-radius:10px;padding:12px;margin:12px 0;font-size:.9rem;}
+.message{padding:12px;border-radius:8px;margin:10px 0;display:none;}
+.button-group{display:flex;flex-wrap:wrap;gap:15px;margin:20px 0;justify-content:center;}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#FF8C00,#FFD700);color:#1a1a2e;padding:11px 22px;border-radius:10px;text-decoration:none;font-weight:bold;border:none;cursor:pointer;transition:.3s;}
+.button:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(255,140,0,.3);}
+.button.secondary{background:linear-gradient(135deg,rgba(79,195,247,.3),rgba(33,150,243,.3));color:var(--accent);border:2px solid var(--accent);}
+.button:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* 聊天 */
+.chat-box{background:rgba(20,25,40,.7);border:2px solid rgba(255,215,0,.2);border-radius:15px;height:420px;display:flex;flex-direction:column;overflow:hidden;}
+.chat-messages{flex:1;overflow-y:auto;padding:15px;}
+.chat-msg{margin:8px 0;padding:8px 12px;border-radius:10px;max-width:80%;word-break:break-word;}
+.chat-msg.them{background:rgba(79,195,247,.15);border-left:3px solid var(--accent);}
+.chat-msg.me{background:rgba(255,215,0,.15);border-right:3px solid var(--secondary);margin-left:auto;text-align:right;}
+.chat-msg.system{background:rgba(255,152,0,.1);text-align:center;font-size:.85rem;color:#FF9800;max-width:100%;}
+.chat-msg .who{font-size:.75rem;color:#FFD700;display:block;margin-bottom:2px;}
+.chat-input-row{display:flex;gap:8px;padding:10px;border-top:1px solid rgba(255,255,0,.1);}
+.chat-input-row input{flex:1;}
+.online-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;}
+
+/* 商城 */
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;}
+.shop-item{background:linear-gradient(135deg,rgba(40,45,70,.6),rgba(30,35,60,.6));border-radius:12px;padding:15px;border:1px solid rgba(255,215,0,.2);text-align:center;transition:.3s;}
+.shop-item:hover{transform:translateY(-4px);border-color:#FFD700;}
+.shop-item .price{color:#FFD700;font-size:1.3rem;font-weight:bold;margin:8px 0;}
+.shop-item .stock{font-size:.8rem;color:#aaa;}
+
+/* 行情 */
+.market-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;}
+.market-table th,.market-table td{padding:10px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);}
+.market-table th{color:var(--accent);position:sticky;top:0;background:rgba(20,25,40,.95);}
+.market-table tr:hover td{background:rgba(255,215,0,.05);}
+.spark-row{background:rgba(255,215,0,.08)!important;}
+.change-up{color:var(--ok);}.change-down{color:var(--danger);}
+
+/* AI */
+.ai-box{background:linear-gradient(135deg,rgba(156,39,176,.1),rgba(79,195,247,.1));border:2px solid rgba(156,39,176,.3);border-radius:15px;padding:20px;margin:15px 0;}
+.ai-messages{height:320px;overflow-y:auto;background:rgba(0,0,0,.25);border-radius:10px;padding:12px;margin-bottom:10px;}
+.ai-msg{margin:8px 0;padding:8px 12px;border-radius:10px;line-height:1.7;}
+.ai-msg.bot{background:rgba(156,39,176,.15);border-left:3px solid #9C27B0;}
+.ai-msg.user{background:rgba(255,215,0,.12);border-right:3px solid var(--secondary);text-align:right;}
+.ai-suggest{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.ai-suggest button{background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.4);color:#FFD700;border-radius:15px;padding:5px 12px;cursor:pointer;font-size:.85rem;}
+
+/* 升级弹窗 */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:2000;align-items:center;justify-content:center;padding:15px;}
+.modal.show{display:flex;}
+.modal-box{background:rgba(20,25,40,.98);padding:25px;border-radius:15px;width:100%;max-width:480px;border:2px solid rgba(255,215,0,.4);}
+.modal-box h3{color:var(--accent);margin-bottom:15px;text-align:center;}
+.diff-box{background:rgba(0,0,0,.4);border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;font-family:'Courier New',monospace;font-size:.8rem;white-space:pre-wrap;text-align:left;color:#aaa;}
+.modal-actions{display:flex;gap:10px;margin-top:18px;justify-content:center;}
+
+/* 管理员面板 */
+.admin-panel{background:linear-gradient(135deg,rgba(76,175,80,.1),rgba(33,150,243,.1));border-radius:15px;padding:20px;margin:15px 0;border:2px solid rgba(76,175,80,.3);}
+.admin-controls{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap;}
+.admin-btn{background:linear-gradient(135deg,rgba(255,107,0,.3),rgba(255,215,0,.3));color:var(--secondary);border:2px solid var(--secondary);border-radius:8px;padding:8px 14px;cursor:pointer;}
+
+/* App 下载 */
+.app-download{background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(79,195,247,.1));border:2px solid var(--secondary);border-radius:15px;padding:25px;margin:15px 0;text-align:center;}
+.app-download .qr{width:140px;height:140px;margin:10px auto;background:rgba(0,0,0,.4);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:3rem;color:#FFD700;}
+
+.footer{margin-top:30px;text-align:center;font-size:.8rem;opacity:.8;padding-top:15px;border-top:1px solid rgba(255,255,255,.1);}
+.footer-links{margin-top:12px;display:flex;flex-wrap:wrap;justify-content:center;gap:15px;}
+.footer-links a{color:#FFD700;text-decoration:none;display:flex;align-items:center;gap:6px;}
+
+/* 名单表 */
+.leaderboard{width:100%;border-collapse:collapse;font-size:.85rem;}
+.leaderboard th,.leaderboard td{padding:8px 6px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);font-family:'Courier New',monospace;}
+.leaderboard th{color:var(--accent);}
+
+@media(max-width:768px){
+.container{padding:12px;}h1{font-size:2rem;}.button-group{flex-direction:column;align-items:center;}.button{width:100%;max-width:300px;}
+.nav-menu{gap:6px;}.nav-link{padding:6px 10px;font-size:.85rem;}.language-switcher{position:relative;top:0;right:0;margin-bottom:8px;}
+}
+</style>
+<script>window.__SPARK_ADMIN_HASH__="a5622e3e304b76911dd2b6ac208981dfefc6df978cfb98d05d97cc372da05a85"</script>
+</head>
+<body>
+<div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+
+<div class="language-switcher">
+<button class="language-btn" onclick="I18n.toggle()" style="background:rgba(20,25,40,.8);border:1px solid rgba(255,215,0,.5);color:#FFD700;padding:8px 14px;border-radius:20px;cursor:pointer;">
+<i class="fas fa-globe"></i> <span id="langText">EN</span></button>
+</div>
+
+<div class="container">
+<nav class="navbar">
+<div class="nav-brand">
+<img src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" class="nav-logo" alt="SPARK">
+<div><div style="font-size:1.3rem;color:var(--secondary);font-weight:bold;" data-i18n="brand">星火通证</div><div style="color:var(--accent);font-size:.8rem;">SPARK DApp</div></div>
+</div>
+<div class="nav-menu">
+<button class="nav-link active" data-sec="home" onclick="App.show('home')"><i class="fas fa-home"></i> <span data-i18n="nav_home">首页</span></button>
+<button class="nav-link" data-sec="airdrop" onclick="App.show('airdrop')"><i class="fas fa-gift"></i> <span data-i18n="nav_airdrop">空投</span></button>
+<button class="nav-link" data-sec="chat" onclick="App.show('chat')"><i class="fas fa-comments"></i> <span data-i18n="nav_chat">聊天</span></button>
+<button class="nav-link" data-sec="market" onclick="App.show('market')"><i class="fas fa-chart-line"></i> <span data-i18n="nav_market">行情</span></button>
+<button class="nav-link" data-sec="shop" onclick="App.show('shop')"><i class="fas fa-store"></i> <span data-i18n="nav_shop">商城</span></button>
+<button class="nav-link" data-sec="ai" onclick="App.show('ai')"><i class="fas fa-robot"></i> <span data-i18n="nav_ai">AI助手</span></button>
+<button class="nav-link" data-sec="app" onclick="App.show('app')"><i class="fas fa-mobile-alt"></i> <span data-i18n="nav_app">APP下载</span></button>
+<button id="walletBtn" class="wallet-btn" onclick="Wallet.connect()"><i class="fas fa-wallet"></i> <span data-i18n="connect">连接钱包</span></button>
+</div>
+</nav>
+
+<!-- 首页 -->
+<div id="home" class="section-content active">
+<div class="header">
+<div class="logo-container"><img class="logo-img" src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" alt="SPARK"></div>
+<h1 data-i18n="title">星火通证</h1><div class="symbol">SPARK</div>
+<p class="tagline" data-i18n="tagline">流动的文化之火 · 透明、公平、可持续的社区价值生态</p>
+</div>
+<div id="walletCard"></div>
+<div class="section-title"><i class="fas fa-rocket"></i> <span data-i18n="core_info">核心信息</span></div>
+<div class="info-grid">
+<div class="info-card"><div style="color:#FFD700;font-size:.85rem;" data-i18n="token_name_title">代币名称</div><div>星火通证 (SPARK)</div></div>
+<div class="info-card"><div style="color:#FFD700;font-size:.85rem;" data-i18n="total_supply">发行总量</div><div>9,999,999,999,999,999,999,999,999</div></div>
+<div class="info-card"><div style="color:#FFD700;font-size:.85rem;" data-i18n="airdrop_pool">空投营销钱包余额</div><div id="marketingBalance" style="color:#FFD700;font-weight:bold;">加载中...</div></div>
+<div class="info-card"><div style="color:#FFD700;font-size:.85rem;" data-i18n="participants">已参与地址</div><div id="homeCount" style="color:#FFD700;font-weight:bold;">0</div></div>
+</div>
+<div class="section-title"><i class="fas fa-file-contract"></i> <span data-i18n="smart_contract">智能合约</span></div>
+<div class="contract-address">
+<div class="contract-copy-container">
+<div class="contract-address-text">0xD580C7C9Cde5ce776fEed844310330A2a40078d9</div>
+<button class="copy-btn" onclick="App.copy('0xD580C7C9Cde5ce776fEed844310330A2a40078d9')"><i class="far fa-copy"></i> <span data-i18n="copy">复制</span></button>
+</div>
+</div>
+<div class="section-title"><i class="fas fa-gift"></i> <span data-i18n="nav_airdrop">空投机制</span></div>
+<div class="info-grid">
+<div class="info-card" style="border-left-color:#4FC3F7;"><div style="color:#4FC3F7;font-size:1.6rem;font-weight:bold;">1亿</div><div data-i18n="newbie_reward">新人免费领取</div></div>
+<div class="info-card" style="border-left-color:#4FC3F7;"><div style="color:#4FC3F7;font-size:1.6rem;font-weight:bold;">1000万</div><div data-i18n="invite_reward">邀请一人奖励</div></div>
+<div class="info-card" style="border-left-color:#4FC3F7;"><div style="color:#4FC3F7;font-size:1.6rem;font-weight:bold;">100,000</div><div data-i18n="pause_threshold">营销钱包下限（少于即暂停）</div></div>
+</div>
+<div class="button-group">
+<a href="https://etherscan.io/token/0xd580c7c9cde5ce776feed844310330a2a40078d9" target="_blank" class="button"><i class="fas fa-external-link-alt"></i> <span data-i18n="explorer">区块浏览器</span></a>
+<a href="https://app.uniswap.org/#/swap?outputCurrency=0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank" class="button secondary"><i class="fas fa-exchange-alt"></i> <span data-i18n="trade">交易</span></a>
+<button class="button" onclick="App.show('airdrop')"><i class="fas fa-gift"></i> <span data-i18n="go_airdrop">立即领空投</span></button>
+</div>
+</div>
+
+<!-- 空投 -->
+<div id="airdrop" class="section-content">
+<div class="claim-section">
+<h2 style="color:var(--secondary);margin-bottom:12px;">🎁 <span data-i18n="airdrop_title">SPARK 链上空投</span></h2>
+<p data-i18n="airdrop_desc">新人领 1 亿 SPARK，邀请一人奖励 1 千万 SPARK。用户自付 ETH 链上手续费领取。</p>
+<div id="airdropWalletTip"></div>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-label" data-i18n="marketing_balance">营销钱包余额</div><div class="stat-value" id="mktBal2">-</div></div>
+<div class="stat-card"><div class="stat-label" data-i18n="total_claimed">累计已领取</div><div class="stat-value" id="totalClaimed">0</div></div>
+<div class="stat-card"><div class="stat-label" data-i18n="participants">参与地址</div><div class="stat-value" id="claimCount">0</div></div>
+<div class="stat-card"><div class="stat-label" data-i18n="invite_count">我的邀请</div><div class="stat-value" id="myInvites">0</div></div>
+</div>
+<div class="invite-box" id="inviteBox"></div>
+<input class="input-field" id="claimAddress" placeholder="0x..." data-i18n-placeholder="your_address">
+<input class="input-field" id="inviteAddress" placeholder="0x... (可选，邀请人地址)" data-i18n-placeholder="inviter_address">
+<div class="message" id="airdropMsg"></div>
+<button class="button" id="claimBtn" onclick="Airdrop.claim()" style="width:100%;max-width:320px;"><i class="fas fa-paper-plane"></i> <span data-i18n="claim_btn">链上领取（自付手续费）</span></button>
+<p style="font-size:.85rem;color:#aaa;margin-top:10px;" data-i18n="claim_note">提交地址即上链，单地址限领一次，防作弊。</p>
+</div>
+<div class="section-title"><i class="fas fa-list"></i> <span data-i18n="leaderboard">空投名单（去中心化公开账本）</span></div>
+<div style="max-height:300px;overflow-y:auto;background:rgba(0,0,0,.25);border-radius:10px;padding:10px;">
+<table class="leaderboard"><thead><tr><th>#</th><th data-i18n="address_col">地址</th><th data-i18n="amount_col">数量</th><th data-i18n="inviter_col">邀请人</th><th data-i18n="time_col">时间</th></tr></thead>
+<tbody id="claimList"></tbody></table>
+</div>
+</div>
+
+<!-- 聊天 -->
+<div id="chat" class="section-content">
+<div class="section-title"><i class="fas fa-comments"></i> <span data-i18n="chat_title">全球社区聊天（P2P 去中心化）</span> <span class="badge"><span class="online-dot"></span> <span id="onlineCount">1</span> <span data-i18n="online">在线</span></span></div>
+<div class="chat-box">
+<div class="chat-messages" id="chatMessages"></div>
+<div class="chat-input-row">
+<input class="input-field" id="chatInput" placeholder="" data-i18n-placeholder="chat_placeholder" onkeypress="if(event.key==='Enter')Chat.send()">
+<button class="button" onclick="Chat.send()" style="max-width:120px;"><i class="fas fa-paper-plane"></i></button>
+</div>
+</div>
+<p style="font-size:.8rem;color:#888;margin-top:8px;" data-i18n="chat_hint">基于 GunDB / BroadcastChannel 的 P2P 同步，无需中心服务器，抗审查。</p>
+</div>
+
+<!-- 行情 -->
+<div id="market" class="section-content">
+<div class="section-title"><i class="fas fa-chart-line"></i> <span data-i18n="market_title">加密行情（前 50，SPARK 置顶）</span></div>
+<div class="contract-address" style="border-color:rgba(79,195,247,.3);">
+<div style="color:var(--accent);font-size:.9rem;"><i class="fas fa-sync-alt"></i> <span data-i18n="data_source">数据源：币安 / 非小号（免费公共 API，每 60 秒刷新）</span></div>
+</div>
+<div style="max-height:520px;overflow-y:auto;margin-top:10px;">
+<table class="market-table"><thead><tr><th>#</th><th data-i18n="coin">币种</th><th data-i18n="price">价格(USDT)</th><th data-i18n="change24">24h涨跌</th><th data-i18n="volume">24h成交额</th></tr></thead>
+<tbody id="marketBody"></tbody></table>
+</div>
+</div>
+
+<!-- 商城 -->
+<div id="shop" class="section-content">
+<div class="section-title"><i class="fas fa-store"></i> <span data-i18n="shop_title">SPARK 商城（积分 / SPARK 抵扣）</span></div>
+<div class="shop-grid" id="shopGrid"></div>
+</div>
+
+<!-- AI -->
+<div id="ai" class="section-content">
+<div class="section-title"><i class="fas fa-robot"></i> <span data-i18n="ai_title">SPARK Web3 AI 助手（本地免费，无需 API Key）</span></div>
+<div class="ai-box">
+<div class="ai-messages" id="aiMessages"></div>
+<div class="ai-suggest" id="aiSuggest"></div>
+<div class="chat-input-row">
+<input class="input-field" id="aiInput" placeholder="" data-i18n-placeholder="ai_placeholder" onkeypress="if(event.key==='Enter')AI.send()">
+<button class="button" onclick="AI.send()" style="max-width:120px;"><i class="fas fa-paper-plane"></i></button>
+</div>
+</div>
+</div>
+
+<!-- APP 下载 -->
+<div id="app" class="section-content">
+<div class="app-download">
+<i class="fas fa-mobile-alt" style="font-size:3rem;color:#FFD700;"></i>
+<h2 style="color:var(--secondary);margin:12px 0;" data-i18n="app_title">SPARK 安卓 APP</h2>
+<p data-i18n="app_desc">去中心化客户端，支持钱包、空投、聊天、行情、商城、AI。APK 免费下载。</p>
+<div class="qr"><i class="fas fa-qrcode"></i></div>
+<button class="button" onclick="App.downloadAPK()"><i class="fas fa-download"></i> <span data-i18n="download_apk">下载 APK (Android)</span></button>
+<p style="font-size:.8rem;color:#aaa;margin-top:10px;" data-i18n="app_note">安装后首次允许「未知来源」安装。iOS 请使用网页版。</p>
+</div>
+</div>
+
+<!-- 管理员入口（隐藏密码，外部无法读取） -->
+<div style="text-align:center;margin-top:15px;">
+<button class="nav-link" onclick="Admin.open()" style="color:#4FC3F7;border:1px solid rgba(79,195,247,.3);"><i class="fas fa-user-shield"></i> <span data-i18n="admin_entry">管理员入口</span></button>
+</div>
+
+<div class="footer">
+<p>© 2026 星火通证 (SPARK). <span data-i18n="decentralized">完全去中心化 · 抗审查 · 数据链上/分布式存储</span></p>
+<div class="footer-links">
+<a href="https://sparky12315000.github.io" target="_blank"><i class="fas fa-globe"></i> sparky12315000.github.io</a>
+<a href="https://etherscan.io/token/0xd580c7c9cde5ce776feed844310330a2a40078d9" target="_blank"><i class="fas fa-external-link-alt"></i> Etherscan</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 管理员登录 -->
+<div class="modal" id="adminLoginModal">
+<div class="modal-box">
+<h3><i class="fas fa-user-shield"></i> <span data-i18n="admin_login">管理员登录</span></h3>
+<input type="password" class="input-field" id="adminPwd" placeholder="" data-i18n-placeholder="admin_pwd_placeholder" autocomplete="off">
+<div class="modal-actions">
+<button class="button" onclick="Admin.login()"><i class="fas fa-sign-in-alt"></i> <span data-i18n="login">登录</span></button>
+<button class="button secondary" onclick="Admin.closeLogin()"><span data-i18n="cancel">取消</span></button>
+</div>
+</div>
+</div>
+
+<!-- 升级确认弹窗 -->
+<div class="modal" id="upgradeModal">
+<div class="modal-box">
+<h3><i class="fas fa-sync-alt"></i> <span data-i18n="upgrade_title">检测到 AI 自动升级候选版本</span></h3>
+<p style="text-align:center;color:#FFD700;" data-i18n="upgrade_desc">以下改动将由管理员手动确认后才应用：</p>
+<div class="diff-box" id="upgradeDiff"></div>
+<div class="modal-actions">
+<button class="button" onclick="Upgrade.confirm()"><i class="fas fa-check"></i> <span data-i18n="upgrade_approve">确认升级</span></button>
+<button class="button secondary" onclick="Upgrade.reject()"><span data-i18n="upgrade_reject">拒绝</span></button>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gun@0.2020.1239/gun.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/wallet.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/airdrop.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/market.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/upgrade.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
