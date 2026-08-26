@@ -53,8 +53,8 @@ console.log('A 邀请奖励总额:', invites[A] ? invites[A] / 10n**decimals + '
 console.log('每地址奖励:', baseAmount / 10n**decimals, 'SPARK (=1亿)');
 console.log('邀请奖励:', inviteReward / 10n**decimals, 'SPARK (=1000万)');
 
-// 管理员哈希验证（密码仅来自环境变量，默认哈希与注入值一致）
-const adminPwd = process.env.SPARK_ADMIN_PWD || 'Yy12315000';
+// 管理员哈希验证（密码仅来自环境变量，无硬编码默认值）
+const adminPwd = process.env.SPARK_ADMIN_PWD || '';
 const hash = crypto.createHash('sha256').update(adminPwd).digest('hex');
 console.log('\n管理员密码哈希(SHA-256):', hash);
 console.log('哈希长度:', hash.length, '(应为64)');

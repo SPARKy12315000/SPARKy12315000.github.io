@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // 部署前一步：将管理员密码 SHA-256 哈希注入 index.html（作为内联脚本设置 window.__SPARK_ADMIN_HASH__）
-// 用法：  SPARK_ADMIN_PWD="Yy12315000" node scripts/inject-hash.cjs
+// 用法：  SPARK_ADMIN_PWD="<管理员密码>" node scripts/inject-hash.cjs
 // 策略：哈希只来自环境变量，源码/config.js 内绝不出现密码明文
 const crypto = require('crypto');
 const fs = require('fs');
