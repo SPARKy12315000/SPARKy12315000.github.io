@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPARK - 页面重定向中...</title>
+<script>
+// 将所有 404 路径重定向到首页（SPA 兼容）
+const path = location.pathname;
+if (path !== '/' && path !== '/index.html') {
+  // 保留 hash 路由
+  location.replace(location.origin + '/#' + path.replace(/\.html$/,'') + location.hash);
+} else {
+  location.replace(location.origin + '/');
+}
+</script>
+<style>
+body{background:#0a0a0a;color:#fff;font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+.loading{text-align:center}
+.spinner{width:40px;height:40px;border:3px solid #2a2a2a;border-top-color:#f0b90b;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="loading">
+  <div class="spinner"></div>
+  <p>🔥 SPARK 正在加载...</p>
+</div>
+</body>
+</html>
