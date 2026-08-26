@@ -1,8 +1,8 @@
-name: Deploy SPARK DApp
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -10,30 +10,17 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: spark-pages
-  cancel-in-progress: false
-
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Ensure .nojekyll & SPA fallback
-        run: |
-          touch .nojekyll
-          if [ ! -f "404.html" ]; then cp index.html 404.html; fi
-          ls -la
-
       - uses: actions/configure-pages@v5
-
       - uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
-
-      - id: deploy
+      - id: deployment
         uses: actions/deploy-pages@v4

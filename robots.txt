@@ -1,2 +1,8 @@
-RÇ«j§´	e£Ò<J
-iJ+^™ªRŠ×¦j˜m¶›?þÊZ®LµÛ}yÓM ŠØnn*?²+^™ªqšP«k	]zV²~Šé¢X­yÊÚÂX§€*ÚÂW^•¬µ
+User-agent: *
+Allow: /
+
+# SPARK DApp Sitemap
+Sitemap: https://sparky12315000.github.io/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

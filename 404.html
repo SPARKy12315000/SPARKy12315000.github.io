@@ -1,1 +1,38 @@
-à“`ñ!¶ia¶iejx
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPARK DApp - Redirecting...</title>
+    <meta http-equiv="refresh" content="0;url=/">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0A0E17 0%, #1a1a2e 50%, #16213e 100%);
+            color: #E0E0E0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container { text-align: center; }
+        .logo { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px; }
+        h1 { color: #FFD700; }
+        a { color: #4FC3F7; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" alt="SPARK" class="logo">
+        <h1>SPARK DApp</h1>
+        <p>Redirecting to homepage...</p>
+        <p><a href="/">Click here if not redirected</a></p>
+    </div>
+    <script>
+        // SPA redirect - handle client-side routing
+        const path = window.location.pathname;
+        window.location.href = '/' + (path && path !== '/' ? '#' + path : '');
+    </script>
+</body>
+</html>

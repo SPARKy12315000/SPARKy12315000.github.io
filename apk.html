@@ -1,1 +1,33 @@
-��`�!�ia�iejx
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPARK APP 下载</title>
+<style>
+body{background:#0a0a0a;color:#fff;font-family:-apple-system,sans-serif;text-align:center;padding:40px 20px;margin:0}
+.logo{width:80px;height:80px;border-radius:50%;background:#f0b90b;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 20px}
+h1{font-size:24px;margin:0 0 8px}
+p{color:#999;max-width:360px;margin:0 auto 24px;font-size:14px;line-height:1.6}
+.btn{display:block;background:#f0b90b;color:#000;padding:16px 24px;border-radius:12px;font-weight:700;margin:12px auto;max-width:320px;text-decoration:none}
+.btn-ghost{background:#1c1c1c;color:#fff;border:1px solid #2a2a2a}
+.qr{width:180px;height:180px;margin:24px auto;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#000;font-size:12px}
+.hint{font-size:12px;color:#666;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="logo">🔥</div>
+<h1>SPARK 星火通证</h1>
+<p>去中心化客户端 · 钱包 · 空投 · 聊天 · 行情 · 商城 · AI</p>
+<a href="https://github.com/SPARKy12315000/SPARKy12315000.github.io/releases/latest" class="btn">🤖 下载 Android APK</a>
+<button class="btn btn-ghost" onclick="installPWA()">🍎 iOS / 桌面端（PWA 安装）</button>
+<div class="qr">扫码下载<br><small id="url"></small></div>
+<p class="hint">Android 安装后首次允许「未知来源」安装。<br>iOS 请使用 Safari → 分享 → 添加到主屏幕。</p>
+<script>
+document.getElementById('url').textContent=location.origin;
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
+function installPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>deferredPrompt=null);}else{alert('请使用浏览器菜单「安装」或 Safari「添加到主屏幕」');}}
+</script>
+</body>
+</html>
