@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-
-# SPARK DApp Sitemap
-Sitemap: https://sparky12315000.github.io/sitemap.xml
-
-# Crawl-delay for polite crawling
-Crawl-delay: 1
