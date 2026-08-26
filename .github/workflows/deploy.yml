@@ -1,8 +1,8 @@
-name: Deploy to GitHub Pages
+name: Deploy SPARK DApp
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -11,39 +11,29 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: spark-pages
+  cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Build (copy index.html to 404.html if missing)
-        run: |
-          # 确保 404.html 存在（SPA 兼容）
-          if [ ! -f "404.html" ]; then
-            cp index.html 404.html
-          fi
-          # 确保 .nojekyll 存在
-          touch .nojekyll
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-
-  deploy:
-    needs: build
+  build-and-deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - uses: actions/checkout@v4
+
+      - name: Ensure .nojekyll & SPA fallback
+        run: |
+          touch .nojekyll
+          if [ ! -f "404.html" ]; then cp index.html 404.html; fi
+          ls -la
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - id: deploy
         uses: actions/deploy-pages@v4

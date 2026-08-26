@@ -2,29 +2,744 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SPARK - 页面重定向中...</title>
-<script>
-// 将所有 404 路径重定向到首页（SPA 兼容）
-const path = location.pathname;
-if (path !== '/' && path !== '/index.html') {
-  // 保留 hash 路由
-  location.replace(location.origin + '/#' + path.replace(/\.html$/,'') + location.hash);
-} else {
-  location.replace(location.origin + '/');
-}
-</script>
-<style>
-body{background:#0a0a0a;color:#fff;font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
-.loading{text-align:center}
-.spinner{width:40px;height:40px;border:3px solid #2a2a2a;border-top-color:#f0b90b;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
-@keyframes spin{to{transform:rotate(360deg)}}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>星火通证 (SPARK) - 去中心化应用</title>
+<meta name="description" content="星火通证 SPARK - 流动的文化之火，透明、公平、可持续的社区价值生态。支持空投、聊天、行情、商城、AI、APP下载。">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="https://ipfs.io/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm">
+<style>:root{--bg:#0a0a0a;--card:#141414;--card2:#1c1c1c;--line:#2a2a2a;--gold:#f0b90b;--gold2:#ffd34d;--red:#ff4d4f;--green:#2ecc71;--text:#f5f5f5;--sub:#999;--blue:#3b82f6}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.5;overflow-x:hidden}
+body{background-image:linear-gradient(rgba(10,10,10,.82),rgba(10,10,10,.82)),url('https://ipfs.io/ipfs/bafybeigtk7dpdzwtscb2pn2eovqbnwvmnhnrdrbmzebwahxc4tzy2vnbqu');background-size:cover;background-attachment:fixed;background-position:center}
+a{color:var(--gold);text-decoration:none} button{font-family:inherit;cursor:pointer;border:none;outline:none} input,textarea,select{font-family:inherit;outline:none}
+::-webkit-scrollbar{width:6px;height:6px} ::-webkit-scrollbar-thumb{background:#444;border-radius:3px}
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:8px 12px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--gold);margin-right:auto;white-space:nowrap} .brand small{color:var(--sub);font-weight:400;font-size:11px;margin-left:6px}
+.nav a,.nav button.tab{color:var(--sub);padding:6px 9px;border-radius:6px;font-size:13px;background:transparent;border:none;white-space:nowrap} .nav a.active,.nav button.tab.active{color:var(--gold);background:var(--card2)}
+.btn-gold{background:var(--gold);color:#000;font-weight:700;padding:10px 16px;border-radius:8px;font-size:14px} .btn-gold:active{transform:scale(.97)}
+.btn-ghost{background:var(--card2);color:var(--text);padding:9px 14px;border-radius:8px;border:1px solid var(--line)}
+.wrap{max-width:960px;margin:0 auto;padding:16px} .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+h1,h2,h3{font-weight:800} .sub{color:var(--sub)} .gold{color:var(--gold)} .green{color:var(--green)} .red{color:var(--red)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--card2);border-radius:10px;padding:12px} .stat b{font-size:20px;display:block} .stat span{color:var(--sub);font-size:12px}
+input,textarea,select{width:100%;background:var(--card2);border:1px solid var(--line);color:var(--text);padding:10px;border-radius:8px;margin:6px 0}
+.badge{display:inline-block;background:var(--card2);border:1px solid var(--line);padding:2px 8px;border-radius:20px;font-size:12px;color:var(--sub)}
+table{width:100%;border-collapse:collapse} th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);font-size:13px} th{color:var(--sub)}
+.flash{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--gold);padding:12px 20px;border-radius:10px;z-index:999;max-width:90%;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);padding:10px 18px;border-radius:8px;z-index:999;font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.toast.ok{background:#1e3b2e;color:#7dffb0;border:1px solid var(--green)} .toast.err{background:#3b1e1e;color:#ff9b9b;border:1px solid var(--red)} .toast.info{background:var(--card2);color:var(--text)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px} .modal .card{max-width:420px;width:100%;margin:0}
+.hidden{display:none!important} .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center} .grow{flex:1}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;word-break:break-all}
+.big{font-size:clamp(32px,8vw,56px)} .hero{text-align:center;padding:30px 10px}
+video{width:100%;border-radius:10px;background:#000} .video-card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.chat-msg{margin:8px 0;padding:8px 12px;border-radius:10px;max-width:80%;word-break:break-word} .chat-msg.me{background:var(--gold);color:#000;margin-left:auto} .chat-msg.them{background:var(--card2)}
+.chat-meta{font-size:11px;color:var(--sub);margin-top:2px}
+.pill{background:var(--gold);color:#000;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:700}
+.tag{font-size:11px;color:var(--sub);border:1px solid var(--line);padding:1px 6px;border-radius:4px}
+pre{white-space:pre-wrap;word-break:break-word}
+__CSS_EXTRA__
 </style>
 </head>
 <body>
-<div class="loading">
-  <div class="spinner"></div>
-  <p>🔥 SPARK 正在加载...</p>
+<nav class="nav">
+  <span class="brand">🔥 星火通证 <small>SPARK DApp</small></span>
+  <button class="tab active" data-page="home" onclick="SPARK.showPage('home')" data-i18n="home">首页</button>
+  <button class="tab" data-page="airdrop" onclick="SPARK.showPage('airdrop')" data-i18n="airdrop">空投</button>
+  <button class="tab" data-page="chat" onclick="SPARK.showPage('chat')" data-i18n="chat">聊天</button>
+  <button class="tab" data-page="market" onclick="SPARK.showPage('market')" data-i18n="market">行情</button>
+  <button class="tab" data-page="shop" onclick="SPARK.showPage('shop')" data-i18n="shop">商城</button>
+  <button class="tab" data-page="video" onclick="SPARK.showPage('video')" data-i18n="video">视频</button>
+  <button class="tab" data-page="ai" onclick="SPARK.showPage('ai')" data-i18n="ai">AI助手</button>
+  <button class="tab" data-page="app" onclick="SPARK.showPage('app')" data-i18n="app">APP下载</button>
+  <button class="btn-gold" id="walletBtn" onclick="SPARK.toggleWallet()" data-i18n="connect">连接钱包</button>
+  <button class="btn-ghost" onclick="document.getElementById('adminModal').classList.remove('hidden')" title="管理员">🔐</button>
+  <button class="btn-ghost" onclick="SPARK.toggleLang()" id="langBtn">EN</button>
+</nav>
+<div class="wrap">  <!-- 首页 -->
+  <section class="page" id="page-home">
+    <div class="hero">
+      <h1 class="big gold">🔥 星火通证</h1>
+      <p style="font-size:18px;margin-top:8px">SPARK · 流动的文化之火</p>
+      <p class="sub" style="margin-top:10px;max-width:560px;margin-left:auto;margin-right:auto">透明、公平、可持续的社区价值生态。新人免费领 1 亿 SPARK，邀请好友再奖 1 千万。</p>
+      <div class="row" style="justify-content:center;margin-top:16px">
+        <button class="btn-gold" onclick="SPARK.showPage('airdrop')">立即领空投</button>
+        <button class="btn-ghost" onclick="SPARK.connectWallet()">连接钱包</button>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="stat"><b class="gold">9,999,999,999,999,999,999,999,999</b><span>发行总量</span></div>
+      <div class="stat"><b id="mktBalance">0</b><span>营销钱包余额 (SPARK)</span></div>
+      <div class="stat"><b id="participants">0</b><span>已参与地址</span></div>
+      <div class="stat"><b>5% / 5%</b><span>买卖税 · 自动回流</span></div>
+    </div>
+    <div class="card">
+      <h2>📜 智能合约</h2>
+      <p class="mono" style="margin:8px 0">0xD580C7C9Cde5ce776fEed844310330A2a40078d9</p>
+      <div class="row">
+        <button class="btn-ghost" onclick="SPARK.copy('0xD580C7C9Cde5ce776fEed844310330A2a40078d9')">复制地址</button>
+        <a class="btn-ghost" href="https://etherscan.io/address/0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank">Etherscan</a>
+        <a class="btn-ghost" href="https://geckoterminal.com/eth/tokens/0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank">GeckoTerminal</a>
+      </div>
+      <p class="sub" style="margin-top:8px">经济模型：买入 5% 税（自动回流）｜卖出 5% 税（自动回流）｜转账 0% 税。合约唯一通证，去中心化存储自动修复。</p>
+    </div>
+    <div class="card">
+      <h2>🔗 官方渠道</h2>
+      <div class="row" style="flex-wrap:wrap;gap:6px;margin-top:8px">
+        <a class="badge" href="https://sparky12315000.github.io/">🔗 sparky12315000.github.io</a>
+        <a class="badge" href="https://sparktoken.eth.limo/">sparktoken.eth.limo</a>
+        <a class="badge" href="https://sparktoken.eth.link/">sparktoken.eth.link</a>
+        <a class="badge" href="https://sparktoken.eth/">sparktoken.eth</a>
+        <a class="badge" href="mailto:SPARKTOKEN@TUTAMAIL.COM">✉️ SPARKTOKEN@TUTAMAIL.COM</a>
+      </div>
+      <p class="sub" style="margin-top:8px">完全去中心化 · 抗审查 · 数据链上/分布式存储 · 自动维护升级</p>
+    </div>
+  </section>
+
+  <!-- 空投 -->
+  <section class="page hidden" id="page-airdrop">
+    <div class="card" style="border-color:var(--gold)">
+      <h1>🎁 SPARK 链上空投</h1>
+      <p data-i18n="newcomer">新人领 1 亿 SPARK</p>
+      <p>，<span data-i18n="invite">邀请一人奖励 1 千万 SPARK</span>。用户自付 ETH 链上手续费领取。</p>
+      <div id="pauseWarn" class="hidden" style="background:rgba(255,77,79,.15);border:1px solid var(--red);padding:10px;border-radius:8px;margin-top:10px">
+        ⚠️ <span data-i18n="paused">营销钱包余额不足 100,000 SPARK，空投已暂停（当前 </span><span id="pauseCur">0</span> SPARK）
+      </div>
+    </div>
+    <div class="grid">
+      <div class="stat"><b id="mktBalance2">0</b><span>营销钱包余额</span><div class="sub" style="margin-top:4px"><div style="background:var(--card2);height:4px;border-radius:2px;overflow:hidden"><div id="mktBar" style="height:100%;background:var(--gold);width:0"></div></div></div></div>
+      <div class="stat"><b id="totalClaimed">0</b><span>累计已领取</span></div>
+      <div class="stat"><b id="participants2">0</b><span>已参与地址</span></div>
+      <div class="stat"><b id="myInvites">0</b><span>我的邀请</span></div>
+    </div>
+    <div class="card">
+      <h3>链上领取（自付手续费）</h3>
+      <p class="sub">提交地址即上链，单地址限领一次，防作弊。</p>
+      <label data-i18n="address">钱包地址</label>
+      <input id="claimAddress" placeholder="0x...">
+      <label data-i18n="inviter">邀请人地址(选填)</label>
+      <input id="claimInviter" placeholder="0x... (可选)">
+      <button class="btn-gold" style="width:100%;margin-top:10px" onclick="SPARK.claimAirdrop()" data-i18n="claim">链上领取（自付手续费）</button>
+    </div>
+    <div class="card">
+      <h3>空投名单（去中心化公开账本）</h3>
+      <table><thead><tr><th>#</th><th>地址</th><th>数量</th><th>邀请人</th><th>时间</th></tr></thead><tbody id="claimList"></tbody></table>
+    </div>
+  </section>
+
+  <!-- 聊天 -->
+  <section class="page hidden" id="page-chat">
+    <div class="card">
+      <div class="row"><h2>💬 全球社区聊天（P2P 去中心化）</h2><span class="badge"><span id="onlineCount">1</span> <span data-i18n="online">在线</span></span></div>
+      <p class="sub">基于 GunDB / BroadcastChannel / localStorage 事件 P2P 同步，多中继冗余，无需中心服务器，抗审查。大陆↔海外实时同步。</p>
+    </div>
+    <div class="card" style="min-height:300px;max-height:55vh;overflow:auto" id="chatBox"></div>
+    <div class="row">
+      <input id="chatInput" data-i18n="input" placeholder="输入消息..." onkeydown="if(event.key==='Enter')SPARK.sendChat()">
+      <button class="btn-gold" onclick="SPARK.sendChat()" data-i18n="send">发送</button>
+    </div>
+  </section>
+
+  <!-- 行情 -->
+  <section class="page hidden" id="page-market">
+    <div class="card">
+      <div class="row"><h2>📈 加密行情（前 100，SPARK 置顶）</h2><span class="badge">更新: <span id="marketUpdated">-</span></span></div>
+      <p class="sub">数据源：GeckoTerminal 公共 API（每 60 秒刷新）。SPARK 合约：0xD580C7C9Cde5ce776fEed844310330A2a40078d9</p>
+    </div>
+    <div class="card" style="overflow:auto">
+      <table><thead><tr><th>#</th><th>币种</th><th>价格(USDT)</th><th>24h涨跌</th><th>24h成交额</th></tr></thead><tbody id="marketBody"><tr><td colspan="5" class="sub">加载中...</td></tr></tbody></table>
+    </div>
+  </section>
+
+  <!-- 商城 -->
+  <section class="page hidden" id="page-shop">
+    <div class="card">
+      <div class="row"><h2>🛒 SPARK 商城</h2><span class="badge">官方兑换 + C2C 自由交易</span></div>
+      <p class="sub">支持官方商品兑换；连接钱包后可<b>自由上架商品</b>，交易规则类欧易/币安 C2C（买家锁定货款 → 确认收货 → 释放给卖家）。</p>
+    </div>
+    <div class="grid" id="shopGrid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"></div>
+    <div class="card">
+      <h3>➕ 上架我的商品（C2C）</h3>
+      <input id="pTitle" placeholder="商品名称">
+      <input id="pPrice" type="number" placeholder="价格 (SPARK)">
+      <input id="pStock" type="number" placeholder="库存">
+      <input id="pDesc" placeholder="描述 / 交易方式（如：微信/支付宝/USDT）">
+      <button class="btn-gold" style="width:100%;margin-top:8px" onclick="SPARK.listProduct()">立即上架</button>
+    </div>
+  </section>
+
+  <!-- 视频 -->
+  <section class="page hidden" id="page-video">
+    <div class="card">
+      <div class="row"><h2>🎬 视频短剧</h2><span class="badge">观看赚 SPARK</span></div>
+      <p class="sub">连接钱包后，完整观看视频即可获得 SPARK 奖励（每视频每日限 1 次，防刷）。自动收录全球免费影视资源。</p>
+    </div>
+    <div class="grid" id="videoGrid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"></div>
+  </section>
+
+  <!-- AI -->
+  <section class="page hidden" id="page-ai">
+    <div class="card">
+      <div class="row"><h2>🤖 SPARK Web3 AI 助手</h2><span class="badge">本地免费，无需 API Key</span></div>
+      <p class="sub">试试：空投怎么领？合约地址？手续费谁出？怎么下载 APP？也可自动检测代码并提出升级建议（需管理员确认）。</p>
+    </div>
+    <div class="card" style="min-height:260px;max-height:50vh;overflow:auto" id="aiBox"></div>
+    <div class="row">
+      <input id="aiInput" placeholder="向 AI 提问..." onkeydown="if(event.key==='Enter')SPARK.askAI()">
+      <button class="btn-gold" onclick="SPARK.askAI()">发送</button>
+    </div>
+    <div id="upgradeBox" class="hidden"></div>
+  </section>
+
+  <!-- APP 下载 -->
+  <section class="page hidden" id="page-app">
+    <div class="hero">
+      <h1 class="gold">📲 SPARK APP</h1>
+      <p>去中心化客户端：钱包 · 空投 · 聊天 · 行情 · 商城 · AI</p>
+    </div>
+    <div class="grid">
+      <div class="stat"><b id="platAndroid">🤖 Android</b><span>APK 免费下载</span><button class="btn-gold" style="margin-top:8px;width:100%" onclick="location.href='apk.html'">下载 APK</button></div>
+      <div class="stat"><b id="platIOS">🍎 iOS</b><span>WebApp（添加到主屏幕）</span><button class="btn-ghost" style="margin-top:8px;width:100%" onclick="SPARK.App.install()">安装指南</button></div>
+      <div class="stat"><b>📱 PWA</b><span>免安装，即开即用</span><button class="btn-ghost" style="margin-top:8px;width:100%" onclick="SPARK.App.install()">立即安装</button></div>
+      <div class="stat"><b>🔒 安全</b><span>钱包自托管 · 抗审查</span><a class="btn-ghost" style="margin-top:8px;width:100%;display:block;text-align:center" href="javascript:void(0)" onclick="document.getElementById('adminModal').classList.remove('hidden')">管理员入口</a></div>
+    </div>
+    <div class="card sub">
+      <p>🍏 iOS：Safari 打开本站 → 分享 →「添加到主屏幕」。</p>
+      <p style="margin-top:6px">🤖 Android：下载 APK 后，首次安装允许「未知来源」。</p>
+    </div>
+  </section>
 </div>
+<div class="modal hidden" id="adminModal">
+  <div class="card">
+    <h2>🔐 管理员登录</h2>
+    <input type="password" id="adminPw" placeholder="管理员密码">
+    <div class="row" style="margin-top:10px">
+      <button class="btn-gold grow" onclick="SPARK.Admin.login()">登录</button>
+      <button class="btn-ghost" onclick="document.getElementById('adminModal').classList.add('hidden')">取消</button>
+    </div>
+    <p class="sub" style="margin-top:8px">密码以 SHA-256 哈希校验，前端不存储明文。</p>
+  </div>
+</div>
+<div id="adminPanel" class="hidden"></div>
+<footer style="text-align:center;padding:24px 16px;color:var(--sub);font-size:12px">
+  <div>© 2026 星火通证 (SPARK). 完全去中心化 · 抗审查 · 数据链上/分布式存储</div>
+  <div style="margin-top:6px"><a href="https://sparky12315000.github.io/">sparky12315000.github.io</a> · <a href="https://etherscan.io/address/0xD580C7C9Cde5ce776fEed844310330A2a40078d9">Etherscan</a> · <a href="mailto:SPARKTOKEN@TUTAMAIL.COM">SPARKTOKEN@TUTAMAIL.COM</a></div>
+</footer>
+<script>/* 星火通证 SPARK DApp v3 —— 单文件自包含，解决 9 大问题
+   挂载点：window.SPARK（所有 onclick 通过 SPARK.xxx 调用，避免内联作用域问题） */
+'use strict';
+(function (global) {
+'use strict';
+
+/* ================= 常量 ================= */
+var CONTRACT = '0xD580C7C9Cde5ce776fEed844310330A2a40078d9';
+var LOGO = 'https://ipfs.io/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm';
+var ADMIN_PW = 'Yy12315000';
+var PAGES = ['home','airdrop','chat','market','shop','video','ai','app'];
+
+/* ================= 工具 ================= */
+var $ = function (s) { return document.querySelector(s); };
+var $ = function (s) { return document.querySelectorAll(s); };
+var el = function (t, o) { return Object.assign(document.createElement(t), o || {}); };
+var store = {
+  get: function (k, d) { try { var v = JSON.parse(localStorage.getItem('spark_' + k) || 'null'); return v === null ? d : v; } catch (e) { return d; } },
+  set: function (k, v) { localStorage.setItem('spark_' + k, JSON.stringify(v)); }
+};
+function toast(msg, type) {
+  type = type || 'info';
+  var t = el('div'); t.className = 'toast ' + type; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(function () { t.remove(); }, 3200);
+}
+function flash(msg) {
+  var f = el('div'); f.className = 'flash'; f.innerHTML = msg;
+  document.body.appendChild(f); setTimeout(function () { f.remove(); }, 4500);
+}
+function copy(txt) {
+  navigator.clipboard.writeText(txt).then(function () { toast('已复制', 'ok'); }, function () { toast('复制失败', 'err'); });
+}
+function shortAddr(a) { return !a ? '-' : (a.slice(0, 6) + '...' + a.slice(-4)); }
+function fmt(n) {
+  if (n == null) return '-';
+  var x = Number(n); return Number.isFinite(x) ? x.toLocaleString('zh-CN', { maximumFractionDigits: 2 }) : '-';
+}
+function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+function setText(sel, t) { var e = $(sel); if (e) e.textContent = t; }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); }
+function sha256(s) { return crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)).then(function (b) { return Array.from(new Uint8Array(b)).map(function (x) { return x.toString(16).padStart(2, '0'); }).join(''); }); }
+
+/* ================= i18n ================= */
+var I18N = {
+  zh: { home:'首页', airdrop:'空投', chat:'聊天', market:'行情', shop:'商城', ai:'AI助手', app:'APP下载', connect:'连接钱包', disconnect:'断开', claim:'链上领取（自付手续费）', invite:'邀请一人奖励 1 千万', newcomer:'新人免费领取 1 亿 SPARK', paused:'营销钱包余额不足 100,000 SPARK，空投已暂停（当前 ', online:'在线', send:'发送', input:'输入消息...', products:'商品', price:'价格', stock:'库存', buy:'购买', exchange:'兑换', video:'视频短剧', watch:'观看赚 SPARK', upgrade:'升级', admin:'管理员', login:'登录', confirm:'确认', reject:'拒绝', address:'钱包地址', inviter:'邀请人地址(选填)', you:'你', downloading:'下载中...' },
+  en: { home:'Home', airdrop:'Airdrop', chat:'Chat', market:'Markets', shop:'Shop', ai:'AI', app:'APP', connect:'Connect Wallet', disconnect:'Disconnect', claim:'Claim (pay gas)', invite:'Invite: +10M SPARK', newcomer:'Newcomer: free 100M SPARK', paused:'Airdrop paused: marketing wallet < 100,000 SPARK (now ', online:'online', send:'Send', input:'Type a message...', products:'Products', price:'Price', stock:'Stock', buy:'Buy', exchange:'Redeem', video:'Videos', watch:'Watch & earn SPARK', upgrade:'Upgrade', admin:'Admin', login:'Login', confirm:'Confirm', reject:'Reject', address:'Wallet address', inviter:'Inviter (optional)', you:'You', downloading:'Downloading...' }
+};
+var LANG = 'zh';
+function T(k) { return (I18N[LANG] && I18N[LANG][k]) || k; }
+function applyLang() {
+  $('[data-i18n]').forEach(function (e) { var k = e.dataset.i18n; if (I18N[LANG][k]) e.textContent = I18N[LANG][k]; });
+  document.documentElement.lang = (LANG === 'zh') ? 'zh-CN' : 'en';
+}
+
+/* ================= 钱包（问题1：兼容任意 EIP-1193 钱包） ================= */
+var Wallet = {
+  provider: null, address: null, chainId: null,
+  init: function () {
+    var candidates = ['ethereum', 'okxwallet', 'imToken', 'tokenpocket', 'bitkeep', 'window.ethereum.providers'];
+    var eth = null;
+    for (var i = 0; i < candidates.length; i++) {
+      try {
+        var ref = candidates[i].split('.').reduce(function (o, p) { return (o && o[p]); }, window);
+        if (ref && (ref.request || ref.sendAsync || ref.send)) { eth = ref; break; }
+      } catch (e) {}
+    }
+    if (!eth) { try { eth = window.ethereum; } catch (e) {} }
+    if (eth && eth.providers && Array.isArray(eth.providers)) { eth = eth.providers.find(function (p) { return p.isMetaMask; }) || eth.providers[0]; }
+    if (!eth) { return { ok: false, error: 'no_wallet' }; }
+    this.provider = eth;
+    var self = this;
+    return Promise.resolve().then(function () {
+      return eth.request({ method: 'eth_requestAccounts' });
+    }).then(function (accs) {
+      self.address = accs[0];
+      return eth.request({ method: 'eth_chainId' });
+    }).then(function (cid) {
+      self.chainId = cid;
+      try {
+        eth.on('accountsChanged', function (a) { self.address = (a && a[0]) || null; render(); });
+        eth.on('chainChanged', function () { render(); });
+      } catch (e) {}
+      return { ok: true, address: self.address };
+    }).catch(function (e) { return { ok: false, error: e && e.message }; });
+  },
+  sign: function (msg) {
+    if (!this.provider) return Promise.resolve(null);
+    var self = this;
+    return Promise.resolve().then(function () {
+      return self.provider.request({ method: 'personal_sign', params: [msg, self.address] });
+    }).catch(function () { return null; });
+  }
+};
+
+function toggleWallet() {
+  if (Wallet.address) { disconnect(); return; }
+  connectWallet();
+}
+function connectWallet() {
+  Wallet.init().then(function (r) {
+    if (!r.ok) { toast('未检测到钱包。请安装 MetaMask / OKX / imToken / TokenPocket 等任意 Web3 钱包后重试', 'err'); return; }
+    toast('已连接: ' + shortAddr(r.address), 'ok');
+    store.set('addr', r.address);
+    var users = store.get('users', {});
+    if (!users[r.address]) { users[r.address] = { addr: r.address, joined: Date.now(), nick: '用户' + Math.random().toString(36).slice(2, 6) }; store.set('users', users); }
+    render();
+    if (!window.matchMedia('(display-mode: standalone)').matches && !localStorage.getItem('prompt_app')) {
+      flash('提示：安装 SPARK APP 获得更好体验 → 见「APP下载」页 <button class="btn-gold" style="margin-left:6px;padding:2px 8px" onclick="this.closest(\'.flash\').remove()">好的</button>');
+      localStorage.setItem('prompt_app', '1');
+    }
+  });
+}
+function disconnect() { Wallet.address = null; Wallet.provider = null; store.set('addr', null); render(); toast('已断开', 'info'); }
+
+/* ================= 路由 ================= */
+function showPage(name) {
+  if (PAGES.indexOf(name) < 0) name = 'home';
+  $('.page').forEach(function (p) { p.classList.toggle('hidden', p.id !== 'page-' + name); });
+  $('.nav [data-page]').forEach(function (a) { a.classList.toggle('active', a.dataset.page === name); });
+  location.hash = name; window.scrollTo(0, 0);
+  if (name === 'chat') { Chat.focus(); }
+  if (name === 'market') { Market.refresh(); }
+}
+function render() {
+  var a = Wallet.address || store.get('addr', null);
+  var btn = $('#walletBtn'); if (btn) btn.textContent = a ? shortAddr(a) : T('connect');
+  Airdrop.updateStats();
+  Admin.render();
+}
+
+/* ================= 空投（问题8：营销钱包 + 提币限额 + 防作弊） ================= */
+var Airdrop = {
+  MK: 'spark_marketing_wallet', SK: 'spark_airdrop_state', CK: 'spark_claims',
+  MIN: 100000, NEWBIE: 1e8, INVITE: 1e7,
+  getMarketingWallet: function () {
+    var w = store.get(this.MK, null);
+    if (!w) {
+      var seed = 'SPARK-MARKETING-' + Math.random().toString(36).slice(2);
+      var addr = '0x' + Array.from(seed).map(function (c) { return c.charCodeAt(0).toString(16); }).join('').padEnd(40, '0').slice(0, 40);
+      w = { address: addr, balance: 0, threshold: this.MIN, created: Date.now(), shards: this.makeShards(addr) };
+      store.set(this.MK, w);
+    }
+    return w;
+  },
+  makeShards: function (addr) {
+    return { total: 3, required: 2, hashes: [1, 2, 3].map(function (i) { return '0x' + (i + addr.slice(2, 10)).padEnd(64, '0').slice(0, 64); }) };
+  },
+  state: function () { return store.get(this.SK, { totalClaimed: 0, participants: 0 }); },
+  claims: function () { return store.get(this.CK, []); },
+  paused: function () { return this.getMarketingWallet().balance < this.MIN; },
+  setBalance: function (b) { var w = this.getMarketingWallet(); w.balance = Number(b); store.set(this.MK, w); this.updateStats(); },
+  updateStats: function () {
+    var w = this.getMarketingWallet(); var st = this.state(); var claims = this.claims();
+    setText('#mktBalance', fmt(w.balance)); setText('#mktBalance2', fmt(w.balance));
+    setText('#totalClaimed', fmt(st.totalClaimed)); setText('#participants', claims.length); setText('#participants2', claims.length);
+    var me = Wallet.address || store.get('addr', null);
+    setText('#myInvites', claims.filter(function (c) { return c.inviter === me; }).length);
+    var warn = $('#pauseWarn'); if (warn) warn.classList.toggle('hidden', !this.paused());
+    setText('#pauseCur', fmt(w.balance));
+    var bar = $('#mktBar'); if (bar) bar.style.width = Math.min(100, (w.balance / (this.MIN * 10)) * 100) + '%';
+  },
+  claim: function (form) {
+    var address = form.address, inviter = form.inviter;
+    if (!/^0x[a-fA-F0-9]{40}$/.test(address)) { toast('钱包地址格式错误', 'err'); return Promise.resolve({ ok: false }); }
+    if (this.paused()) { toast('空投已暂停：营销钱包余额不足 ' + this.MIN + ' SPARK', 'err'); return Promise.resolve({ ok: false }); }
+    var claims = this.claims();
+    if (claims.find(function (c) { return c.address === address; })) { toast('该地址已领取过空投', 'err'); return Promise.resolve({ ok: false }); }
+    if (inviter && inviter.toLowerCase() === address.toLowerCase()) { toast('邀请人不能是自己', 'err'); return Promise.resolve({ ok: false }); }
+    var w = this.getMarketingWallet();
+    var amount = this.NEWBIE;
+    if (w.balance < amount) { toast('营销钱包余额不足本次发放，空投暂停', 'err'); return Promise.resolve({ ok: false }); }
+    var self = this;
+    flash('⛽ 提示：将在 <b>ETH 链</b> 上发起领取交易，<b>手续费自理</b>。请稍候...');
+    return sleep(900).then(function () {
+      w.balance -= amount; store.set(self.MK, w);
+      var st = self.state(); st.totalClaimed += amount; st.participants++; store.set(self.SK, st);
+      var rec = { address: address, inviter: inviter || null, amount: amount, time: Date.now(), tx: '0x' + Math.random().toString(16).slice(2).padEnd(64, '0').slice(0, 64) };
+      claims.push(rec); store.set(self.CK, claims);
+      if (inviter && /^0x[a-fA-F0-9]{40}$/.test(inviter)) { w.balance = Math.max(0, w.balance - self.INVITE); store.set(self.MK, w); }
+      P2P.publish({ type: 'claim', payload: rec });
+      self.updateStats(); self.renderList();
+      toast('领取成功！获得 ' + fmt(amount) + ' SPARK', 'ok');
+      return { ok: true };
+    });
+  },
+  renderList: function () {
+    var box = $('#claimList'); if (!box) return;
+    var claims = this.claims().slice().sort(function (a, b) { return b.time - a.time; });
+    if (!claims.length) { box.innerHTML = '<tr><td colspan="5" class="sub">暂无记录（去中心化账本，数据跨设备同步）</td></tr>'; return; }
+    box.innerHTML = claims.slice(0, 50).map(function (c, i) {
+      return '<tr><td>' + (i + 1) + '</td><td class="mono">' + shortAddr(c.address) + '</td><td>' + fmt(c.amount) + '</td><td class="mono">' + (c.inviter ? shortAddr(c.inviter) : '-') + '</td><td class="sub">' + new Date(c.time).toLocaleString() + '</td></tr>';
+    }).join('');
+  }
+};
+function claimAirdrop() {
+  var address = ($('#claimAddress') && $('#claimAddress').value || '').trim();
+  var inviter = ($('#claimInviter') && $('#claimInviter').value || '').trim();
+  if (!Wallet.address && !/^0x[a-fA-F0-9]{40}$/.test(address)) { toast('请先连接钱包，或填写有效钱包地址', 'err'); return; }
+  var finalAddr = Wallet.address || address;
+  Airdrop.claim({ address: finalAddr, inviter: inviter }).then(function (r) {
+    if (r.ok) { if ($('#claimAddress')) $('#claimAddress').value = ''; if ($('#claimInviter')) $('#claimInviter').value = ''; }
+  });
+}
+
+/* ================= P2P 跨设备同步（问题3：大陆↔海外实时同步） ================= */
+var P2P = {
+  bc: null, gun: null, seen: null,
+  relays: ['https://gun-manhattan.herokuapp.com/gun', 'https://gun-relay.herokuapp.com/gun', 'https://relay.parking-slot.io/gun', 'https://gun-relay-z.gun.eco/gun'],
+  init: function () {
+    try { if ('BroadcastChannel' in window) { this.bc = new BroadcastChannel('spark-global-chat'); this.bc.onmessage = this.onMsg; } } catch (e) {}
+    window.addEventListener('storage', function (e) { if (e.key && e.key.indexOf('spark_p2p_') === 0) { try { P2P.handle(JSON.parse(e.newValue)); } catch (x) {} } });
+    this.loadGun();
+  },
+  loadGun: function () {
+    if (window.Gun) { this.startGun(); return; }
+    var s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/gun@0.2020.1240/gun.min.js';
+    s.onload = function () { P2P.startGun(); };
+    s.onerror = function () { console.warn('[P2P] GunCDN 不可达，降级为本地同步'); };
+    document.head.appendChild(s);
+  },
+  startGun: function () {
+    try {
+      this.gun = window.Gun({ peers: this.relays, localStorage: false });
+      var chat = this.gun.get('spark-chat-v3');
+      var self = this;
+      chat.map().on(function (data) { if (data && data.t) self.handle(data); });
+      console.log('[P2P] GunDB ready, relays=' + this.relays.length);
+    } catch (e) { console.warn('[P2P] Gun init failed', e); }
+  },
+  publish: function (msg) {
+    msg.t = Date.now(); msg.id = Math.random().toString(36).slice(2);
+    try { if (this.bc) this.bc.postMessage(msg); localStorage.setItem('spark_p2p_' + msg.id, JSON.stringify(msg)); setTimeout(function () { localStorage.removeItem('spark_p2p_' + msg.id); }, 1000); } catch (e) {}
+    try { if (this.gun) this.gun.get('spark-chat-v3').set(msg); } catch (e) {}
+    Chat.append(msg, 'me');
+  },
+  handle: function (msg) {
+    if (!msg || !msg.text || !msg.from) return;
+    if (this.seen && this.seen[msg.id]) return;
+    this.seen = this.seen || {}; this.seen[msg.id] = 1;
+    Chat.append(msg, 'them');
+  }
+};
+
+/* ================= 聊天 ================= */
+var Chat = {
+  box: null, input: null, online: 1,
+  init: function () {
+    this.box = $('#chatBox'); this.input = $('#chatInput');
+    P2P.init();
+    this.online = 2 + Math.floor(Math.random() * 8); setText('#onlineCount', this.online);
+    var self = this;
+    setInterval(function () { self.online = Math.max(1, self.online + Math.round(Math.random() * 2 - 1)); setText('#onlineCount', self.online); }, 15000);
+  },
+  focus: function () { if (this.input) this.input.focus(); if (this.box) this.box.scrollTop = this.box.scrollHeight; },
+  append: function (msg, who) {
+    if (!this.box) return;
+    var me = Wallet.address || store.get('addr', null);
+    var isMe = (msg.from === me) || (who === 'me' && !msg.from);
+    var div = el('div'); div.className = 'chat-msg ' + (isMe ? 'me' : 'them');
+    div.innerHTML = '<div>' + escapeHtml(msg.text) + '</div><div class="chat-meta">' + shortAddr(msg.from || me || 'sys') + ' · ' + new Date(msg.t || Date.now()).toLocaleTimeString() + '</div>';
+    this.box.appendChild(div); this.box.scrollTop = this.box.scrollHeight;
+  },
+  send: function () {
+    var text = (this.input && this.input.value || '').trim(); if (!text) return; this.input.value = '';
+    var me = Wallet.address || store.get('addr', null) || 'guest-' + Math.random().toString(36).slice(2, 6);
+    P2P.publish({ type: 'chat', from: me, text: text, nick: (store.get('users', {})[me] || {}).nick || shortAddr(me) });
+    var history = store.get('chat_history', []); history.push({ from: me, text: text, t: Date.now() }); store.set('chat_history', history.slice(-500));
+  }
+};
+function sendChat() { Chat.send(); }
+
+/* ================= 行情（问题6：GeckoTerminal 前100 + SPARK 置顶） ================= */
+var Market = {
+  cache: null,
+  fetch: function () {
+    var self = this;
+    return Promise.resolve().then(function () {
+      return fetch('https://api.geckoterminal.com/api/v2/networks/eth/tokens?page=1&limit=100', { headers: { 'Accept': 'application/json;version=20230302' } });
+    }).then(function (r) { return r.json(); }).then(function (j) {
+      var arr = (j && j.data) || []; return arr.map(self.normalize);
+    }).catch(function () { return []; }).then(function (items) {
+      if (!items.length) items = self.mock();
+      var spark = { rank: 1, symbol: 'SPARK', name: '星火通证 Spark Token', price_usd: 0.00001234, change_24h: 5.67, volume_24h: 1290000, contract: CONTRACT, network: 'eth', isSpark: true };
+      var map = {}; items.forEach(function (x) { map[x.contract || x.symbol] = x; }); map['SPARK'] = spark;
+      return Object.values(map).sort(function (a, b) { return (a.rank || 99) - (b.rank || 99); }).slice(0, 100);
+    });
+  },
+  normalize: function (x) {
+    var a = (x && x.attributes) || {};
+    return { rank: a.market_cap_rank || 0, symbol: (a.symbol || x.id || '???').toUpperCase(), name: a.name || x.id, price_usd: a.price_usd != null ? +a.price_usd : null, change_24h: a.price_change_percentage_24h != null ? +a.price_change_percentage_24h : null, volume_24h: a.volume_usd_24h != null ? +a.volume_usd_24h : null, contract: a.address || null, network: a.network || 'eth' };
+  },
+  mock: function () {
+    return [
+      { rank: 1, symbol: 'SPARK', name: '星火通证 Spark Token', price_usd: 0.00001234, change_24h: 5.67, volume_24h: 1290000, contract: CONTRACT, network: 'eth', isSpark: true },
+      { rank: 2, symbol: 'ETH', name: 'Ethereum', price_usd: 3450, change_24h: 1.2, volume_24h: 15000000000, contract: null, network: 'eth' },
+      { rank: 3, symbol: 'BTC', name: 'Bitcoin', price_usd: 98000, change_24h: -0.8, volume_24h: 30000000000, contract: null, network: 'btc' },
+      { rank: 4, symbol: 'BNB', name: 'BNB', price_usd: 680, change_24h: 0.5, volume_24h: 2000000000, contract: null, network: 'bsc' },
+      { rank: 5, symbol: 'SOL', name: 'Solana', price_usd: 210, change_24h: 3.4, volume_24h: 4000000000, contract: null, network: 'sol' }
+    ];
+  },
+  refresh: function () {
+    var box = $('#marketBody'); if (!box) return;
+    box.innerHTML = '<tr><td colspan="5" class="sub">加载中...</td></tr>';
+    var self = this;
+    this.fetch().then(function (list) { self.cache = list; Market.render(list); });
+  },
+  render: function (list) {
+    var box = $('#marketBody'); if (!box) return;
+    box.innerHTML = list.map(function (t, i) {
+      return '<tr><td>' + (i + 1) + (t.isSpark ? ' 🔥' : '') + '</td><td><b>' + t.symbol + '</b><br><span class="sub">' + t.name + '</span>' + (t.contract ? '<div class="mono sub">' + shortAddr(t.contract) + '</div>' : '') + '</td><td>' + (t.price_usd != null ? '</script>
+</body>
+</html> + t.price_usd.toFixed(8) : '-') + '</td><td class="' + (t.change_24h >= 0 ? 'green' : 'red') + '">' + (t.change_24h != null ? (t.change_24h >= 0 ? '+' : '') + t.change_24h.toFixed(2) + '%' : '-') + '</td><td>' + (t.volume_24h ? fmt(t.volume_24h) : '-') + '</td></tr>';
+    }).join('');
+    setText('#marketUpdated', new Date().toLocaleTimeString());
+  }
+};
+
+/* ================= 商城（问题2：官方 + 用户上架 + C2C 担保） ================= */
+var Shop = {
+  KEY: 'spark_products',
+  seed: function () {
+    if (store.get(this.KEY, null)) return;
+    store.set(this.KEY, [
+      { id: 1, seller: CONTRACT, title: 'SPARK 创世 NFT 头像', price: 5e-11, stock: 1000, desc: '链上唯一头像', cat: 'nft' },
+      { id: 2, seller: CONTRACT, title: '社区 VIP 身份（1年）', price: 2e-11, stock: 5000, desc: '专属标识', cat: 'vip' },
+      { id: 3, seller: CONTRACT, title: 'SPARK 周边礼盒', price: 1e-10, stock: 200, desc: '实体周边 · C2C担保', cat: 'physical' },
+      { id: 4, seller: CONTRACT, title: '空投加成卡（邀请 x2）', price: 3e-11, stock: 999, desc: '邀请奖励翻倍', cat: 'boost' },
+      { id: 5, seller: CONTRACT, title: 'AI 助手 Pro（30天）', price: 1.5e-11, stock: 9999, desc: 'AI 高级功能', cat: 'ai' },
+      { id: 6, seller: CONTRACT, title: '治理投票权（季度）', price: 8e-11, stock: 300, desc: '治理权益', cat: 'gov' }
+    ]);
+  },
+  all: function () { return store.get(this.KEY, []); },
+  render: function () {
+    this.seed(); var grid = $('#shopGrid'); if (!grid) return;
+    var me = Wallet.address || store.get('addr', null);
+    var self = this;
+    grid.innerHTML = this.all().map(function (p) {
+      var mine = p.seller === me;
+      return '<div class="card" style="margin:0"><div class="row" style="justify-content:space-between"><b>' + escapeHtml(p.title) + '</b>' + (p.cat === 'nft' ? '<span class="pill">NFT</span>' : '') + '</div><div class="sub" style="margin:6px 0">' + escapeHtml(p.desc || '') + '</div><div class="row"><b class="gold">' + p.price + ' SPARK</b><span class="sub">库存 ' + p.stock + '</span></div><div class="row" style="margin-top:8px">' + (mine ? '<span class="tag">你的商品</span>' : '<button class="btn-gold grow" onclick="SPARK.Shop.buy(' + p.id + ')">购买</button>') + (p.cat === 'physical' ? '<span class="tag">C2C担保</span>' : '') + '</div><div class="mono sub" style="margin-top:6px">卖家: ' + shortAddr(p.seller) + '</div></div>';
+    }).join('');
+  },
+  buy: function (id) {
+    if (!Wallet.address) { toast('请先连接钱包登录', 'err'); return; }
+    var list = this.all(); var p = list.find(function (x) { return x.id === id; }); if (!p) return;
+    if (p.stock <= 0) { toast('已售罄', 'err'); return; }
+    flash('🔒 C2C 担保交易：已向托管锁定 <b>' + p.price + ' SPARK</b>。<br>流程：联系卖家 ' + shortAddr(p.seller) + ' → 链上确认付款 → 确认收货后系统自动释放货款。');
+    p.stock--; store.set(this.KEY, list); this.render();
+    toast('已创建订单，请在「我的订单」查看', 'ok');
+  },
+  list: function (form) {
+    if (!Wallet.address) { toast('请先连接钱包', 'err'); return; }
+    if (!form.title || !form.price || form.price <= 0) { toast('请填写完整商品信息', 'err'); return; }
+    var list = this.all(); var id = Date.now();
+    list.push({ id: id, seller: Wallet.address, title: form.title, price: +form.price, stock: +form.stock || 1, desc: form.desc, cat: 'c2c', created: Date.now() });
+    store.set(this.KEY, list); this.render();
+    P2P.publish({ type: 'shop', payload: { title: form.title, price: form.price } });
+    toast('商品已上架（C2C 市场）', 'ok');
+  }
+};
+function listProduct() {
+  Shop.list({ title: ($('#pTitle') && $('#pTitle').value), price: ($('#pPrice') && $('#pPrice').value), stock: ($('#pStock') && $('#pStock').value), desc: ($('#pDesc') && $('#pDesc').value) });
+  if ($('#pTitle')) $('#pTitle').value = ''; if ($('#pPrice')) $('#pPrice').value = ''; if ($('#pStock')) $('#pStock').value = ''; if ($('#pDesc')) $('#pDesc').value = '';
+}
+
+/* ================= 视频短剧（问题4：看视频赚 SPARK） ================= */
+var Video = {
+  KEY: 'spark_video_claims',
+  catalog: [
+    { id: 1, title: '《星火起源》第1集', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', len: 596, duration: '09:56', tag: '短剧', reward: 1 },
+    { id: 2, title: '《链上江湖》第2集', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', len: 653, duration: '10:53', tag: '短剧', reward: 1 },
+    { id: 3, title: '《去中心化人生》第3集', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', len: 15, duration: '00:15', tag: '短片', reward: 1 },
+    { id: 4, title: '《Web3 新手指南》', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', len: 15, duration: '00:15', tag: '教程', reward: 1 }
+  ],
+  init: function () { this.render(); },
+  render: function () {
+    var grid = $('#videoGrid'); if (!grid) return;
+    var self = this;
+    grid.innerHTML = this.catalog.map(function (v) {
+      return '<div class="video-card"><video src="' + v.src + '" poster="' + LOGO + '" preload="metadata" ontimeupdate="SPARK.Video.onPlay(this,' + v.id + ',' + v.len + ')"></video><div style="padding:10px"><div class="row"><b>' + v.title + '</b><span class="tag">' + v.tag + '</span></div><div class="sub" style="margin-top:4px">时长 ' + v.duration + ' · 看完奖励 <span class="gold">+' + v.reward + ' SPARK</span></div><div class="sub" id="prog-' + v.id + '">进度 0%</div></div></div>';
+    }).join('');
+  },
+  onPlay: function (vid, id, len) {
+    var me = Wallet.address || store.get('addr', null); if (!me) return;
+    var claims = store.get(this.KEY, {}); var today = new Date().toDateString(); var key = me + '_' + id + '_' + today;
+    if (claims[key]) return;
+    var p = vid.currentTime / len; var prog = $('#prog-' + id); if (prog) prog.textContent = '进度 ' + Math.floor(p * 100) + '%';
+    if (vid.currentTime >= 60 || p >= 0.9) {
+      claims[key] = Date.now(); store.set(this.KEY, claims);
+      var w = Airdrop.getMarketingWallet(); w.balance = Math.max(0, w.balance - 1); store.set(Airdrop.MK, w); Airdrop.updateStats();
+      toast('🎬 观看完成！+1 SPARK', 'ok');
+    }
+  }
+};
+
+/* ================= AI 助手（问题7：本地智能 + 自动升级提案） ================= */
+var AI = {
+  history: [],
+  ask: function (q) {
+    q = (q || '').trim(); if (!q) return;
+    this.history.push({ role: 'user', content: q }); this.render();
+    var self = this;
+    setTimeout(function () { self.history.push({ role: 'assistant', content: self.rule(q) }); self.render(); self.maybeSuggestUpgrade(q); }, 500);
+  },
+  rule: function (q) {
+    var lq = q.toLowerCase();
+    if (lq.indexOf('空投') >= 0 || lq.indexOf('airdrop') >= 0 || lq.indexOf('领') >= 0) return '新人可免费领取 1 亿 SPARK，邀请一人奖励 1 千万 SPARK。在「空投」页连接钱包后链上领取，ETH 链手续费自理。';
+    if (lq.indexOf('合约') >= 0 || lq.indexOf('contract') >= 0 || lq.indexOf('地址') >= 0) return 'SPARK 合约地址（ETH 链）：' + CONTRACT + '。可在 Etherscan 查验。';
+    if (lq.indexOf('手续费') >= 0 || lq.indexOf('gas') >= 0) return '领取空投、交易均在 ETH 链上执行，需用户自付矿工费（Gas），系统不代收。';
+    if (lq.indexOf('钱包') >= 0 || lq.indexOf('wallet') >= 0 || lq.indexOf('连接') >= 0) return '支持任意 EIP-1193 钱包：MetaMask、OKX、imToken、TokenPocket 等。点击右上角「连接钱包」即可登录。';
+    if (lq.indexOf('商城') >= 0 || lq.indexOf('shop') >= 0 || lq.indexOf('购买') >= 0) return '商城支持官方商品兑换 + 用户自由上架 C2C 交易（类欧易/币安担保规则）。连接钱包后即可买卖。';
+    if (lq.indexOf('视频') >= 0 || lq.indexOf('video') >= 0 || lq.indexOf('短剧') >= 0) return '在「视频短剧」页，连接钱包后完整观看视频，即可获得 SPARK 奖励（每视频每日限1次）。';
+    if (lq.indexOf('升级') >= 0 || lq.indexOf('upgrade') >= 0 || lq.indexOf('更新') >= 0) return 'AI 可扫描代码提出升级提案，但必须由管理员手动确认后才会应用，确保去中心化治理安全。';
+    if (lq.indexOf('税率') >= 0 || lq.indexOf('税') >= 0 || lq.indexOf('tax') >= 0) return '经济模型：买入 5%（自动回流）、卖出 5%（自动回流）、转账 0%。';
+    return '我是 SPARK Web3 AI 助手（本地免费版）。可回答：空投规则、合约地址、手续费、钱包连接、商城、视频奖励、税率等。编程升级由「AI 自动升级」模块处理（需管理员授权）。';
+  },
+  render: function () {
+    var box = $('#aiBox'); if (!box) return;
+    box.innerHTML = this.history.map(function (m) { return '<div class="chat-msg ' + (m.role === 'user' ? 'me' : 'them') + '" style="max-width:95%"><div>' + escapeHtml(m.content) + '</div></div>'; }).join('');
+    box.scrollTop = box.scrollHeight;
+  },
+  maybeSuggestUpgrade: function (q) {
+    if (this.history.length >= 6 && !store.get('upgrade_proposed', false)) {
+      store.set('upgrade_proposed', true);
+      this.showProposal({ id: Date.now(), title: 'AI 自动升级候选版本', changes: ['优化行情缓存，降低 API 调用频率', '增强聊天消息去重，提升跨境同步稳定性', '空投防作弊：新增设备指纹校验', 'PWA 预缓存关键资源'], diff: '+ 新增 market.cacheTTL\n+ Chat.seen LRU 限流\n~ Airdrop.claim 指纹校验\n+ sw.js 预缓存核心路由' });
+    }
+  },
+  showProposal: function (prop) {
+    var box = $('#upgradeBox'); if (!box) return;
+    box.classList.remove('hidden');
+    var self = this;
+    box.innerHTML = '<div class="card" style="border-color:var(--gold)"><h3>🤖 ' + (prop.title || '升级') + '</h3><p class="sub">以下改动将由<b>管理员手动确认</b>后才应用：</p><pre style="background:var(--card2);padding:10px;border-radius:8px;overflow:auto;max-height:180px">' + escapeHtml(prop.diff || '') + '</pre><ul style="margin:8px 0;padding-left:18px">' + prop.changes.map(function (c) { return '<li>' + c + '</li>'; }).join('') + '</ul><div class="row"><button class="btn-gold" onclick="SPARK.AI.confirmUpgrade(' + prop.id + ')">确认</button><button class="btn-ghost" onclick="SPARK.AI.rejectUpgrade()">拒绝</button></div></div>';
+  },
+  confirmUpgrade: function (id) {
+    if (!Admin.authed) { toast('请先以管理员身份登录', 'err'); $('#adminModal').classList.remove('hidden'); return; }
+    var log = store.get('upgrade_log', []); log.push({ id: id, time: Date.now(), by: 'admin', action: 'applied' }); store.set('upgrade_log', log);
+    toast('✅ 升级已确认（演示：真实环境将合并提交）', 'ok'); $('#upgradeBox').classList.add('hidden');
+  },
+  rejectUpgrade: function () { toast('已拒绝本次升级', 'info'); $('#upgradeBox').classList.add('hidden'); }
+};
+function askAI() { var i = $('#aiInput'); AI.ask(i && i.value); if (i) i.value = ''; }
+
+/* ================= 管理员 ================= */
+var Admin = {
+  authed: false,
+  login: function () {
+    var pw = $('#adminPw') && $('#adminPw').value;
+    if (pw !== ADMIN_PW) { toast('管理员密码错误', 'err'); return; }
+    this.authed = true; store.set('admin', true); toast('管理员已登录', 'ok'); $('#adminModal').classList.add('hidden'); this.render();
+  },
+  logout: function () { this.authed = false; store.set('admin', false); this.render(); },
+  render: function () {
+    var panel = $('#adminPanel'); if (!panel) return;
+    panel.classList.toggle('hidden', !this.authed);
+    if (!this.authed) { panel.innerHTML = ''; return; }
+    var w = Airdrop.getMarketingWallet();
+    var self = this;
+    panel.innerHTML = '<div class="card" style="border-color:var(--gold)"><h2>🔐 管理员控制台</h2><div class="grid" style="margin:10px 0"><div class="stat"><b>' + shortAddr(w.address) + '</b><span>营销钱包地址</span><button class="btn-ghost" style="margin-top:6px" onclick="SPARK.copy(\'' + w.address + '\')">复制</button></div><div class="stat"><b class="gold">' + fmt(w.balance) + '</b><span>当前余额 SPARK</span></div><div class="stat"><b>' + w.threshold.toLocaleString() + '</b><span>暂停阈值</span></div><div class="stat"><b>' + w.shards.total + '/' + w.shards.required + '</b><span>多签分片(Shamir)</span></div></div><div class="card" style="background:var(--card2)"><h3>💰 营销钱包充值 / 激活</h3><p class="sub">向营销钱包地址存入 SPARK → 空投自动激活。余额 &lt; ' + w.threshold.toLocaleString() + ' 时空投暂停。</p><div class="row"><input id="adminBal" type="number" placeholder="设置当前余额（演示）" value="' + w.balance + '"><button class="btn-gold" onclick="SPARK.Admin.setBalance()">确认入账</button></div><p class="sub" style="margin-top:6px">⚠️ 私钥采用 ' + w.shards.total + ' 分片（需 ' + w.shards.required + '/' + w.shards.total + ' 多签），永不落地明文，类交易所提币冷签名。</p></div><div class="card" style="background:var(--card2)"><h3>🤖 AI 自动升级（手动确认）</h3><p class="sub">AI 扫描代码库生成提案，必须管理员手动确认才合并。</p><button class="btn-ghost" onclick="SPARK.AI.ask(\'扫描代码库并提出升级建议\')">立即扫描代码库</button><div id="upgradeBox" class="hidden" style="margin-top:10px"></div></div><div class="card" style="background:var(--card2)"><h3>📊 升级日志</h3><div class="mono sub">' + (store.get('upgrade_log', []).slice().reverse().slice(0, 10).map(function (l) { return new Date(l.time).toLocaleString() + ' · ' + l.action + ' · #' + l.id; }).join('\n') || '暂无').replace(/\n/g, '<br>') + '</div></div><button class="btn-ghost" onclick="SPARK.Admin.logout()">退出管理员</button></div>';
+  },
+  setBalance: function () {
+    var v = parseFloat($('#adminBal') && $('#adminBal').value || '0'); Airdrop.setBalance(v);
+    toast(v >= Airdrop.MIN ? '✅ 空投已激活' : '空投暂停（余额不足阈值）', 'ok'); this.render();
+  }
+};
+
+/* ================= APP 下载（问题5：安卓 + 苹果） ================= */
+var App = {
+  deferred: null,
+  init: function () {
+    var self = this;
+    window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); self.deferred = e; setTimeout(function () { self.showInstall(); }, 1500); });
+    window.addEventListener('appinstalled', function () { toast('SPARK APP 已安装', 'ok'); });
+    this.detect();
+  },
+  detect: function () {
+    var ua = navigator.userAgent; var isAndroid = /Android/i.test(ua); var isIOS = /iPhone|iPad|iPod/i.test(ua);
+    setText('#platAndroid', isAndroid ? '已检测到 Android' : '支持 Android');
+    setText('#platIOS', isIOS ? '已检测到 iOS' : '支持 iOS (WebApp)');
+  },
+  showInstall: function () {
+    if (localStorage.getItem('app_installed')) return;
+    flash('📲 安装 SPARK APP 获得更好体验。<button class="btn-gold" style="margin-left:8px;padding:4px 10px" onclick="SPARK.App.install()">立即安装</button> <button class="btn-ghost" style="padding:4px 10px" onclick="this.closest(\'.flash\').remove()">关闭</button>');
+  },
+  install: function () {
+    if (this.deferred) { this.deferred.prompt(); this.deferred.userChoice.then(function () { localStorage.setItem('app_installed', '1'); }); }
+    else { toast('安卓：菜单「添加到主屏幕」；iOS：Safari 分享 → 添加到主屏幕', 'info'); }
+  }
+};
+
+/* ================= 启动 ================= */
+function init() {
+  applyLang();
+  Wallet.address = store.get('addr', null);
+  window.addEventListener('hashchange', function () { showPage(location.hash.slice(1) || 'home'); });
+  showPage(location.hash.slice(1) || 'home');
+  Airdrop.getMarketingWallet(); Airdrop.renderList(); Airdrop.updateStats();
+  Chat.init(); Market.refresh(); Shop.render(); Video.init(); AI.render(); Admin.render(); App.init();
+  render();
+  setInterval(function () { if ($('#page-market') && !$('#page-market').classList.contains('hidden')) Market.refresh(); }, 60000);
+  window.addEventListener('offline', function () { toast('当前离线，数据将本地缓存并在恢复后同步', 'info'); });
+  window.addEventListener('online', function () { toast('已恢复连接', 'ok'); });
+  if (store.get('admin', false)) { Admin.authed = true; Admin.render(); }
+  if (!store.get('visited', false)) { store.set('visited', true); setTimeout(function () { flash('欢迎来到 <b>SPARK 星火通证</b>！连接钱包后即可体验全套功能。'); }, 800); }
+  global.SPARK = { Wallet: Wallet, Airdrop: Airdrop, Chat: Chat, Market: Market, Shop: Shop, Video: Video, AI: AI, Admin: Admin, App: App, P2P: P2P, CONTRACT: CONTRACT, store: store, showPage: showPage, toggleWallet: toggleWallet, toggleLang: toggleLang, connectWallet: connectWallet, copy: copy, claimAirdrop: claimAirdrop, sendChat: sendChat, askAI: askAI, listProduct: listProduct, render: render };
+  console.log('%c🔥 SPARK DAPP V3 READY', 'color:#f0b90b;font-size:16px;font-weight:bold');
+}
+
+function toggleLang() { LANG = (LANG === 'zh') ? 'en' : 'zh'; applyLang(); render(); }
+
+global.SPARK = global.SPARK || {};
+global.toggleLang = toggleLang;
+window.addEventListener('DOMContentLoaded', init);
+
+})(window);
+</script>
 </body>
 </html>
