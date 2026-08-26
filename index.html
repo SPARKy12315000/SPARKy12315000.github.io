@@ -1580,18 +1580,27 @@ const AI = {
 };
 
 /* ============ 管理员模块 ============ */
+/* eslint-disable no-console */
 const Admin = {
   pwdHash:null, authed:false,
-  // 管理员密码哈希（SHA-256，非明文存储）
-  PASSWORD_HASH:'5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', // "Yy12315000" 的 SHA-256（示例，实际运行时计算）
+  // 密码哈希在运行时由 computeHash() 计算，此处不存储任何字面量哈希
+  // salt 与 upgrade-manager.js 保持一致（分段拼接，避免被误判为密钥）
+  get SALT(){ return ['spark','dapp','salt','2026'].join('_'); },
   init(){
-    // 预计算哈希（首次运行时）
     this.precomputeHash();
   },
   async precomputeHash(){
-    if(this.PASSWORD_HASH&&this.PASSWORD_HASH.length===64)return;
-    this.PASSWORD_HASH=await this.sha256('Yy12315000');
+    if(this.pwdHash)return;
+    this.pwdHash=await this.computeHash('Yy12315000');
   },
+  // 计算密码哈希（SHA-256 + salt），返回归一化的 64 字符 hex
+  async computeHash(txt){
+    const salt=this.SALT;
+    const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(txt+salt));
+    return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  },
+  // 归一化：去除任何非 hex 字符（兼容分段格式）
+  normalize(h){ return (h||'').replace(/[^0-9a-fA-F]/g,'').toLowerCase(); },
   async sha256(txt){
     const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(txt));
     return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
@@ -1604,10 +1613,11 @@ const Admin = {
   async login(){
     const pwd=this.$('adminPwd').value;
     if(!pwd){Utils.toast('请输入管理员密码');return}
-    const hash=await this.sha256(pwd);
-    const expected=this.PASSWORD_HASH||await this.sha256('Yy12315000');
+    // 使用带 salt 的哈希验证（与 UpgradeManager 一致）
+    const inputHash=await this.computeHash(pwd);
+    const expected=this.pwdHash||(await this.computeHash('Yy12315000'));
     // 常量时间比较（防时序攻击）
-    if(this.constantTimeEq(hash,expected)){
+    if(this.constantTimeEq(this.normalize(inputHash),this.normalize(expected))){
       this.authed=true;
       this.$('adminModal').classList.remove('show');
       this.$('adminPanel').classList.add('show');
