@@ -1,0 +1,15 @@
+{
+  "name": "spark-dapp",
+  "version": "2.0.0",
+  "description": "SPARK 星火通证 - AI 驱动的去中心化应用 (DApp)，部署于 GitHub Pages + IPFS",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "build": "node scripts/build.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "deploy:now": "python3 scripts/deploy-now.py",
+    "lint": "node scripts/lint.mjs"
+  },
+  "keywords": ["SPARK", "DApp", "Web3", "Ethereum", "IPFS"],
+  "license": "MIT"
+}
