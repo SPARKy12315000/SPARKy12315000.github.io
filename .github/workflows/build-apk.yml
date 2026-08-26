@@ -1,0 +1,76 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Cordova
+        run: npm install -g cordova @cordova/cli
+
+      - name: Create Cordova project
+        run: |
+          cordova create spark-app org.spark.token SPARK || true
+          cp -r * spark-app/www/ 2>/dev/null || true
+          cd spark-app
+          cordova platform add android || true
+
+      - name: Build APK (debug)
+        working-directory: spark-app
+        run: cordova build android --release -- --packageType=apk || cordova build android
+
+      - name: Find APK
+        id: apk
+        run: |
+          APK=$(find spark-app/platforms/android/app/build/outputs -name "*.apk" 2>/dev/null | head -1)
+          if [ -z "$APK" ]; then
+            APK=$(find spark-app/platforms/android -name "*.apk" | head -1)
+          fi
+          echo "path=${APK}" >> $GITHUB_OUTPUT
+          echo "Found APK: $APK"
+
+      - name: Upload APK artifact
+        if: steps.apk.outputs.path != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: SPARK-Android-APK
+          path: ${{ steps.apk.outputs.path }}
+
+      - name: Create / Update Release
+        if: steps.apk.outputs.path != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2.0.0
+          name: SPARK DApp v2.0.0
+          body: |
+            🔥 SPARK 星火通证 去中心化应用 APK
+
+            ## 功能
+            - 🔗 钱包连接（MetaMask/OKX/imToken/TokenPocket/WalletConnect）
+            - 🎁 链上空投（1亿 SPARK + 邀请奖励）
+            - 💬 全球 P2P 聊天（多中继同步）
+            - 📈 行情（GeckoTerminal 前100，SPARK 置顶）
+            - 🛒 商城 + C2C 交易市场
+            - 🎬 短视频/短剧（观看奖励）
+            - 🤖 AI 助手 + 自动升级
+
+            安装后首次请允许「未知来源」安装。
+          files: ${{ steps.apk.outputs.path }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
