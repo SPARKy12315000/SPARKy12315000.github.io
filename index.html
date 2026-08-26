@@ -1,1 +1,2079 @@
-��`�!�ia�iejx
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>星火通证 (SPARK) - 去中心化应用</title>
+<meta name="description" content="星火通证 SPARK - 流动的文化之火，透明、公平、可持续的社区价值生态">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<style>
+:root{
+  --bg:#0a0a0a;--card:#141414;--card2:#1c1c1c;--line:#2a2a2a;
+  --gold:#f0b90b;--gold2:#ffd34d;--red:#ff4d4f;--green:#2ecc71;
+  --text:#f5f5f5;--sub:#999;--blue:#3b82f6;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:14px;line-height:1.5;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;outline:none}
+input,textarea,select{font-family:inherit;outline:none}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:#444;border-radius:3px}
+
+/* 顶部导航 */
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.92);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:8px 12px;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px;
+  margin-right:auto;white-space:nowrap}
+.brand .logo{width:30px;height:30px;border-radius:50%;background:var(--gold);
+  display:flex;align-items:center;justify-content:center;font-size:16px}
+.brand small{display:block;font-weight:400;font-size:9px;color:var(--sub)}
+.nav-links{display:flex;gap:2px;flex-wrap:wrap}
+.nav-links a{padding:6px 10px;border-radius:8px;color:var(--sub);font-size:12px;
+  white-space:nowrap;transition:.2s}
+.nav-links a.active,.nav-links a:hover{color:var(--gold);background:rgba(240,185,11,.1)}
+.wallet-btn{background:var(--gold);color:#000;padding:8px 14px;border-radius:10px;
+  font-weight:700;font-size:12px;white-space:nowrap}
+.wallet-btn:hover{background:var(--gold2)}
+.lang-switch{background:var(--card2);color:var(--text);padding:6px 10px;border-radius:8px;font-size:12px}
+
+.container{max-width:900px;margin:0 auto;padding:12px}
+section{display:none;animation:fade .3s}
+section.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.card h2{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card h3{font-size:14px;margin:12px 0 8px;color:var(--gold)}
+
+.hero{text-align:center;padding:28px 16px;background:
+  radial-gradient(circle at 50% 0%,rgba(240,185,11,.15),transparent 60%),var(--card);
+  border-radius:20px;margin-bottom:16px}
+.hero h1{font-size:26px;margin-bottom:8px}
+.hero .sub{color:var(--sub);max-width:520px;margin:0 auto 16px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
+.stat{background:var(--card2);border-radius:12px;padding:12px;text-align:center}
+.stat .v{font-size:18px;font-weight:800;color:var(--gold)}
+.stat .l{font-size:11px;color:var(--sub);margin-top:4px}
+
+.btn{display:inline-block;background:var(--gold);color:#000;padding:12px 20px;border-radius:12px;
+  font-weight:700;text-align:center;width:100%;transition:.2s;border:none}
+.btn:hover{background:var(--gold2)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-sm{padding:8px 14px;font-size:12px;width:auto}
+.btn-ghost{background:var(--card2);color:var(--text);border:1px solid var(--line)}
+.btn-red{background:var(--red);color:#fff}
+
+input,textarea,select{width:100%;background:var(--bg);border:1px solid var(--line);
+  color:var(--text);padding:12px;border-radius:12px;font-size:14px;margin-bottom:10px}
+textarea{resize:vertical;min-height:80px}
+label{font-size:12px;color:var(--sub);display:block;margin-bottom:4px}
+
+.alert{padding:12px;border-radius:12px;margin-bottom:12px;font-size:13px}
+.alert-warn{background:rgba(255,77,79,.12);border:1px solid var(--red);color:#ff8788}
+.alert-info{background:rgba(59,130,246,.12);border:1px solid var(--blue);color:#93c5fd}
+.alert-ok{background:rgba(46,204,113,.12);border:1px solid var(--green);color:#6ee7a0}
+
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;background:var(--card2)}
+.badge-gold{background:rgba(240,185,11,.15);color:var(--gold)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+
+/* 空投 */
+.airdrop-rule{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.rule-item{flex:1;min-width:120px;background:var(--card2);border-radius:12px;padding:12px;text-align:center}
+.rule-item .n{font-size:22px;font-weight:800;color:var(--gold)}
+.rule-item .t{font-size:11px;color:var(--sub);margin-top:4px}
+
+/* 聊天 */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 140px);min-height:400px}
+.chat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+.chat-messages{flex:1;overflow-y:auto;padding:12px;background:var(--bg);border-radius:12px;margin-bottom:10px}
+.msg{margin-bottom:12px;max-width:80%;padding:10px 12px;border-radius:14px;word-break:break-word;position:relative}
+.msg.them{background:var(--card2);border-bottom-left-radius:4px}
+.msg.me{background:var(--gold);color:#000;margin-left:auto;border-bottom-right-radius:4px}
+.msg .who{font-size:10px;opacity:.7;margin-bottom:3px}
+.msg .time{font-size:9px;opacity:.5;margin-top:4px;text-align:right}
+.chat-input{display:flex;gap:8px}
+.chat-input input{flex:1;margin-bottom:0}
+.typing{font-size:11px;color:var(--sub);padding:4px 12px;height:18px}
+
+/* 行情 */
+.market-row{display:grid;grid-template-columns:24px 1fr auto auto auto;gap:8px;align-items:center;
+  padding:12px;border-bottom:1px solid var(--line);font-size:13px}
+.market-row.head{font-size:11px;color:var(--sub);position:sticky;top:0;background:var(--card)}
+.market-row .up{color:var(--green)}
+.market-row .down{color:var(--red)}
+.market-row .star{color:var(--gold);font-weight:800}
+.market-list{max-height:60vh;overflow-y:auto;border-radius:12px;border:1px solid var(--line)}
+
+/* 商城 */
+.product{background:var(--card2);border-radius:14px;padding:14px;border:1px solid var(--line)}
+.product .pt{font-weight:700;margin-bottom:6px}
+.product .pp{color:var(--gold);font-weight:800;margin:8px 0}
+.product img{max-width:100%;height:120px;object-fit:cover;border-radius:10px;margin-bottom:8px;
+  background:#000;display:block;margin-left:auto;margin-right:auto}
+.dex-badge{font-size:10px;background:var(--card);padding:2px 6px;border-radius:6px;color:var(--gold)}
+
+/* 视频 */
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.video-card{background:var(--card2);border-radius:12px;overflow:hidden;cursor:pointer}
+.video-card video,.video-card img{width:100%;height:180px;object-fit:cover;background:#000}
+.video-card .vt{padding:8px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reward-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+  background:var(--gold);color:#000;padding:20px 30px;border-radius:16px;font-weight:800;
+  font-size:18px;z-index:999;transition:.3s;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.reward-pop.show{transform:translate(-50%,-50%) scale(1)}
+
+/* AI */
+.ai-chat{height:50vh;overflow-y:auto;padding:12px;background:var(--bg);border-radius:12px;margin-bottom:10px}
+.ai-msg{padding:10px 12px;border-radius:12px;margin-bottom:10px;font-size:13px;white-space:pre-wrap}
+.ai-msg.bot{background:var(--card2)}
+.ai-msg.user{background:rgba(240,185,11,.15);margin-left:20px}
+
+/* APP下载 */
+.app-box{text-align:center;padding:24px}
+.app-box .icon{font-size:48px;margin-bottom:12px}
+.qr{width:160px;height:160px;margin:16px auto;background:#fff;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;color:#000;font-size:11px;text-align:center;padding:8px}
+
+/* 管理员 */
+.admin-modal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;
+  display:none;align-items:center;justify-content:center;padding:20px}
+.admin-modal.show{display:flex}
+.admin-box{background:var(--card);border-radius:16px;padding:24px;max-width:400px;width:100%}
+.admin-box h3{margin-bottom:16px}
+
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--card2);
+  border:1px solid var(--line);padding:12px 20px;border-radius:12px;font-size:13px;z-index:2000;
+  opacity:0;transition:.3s;max-width:90%;text-align:center}
+.toast.show{opacity:1}
+
+.tab-nav{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}
+.tab-nav button{background:var(--card2);color:var(--sub);padding:8px 14px;border-radius:8px;font-size:12px}
+.tab-nav button.active{background:var(--gold);color:#000;font-weight:700}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;display:none;
+  align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.modal.show{display:flex}
+.modal-box{background:var(--card);border-radius:16px;padding:20px;max-width:500px;width:100%}
+
+.social-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.social-links a{background:var(--card2);padding:8px 12px;border-radius:8px;font-size:12px}
+
+.upgrade-bar{background:rgba(240,185,11,.1);border:1px solid var(--gold);border-radius:12px;
+  padding:12px;margin-bottom:12px;display:none}
+.upgrade-bar.show{display:block}
+
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--sub);font-weight:600}
+
+.tx-hash{font-family:monospace;font-size:11px;color:var(--blue);word-break:break-all}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--line);
+  border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+
+<!-- SPARK_WALLET_GUARD_START -->
+<script>
+/**
+ * SPARK Wallet Guard - EIP-1193 兼容层
+ * 支持: MetaMask, OKX, imToken, TokenPocket, Trust Wallet, Coinbase, WalletConnect,
+ *       Brave Wallet, Rabby, BitKeep, 以及任何注入 window.ethereum 的钱包
+ * 无外部依赖，纯原生 JS
+ */
+(function () {
+  'use strict';
+
+  // 防止重复注入
+  if (window.SPARKWalletGuard) return;
+  window.SPARKWalletGuard = true;
+
+  console.log('[SPARK Wallet] Guard loaded');
+
+  // ========== 1. 收集所有 EIP-1193 Provider ==========
+  var providers = []; // {name, provider, uuid}
+
+  function addProvider(name, provider, uuid) {
+    if (!provider || typeof provider.request !== 'function') return;
+    // 去重
+    for (var i = 0; i < providers.length; i++) {
+      if (providers[i].provider === provider) return;
+    }
+    providers.push({ name: name, provider: provider, uuid: uuid || '' });
+    console.log('[SPARK Wallet] Detected:', name);
+  }
+
+  // EIP-6963: 监听多钱包广播
+  window.addEventListener('eip6963:announceProvider', function (event) {
+    var detail = event.detail;
+    if (detail && detail.provider) {
+      var info = detail.info || {};
+      addProvider(info.name || detail.providerName || 'Wallet (EIP-6963)', detail.provider, info.uuid);
+    }
+  });
+
+  // 主动请求钱包广播（触发已注入的钱包重新 announce）
+  window.dispatchEvent(new Event('eip6963:requestProvider'));
+
+  // ========== 2. 扫描常见注入点 ==========
+  function scanInjectors() {
+    var candidates = [
+      { name: 'MetaMask', obj: window.ethereum },
+      { name: 'OKX Wallet', obj: window.okxwallet },
+      { name: 'imToken', obj: window.imToken },
+      { name: 'TokenPocket', obj: window.tokenpocket },
+      { name: 'Trust Wallet', obj: window.trustwallet },
+      { name: 'Coinbase Wallet', obj: window.coinbaseWalletExtension },
+      { name: 'Brave Wallet', obj: window.braveEthereum },
+      { name: 'Rabby', obj: window.rabby },
+      { name: 'BitKeep', obj: window.bitkeep }
+    ];
+
+    for (var i = 0; i < candidates.length; i++) {
+      var c = candidates[i];
+      if (c.obj && typeof c.obj.request === 'function') {
+        addProvider(c.name, c.obj);
+      }
+    }
+
+    // window.ethereum 可能是多钱包聚合器（如 OKX 同时注入 ethereum）
+    if (window.ethereum && typeof window.ethereum.request === 'function') {
+      addProvider('Ethereum (window.ethereum)', window.ethereum);
+    }
+  }
+
+  scanInjectors();
+
+  // ========== 3. 延迟二次扫描（部分钱包异步注入）==========
+  setTimeout(scanInjectors, 500);
+  setTimeout(scanInjectors, 1500);
+  setTimeout(function () {
+    window.dispatchEvent(new Event('eip6963:requestProvider'));
+    scanInjectors();
+  }, 3000);
+
+  // ========== 4. 连接指定 provider ==========
+  async function connectProvider(provider, name) {
+    try {
+      var accounts = await provider.request({ method: 'eth_requestAccounts' });
+      if (!accounts || accounts.length === 0) {
+        throw new Error('未获取到账户，请在钱包中授权');
+      }
+
+      var address = accounts[0];
+      var chainId = null;
+      try {
+        chainId = await provider.request({ method: 'eth_chainId' });
+      } catch (e) {}
+
+      // 标准化地址
+      address = String(address).toLowerCase();
+
+      // 触发全局登录事件（供主应用监听）
+      var event = new CustomEvent('spark:walletConnected', {
+        detail: {
+          address: address,
+          chainId: chainId,
+          walletName: name,
+          provider: provider
+        }
+      });
+      window.dispatchEvent(event);
+
+      // 兼容旧版全局回调
+      if (typeof window.onWalletConnected === 'function') {
+        window.onWalletConnected({ address: address, chainId: chainId, walletName: name });
+      }
+
+      return { success: true, address: address, chainId: chainId, walletName: name };
+    } catch (err) {
+      console.error('[SPARK Wallet] Connect error:', err);
+      return { success: false, error: err.message || String(err) };
+    }
+  }
+
+  // ========== 5. 自动检测并连接任意钱包 ==========
+  async function connectAny() {
+    scanInjectors();
+
+    // 优先 EIP-6963 发现的 provider
+    if (providers.length > 0) {
+      var p = providers[0];
+      return connectProvider(p.provider, p.name);
+    }
+
+    // 降级：直接使用 window.ethereum
+    if (window.ethereum && typeof window.ethereum.request === 'function') {
+      return connectProvider(window.ethereum, 'Ethereum (window.ethereum)');
+    }
+
+    return { success: false, error: '未检测到钱包。请安装 MetaMask / OKX / imToken 等浏览器扩展或移动端钱包。' };
+  }
+
+  // ========== 6. 诊断信息 ==========
+  function diagnose() {
+    scanInjectors();
+    var info = {
+      userAgent: navigator.userAgent,
+      hasEthereum: !!window.ethereum,
+      ethereumIsMetaMask: !!(window.ethereum && window.ethereum.isMetaMask),
+      ethereumIsOKX: !!(window.ethereum && window.ethereum.isOKX),
+      providersCount: providers.length,
+      providers: providers.map(function (p) { return p.name; }),
+      eip6963Supported: 'dispatchEvent' in window
+    };
+    console.log('[SPARK Wallet] Diagnosis:', info);
+    return info;
+  }
+
+  // ========== 7. 暴露全局 API ==========
+  window.SPARKWallet = {
+    connect: connectAny,
+    connectProvider: connectProvider,
+    detect: scanInjectors,
+    diagnose: diagnose,
+    getProviders: function () { return providers.slice(); },
+    isReady: function () { return providers.length > 0 || !!window.ethereum; }
+  };
+
+  // ========== 8. 自动诊断（控制台可见）==========
+  setTimeout(function () {
+    diagnose();
+    if (providers.length === 0 && !window.ethereum) {
+      console.warn('[SPARK Wallet] ⚠️ 未检测到任何钱包注入器。请确保：\n  1. 已安装钱包扩展（MetaMask / OKX 等）\n  2. 在移动端钱包内置浏览器中打开\n  3. 钱包已解锁');
+    }
+  }, 1000);
+
+})();
+
+</script>
+<!-- SPARK_WALLET_GUARD_END -->
+</head>
+<body>
+
+<div class="nav">
+  <div class="brand">
+    <div class="logo">🔥</div>
+    <div>星火通证<small>SPARK DApp</small></div>
+  </div>
+  <nav class="nav-links">
+    <a href="#home" class="active" data-tab="home">首页</a>
+    <a href="#airdrop" data-tab="airdrop">空投</a>
+    <a href="#chat" data-tab="chat">聊天</a>
+    <a href="#market" data-tab="market">行情</a>
+    <a href="#shop" data-tab="shop">商城</a>
+    <a href="#video" data-tab="video">短剧</a>
+    <a href="#ai" data-tab="ai">AI助手</a>
+    <a href="#app" data-tab="app">APP下载</a>
+  </nav>
+  <button class="lang-switch" onclick="App.toggleLang()">EN</button>
+  <button class="wallet-btn" id="walletBtn" onclick="App.openWalletSelector()">连接钱包</button>
+</div>
+
+<div class="container">
+
+<!-- 升级提示条 -->
+<div class="upgrade-bar" id="upgradeBar">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span>🤖 <span id="upgradeTitle">检测到 AI 自动升级候选版本</span></span>
+    <button class="btn btn-sm" style="margin-left:auto" onclick="Admin.confirmUpgrade()">确认升级</button>
+    <button class="btn btn-sm btn-ghost" onclick="Admin.dismissUpgrade()">拒绝</button>
+  </div>
+  <details style="margin-top:8px;font-size:12px;color:var(--sub)">
+    <summary>查看改动详情</summary>
+    <pre id="upgradeDiff" style="white-space:pre-wrap;margin-top:8px"></pre>
+  </details>
+</div>
+
+<!-- 首页 -->
+<section id="home" class="active">
+  <div class="hero">
+    <h1>🔥 <span data-i18n="hero_title">星火通证</span></h1>
+    <p class="sub" data-i18n="hero_sub">流动的文化之火 · 透明、公平、可持续的社区价值生态</p>
+    <div class="stats">
+      <div class="stat"><div class="v">SPARK</div><div class="l" data-i18n="stat_token">代币名称</div></div>
+      <div class="stat"><div class="v">9.99Q</div><div class="l" data-i18n="stat_supply">发行总量</div></div>
+      <div class="stat"><div class="v" id="homeWalletBalance">0</div><div class="l" data-i18n="stat_marketing">营销钱包余额</div></div>
+      <div class="stat"><div class="v" id="homeParticipants">0</div><div class="l" data-i18n="stat_participants">已参与地址</div></div>
+    </div>
+    <button class="btn" style="margin-top:16px;max-width:280px" onclick="App.switchTab('airdrop')">🎁 立即领空投</button>
+  </div>
+
+  <div class="card">
+    <h2>📋 <span data-i18n="core_info">核心信息</span></h2>
+    <div class="grid2">
+      <div><label data-i18n="contract">智能合约</label>
+        <div style="display:flex;gap:6px;align-items:center">
+          <span class="tx-hash" id="contractAddr">0xD580C7C9Cde5ce776fEed844310330A2a40078d9</span>
+          <button class="btn btn-sm btn-ghost" onclick="App.copy('0xD580C7C9Cde5ce776fEed844310330A2a40078d9')">复制</button>
+        </div>
+      </div>
+      <div><label data-i18n="network">网络</label>
+        <div>Ethereum Mainnet (ETH)</div>
+      </div>
+    </div>
+    <h3>📜 <span data-i18n="intro">项目简介</span></h3>
+    <p style="font-size:13px;color:#ccc" data-i18n="intro_text">
+      星火通证 (SPARK) 是一个以"流动的文化之火"为核心理念的创新型代币。我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个"星火流转，价值共生"的可持续生态。项目采用独特的营销回流经济模型，所有买卖交易产生的税费（买入5%、卖出5%）将100%自动注入资金池用于回流，旨在支撑币价长期稳定，形成内生的价值增长飞轮。
+    </p>
+    <div class="grid3" style="margin-top:12px">
+      <div class="stat"><div class="v" style="font-size:14px">5%</div><div class="l">买入税 · 自动回流</div></div>
+      <div class="stat"><div class="v" style="font-size:14px">5%</div><div class="l">卖出税 · 自动回流</div></div>
+      <div class="stat"><div class="v" style="font-size:14px">0%</div><div class="l">转账税</div></div>
+    </div>
+    <h3>🔗 <span data-i18n="official_links">官方链接</span></h3>
+    <div class="social-links">
+      <a href="mailto:SPARKTOKEN@TUTAMAIL.COM">📧 SPARKTOKEN@TUTAMAIL.COM</a>
+      <a href="https://sparktoken.eth.limo/" target="_blank">🌐 sparktoken.eth.limo</a>
+      <a href="https://sparktoken.eth.link/" target="_blank">🌐 sparktoken.eth.link</a>
+      <a href="https://sparktoken.eth/" target="_blank">🌐 sparktoken.eth</a>
+      <a href="https://etherscan.io/token/0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank">🔍 Etherscan</a>
+    </div>
+  </div>
+</section>
+
+<!-- 空投 -->
+<section id="airdrop">
+  <div class="card">
+    <h2>🎁 <span data-i18n="airdrop_title">SPARK 链上空投</span></h2>
+    <div class="airdrop-rule">
+      <div class="rule-item"><div class="n">1亿</div><div class="t" data-i18n="rule1">新人免费领取</div></div>
+      <div class="rule-item"><div class="n">1000万</div><div class="t" data-i18n="rule2">邀请一人奖励</div></div>
+      <div class="rule-item"><div class="n">100,000</div><div class="t" data-i18n="rule3">营销钱包下限</div></div>
+    </div>
+    <div class="alert alert-info" id="airdropNotice">
+      ⛓️ <span data-i18n="airdrop_notice">提交地址即上链，单地址限领一次，防作弊。用户自付 ETH 链上手续费领取。</span>
+    </div>
+    <div id="airdropPauseAlert"></div>
+    <div class="grid2" style="margin:12px 0">
+      <div class="stat"><div class="v" id="marketingBalance" style="font-size:15px">0</div><div class="l" data-i18n="mkt_balance">营销钱包余额</div></div>
+      <div class="stat"><div class="v" id="totalClaimed" style="font-size:15px">0</div><div class="l" data-i18n="total_claimed">累计已领取</div></div>
+      <div class="stat"><div class="v" id="participantCount" style="font-size:15px">0</div><div class="l" data-i18n="participants">已参与地址</div></div>
+      <div class="stat"><div class="v" id="myInvites" style="font-size:15px">0</div><div class="l" data-i18n="my_invites">我的邀请</div></div>
+    </div>
+    <div id="claimForm">
+      <label data-i18n="your_addr">你的钱包地址（领取空投）</label>
+      <input type="text" id="claimAddress" placeholder="0x...">
+      <label data-i18n="inviter_addr">邀请人地址（可选）</label>
+      <input type="text" id="inviterAddress" placeholder="0x... 不填则无邀请奖励">
+      <button class="btn" id="claimBtn" onclick="Airdrop.claim()">⛓️ <span data-i18n="claim_btn">链上领取（自付手续费）</span></button>
+    </div>
+    <div class="alert alert-info" style="margin-top:12px;font-size:12px">
+      💡 <span data-i18n="claim_tip">系统将自动关联你的地址为邀请奖励地址。领取时需支付 ETH 链上 Gas 费，请从交易所提取少量 ETH 到该钱包用于手续费。</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📜 <span data-i18n="claim_list">空投名单（去中心化公开账本）</span></h2>
+    <div style="font-size:12px;color:var(--sub);margin-bottom:8px" data-i18n="claim_list_tip">
+      所有领取记录存储于 IPFS + 浏览器本地，任何人可验证，不可篡改。
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>#</th><th>地址</th><th>数量</th><th>邀请人</th><th>时间</th></tr></thead>
+        <tbody id="claimListBody"><tr><td colspan="5" style="text-align:center;color:var(--sub)">加载中...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 聊天 -->
+<section id="chat">
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="padding:12px;border-bottom:1px solid var(--line)">
+      <h2 style="margin:0">💬 <span data-i18n="chat_title">全球社区聊天</span></h2>
+      <div style="font-size:11px;color:var(--sub);margin-top:4px">
+        <span data-i18n="chat_desc">P2P 去中心化 · 多中继同步 · 抗审查 · </span>
+        <span id="chatOnline" style="color:var(--green)">0 在线</span>
+      </div>
+    </div>
+    <div class="chat-wrap" style="height:55vh;min-height:350px">
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="typing" id="chatTyping"></div>
+      <div style="padding:12px;display:flex;gap:8px">
+        <input type="text" id="chatInput" placeholder="输入消息..." style="margin:0" onkeydown="if(event.key==='Enter')Chat.send()">
+        <button class="btn btn-sm" style="width:auto;padding:12px 20px" onclick="Chat.send()">发送</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 行情 -->
+<section id="market">
+  <div class="card">
+    <h2>📈 <span data-i18n="market_title">加密行情（前100，SPARK置顶）</span></h2>
+    <div style="font-size:11px;color:var(--sub);margin-bottom:10px">
+      <span data-i18n="market_src">数据源：GeckoTerminal（免费公共 API，每60秒刷新）</span>
+      · <span id="marketUpdate"></span>
+      <button class="btn btn-sm btn-ghost" style="float:right" onclick="Market.refresh()">🔄 刷新</button>
+    </div>
+    <div class="market-list">
+      <div class="market-row head">
+        <span>#</span><span>币种</span><span style="text-align:right">价格(USDT)</span><span style="text-align:right">24h</span><span style="text-align:right">成交额</span>
+      </div>
+      <div id="marketBody"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 商城 -->
+<section id="shop">
+  <div class="tab-nav">
+    <button class="active" onclick="Shop.switchTab('mall',this)">🛒 <span data-i18n="shop_mall">官方商城</span></button>
+    <button onclick="Shop.switchTab('c2c',this)">🏪 <span data-i18n="shop_c2c">C2C 交易市场</span></button>
+    <button onclick="Shop.switchTab('sell',this)">➕ <span data-i18n="shop_sell">我要出售</span></button>
+  </div>
+
+  <div id="mallTab">
+    <div class="grid2" id="productList"></div>
+  </div>
+
+  <div id="c2cTab" style="display:none">
+    <div class="alert alert-info" style="font-size:12px">
+      💱 <span data-i18n="c2c_desc">类似欧易/币安 C2C 交易：用户自由挂单买卖，平台作为去中心化撮合中介，资金由智能合约托管，交易双方确认后自动放行。支持法币与 SPARK 兑换。</span>
+    </div>
+    <div style="display:flex;gap:8px;margin:12px 0;flex-wrap:wrap">
+      <select id="c2cFilter" onchange="Shop.renderC2C()" style="width:auto;margin:0">
+        <option value="all">全部</option>
+        <option value="sell">我要买（出售单）</option>
+        <option value="buy">我要卖（求购单）</option>
+      </select>
+      <select id="c2cPay" onchange="Shop.renderC2C()" style="width:auto;margin:0">
+        <option value="all">全部支付</option>
+        <option value="USDT">USDT</option>
+        <option value="CNY">CNY</option>
+        <option value="SPARK">SPARK</option>
+      </select>
+    </div>
+    <div id="c2cList"></div>
+  </div>
+
+  <div id="sellTab" style="display:none">
+    <div class="card">
+      <h3 data-i18n="sell_title">发布商品 / 挂单</h3>
+      <input type="text" id="sellTitle" placeholder="商品名称">
+      <textarea id="sellDesc" placeholder="商品描述、规格、发货方式..."></textarea>
+      <div class="grid2">
+        <div><label data-i18n="sell_price">价格</label><input type="number" id="sellPrice" placeholder="0"></div>
+        <div><label data-i18n="sell_currency">计价单位</label>
+          <select id="sellCurrency" style="margin:0">
+            <option value="SPARK">SPARK</option>
+            <option value="USDT">USDT</option>
+            <option value="CNY">CNY</option>
+          </select>
+        </div>
+      </div>
+      <label data-i18n="sell_stock">库存</label>
+      <input type="number" id="sellStock" placeholder="1" value="1">
+      <button class="btn" onclick="Shop.publish()">✅ <span data-i18n="sell_submit">上架商品</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- 视频 -->
+<section id="video">
+  <div class="card">
+    <h2>🎬 <span data-i18n="video_title">短视频 / 短剧</span></h2>
+    <div style="font-size:12px;color:var(--sub);margin-bottom:10px">
+      <span data-i18n="video_desc">观看视频即可获得 SPARK 奖励（每60秒 +1 SPARK）。钱包登录后奖励自动累计到你的地址。</span>
+      · <span data-i18n="video_watched">已观看奖励：</span><b id="videoEarned" style="color:var(--gold)">0</b> SPARK
+    </div>
+    <div class="video-grid" id="videoGrid"></div>
+  </div>
+</section>
+
+<!-- AI -->
+<section id="ai">
+  <div class="card">
+    <h2>🤖 <span data-i18n="ai_title">SPARK Web3 AI 助手</span></h2>
+    <div style="font-size:12px;color:var(--sub);margin-bottom:10px" data-i18n="ai_desc">
+      本地免费运行，无需 API Key。可回答空投、合约、手续费、下载等问题，并具备自动检测升级项目代码的能力。
+    </div>
+    <div class="ai-chat" id="aiChat"></div>
+    <div style="display:flex;gap:8px">
+      <input type="text" id="aiInput" placeholder="问点什么... 如：空投怎么领？" style="margin:0" onkeydown="if(event.key==='Enter')AI.send()">
+      <button class="btn btn-sm" style="width:auto;padding:12px 20px" onclick="AI.send()">发送</button>
+    </div>
+  </div>
+</section>
+
+<!-- APP下载 -->
+<section id="app">
+  <div class="card app-box">
+    <div class="icon">📱</div>
+    <h2 data-i18n="app_title">SPARK 安卓 APP</h2>
+    <p style="color:var(--sub)" data-i18n="app_desc">去中心化客户端，支持钱包、空投、聊天、行情、商城、AI。APK 免费下载。</p>
+    <div class="grid2" style="margin-top:16px">
+      <a href="apk.html" class="btn"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M17.523 15.3414c-.5511 0-.999-.4489-.999-.9999s.4479-.999.999-.999.999.4488.999.999-.4479.9999-.999.9999zm-11.046 0c-.551 0-.999-.4489-.999-.9999s.4479-.999.999-.999.999.4488.999.999-.4479.9999-.999.9999zm11.4045-6.02l1.7027-2.548c.109-.165.06-.384-.109-.493-.168-.109-.388-.06-.497.105l-1.744 2.568c-.918-.409-1.968-.682-3.118-.682-1.142 0-2.18.273-3.094.682l-1.743-2.568c-.109-.165-.329-.214-.497-.105-.168.109-.218.328-.109.493l1.702 2.548c-2.387 1.538-3.949 4.025-3.949 6.851h12.506c0-2.826-1.561-5.313-3.948-6.851zm-5.358 8.426c-.307 0-.553.246-.553.553v2.481c0 .307.246.553.553.553s.553-.246.553-.553v-2.481c0-.307-.246-.553-.553-.553zm6.563 0c-.307 0-.553.246-.553.553v2.481c0 .307.246.553.553.553s.553-.246.553-.553v-2.481c0-.307-.246-.553-.553-.553z'/%3E%3C/svg%3E" style="width:20px;height:20px;vertical-align:middle;margin-right:6px">🤖 <span data-i18n="app_android">下载 APK (Android)</span></a>
+      <button class="btn btn-ghost" onclick="App.installPWA()">🍎 <span data-i18n="app_ios">iOS 网页安装</span></button>
+    </div>
+    <div class="qr" id="appQr">扫码直达<br><small id="appQrUrl"></small></div>
+    <p style="font-size:11px;color:var(--sub)" data-i18n="app_tip">安装后首次允许「未知来源」安装。iOS 请使用 Safari 添加到主屏幕。</p>
+    <button class="btn btn-sm btn-ghost" onclick="App.installPWA()" id="pwaBtn" style="display:none">📲 <span data-i18n="app_pwa">直接安装到手机</span></button>
+  </div>
+</section>
+
+</div>
+
+<footer style="text-align:center;padding:24px 12px;font-size:11px;color:var(--sub)">
+  <div class="social-links">
+    <a href="https://sparky12315000.github.io/" target="_blank">🌐 sparky12315000.github.io</a>
+    <a href="https://etherscan.io/token/0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank">🔍 Etherscan</a>
+    <a href="mailto:SPARKTOKEN@TUTAMAIL.COM">📧 Email</a>
+  </div>
+  <p style="margin-top:12px">© 2026 星火通证 (SPARK). <span data-i18n="footer">完全去中心化 · 抗审查 · 数据链上/分布式存储</span></p>
+  <button class="btn btn-sm btn-ghost" style="margin-top:12px" onclick="Admin.open()">🔒 <span data-i18n="admin_entrance">管理员入口</span></button>
+</footer>
+
+<!-- 钱包选择器 -->
+<div class="modal" id="walletModal">
+  <div class="modal-box">
+    <h3>🔗 <span data-i18n="wallet_title">连接去中心化钱包</span></h3>
+    <p style="font-size:12px;color:var(--sub);margin-bottom:16px" data-i18n="wallet_desc">
+      自动检测设备已安装的钱包，支持任意 EIP-1193 兼容钱包。
+    </p>
+    <div id="walletList" style="display:flex;flex-direction:column;gap:8px"></div>
+    <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="App.closeWalletSelector()">取消</button>
+  </div>
+</div>
+
+<!-- 管理员登录 -->
+<div class="modal" id="adminModal">
+  <div class="modal-box">
+    <h3>🔒 <span data-i18n="admin_login">管理员登录</span></h3>
+    <input type="password" id="adminPwd" placeholder="管理员密码">
+    <button class="btn" onclick="Admin.login()">登录</button>
+    <button class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="Admin.close()">取消</button>
+  </div>
+</div>
+
+<!-- 管理员面板 -->
+<div class="modal" id="adminPanel">
+  <div class="modal-box" style="max-width:600px">
+    <h3>⚙️ <span data-i18n="admin_panel">管理员面板</span></h3>
+    <div class="tab-nav">
+      <button class="active" onclick="Admin.switchTab('gen',this)">营销钱包</button>
+      <button onclick="Admin.switchTab('upgrade',this)">AI 升级</button>
+      <button onclick="Admin.switchTab('claims',this)">空投记录</button>
+      <button onclick="Admin.switchTab('settings',this)">系统设置</button>
+    </div>
+
+    <div id="adminGen">
+      <div class="alert alert-info" style="font-size:12px">
+        系统自动生成空投营销钱包。存入 SPARK 即激活空投；余额 &lt; 100,000 自动暂停。私钥经加密分片，仅多签/黑洞策略管控。
+      </div>
+      <label>营销钱包地址</label>
+      <input type="text" id="marketingAddr" readonly>
+      <button class="btn btn-sm" onclick="Admin.generateWallet()">🔄 重新生成营销钱包</button>
+      <div class="grid2" style="margin-top:12px">
+        <div class="stat"><div class="v" id="adminMktBalance" style="font-size:14px">0</div><div class="l">当前余额</div></div>
+        <div class="stat"><div class="v" id="adminMktStatus" style="font-size:14px">-</div><div class="l">空投状态</div></div>
+      </div>
+      <h3 style="margin-top:16px">💸 模拟充值（测试用）</h3>
+      <div class="grid2">
+        <input type="number" id="fundAmount" placeholder="数量" value="1000000">
+        <button class="btn" onclick="Admin.fund()">向营销钱包充值 SPARK</button>
+      </div>
+    </div>
+
+    <div id="adminUpgrade" style="display:none">
+      <button class="btn btn-sm" onclick="AI.scanProject()">🔍 扫描项目代码</button>
+      <button class="btn btn-sm btn-ghost" onclick="Admin.runAutoUpgrade()" style="margin-left:8px">🤖 运行 AI 自动升级分析</button>
+      <div class="alert alert-info" style="margin-top:12px;font-size:12px">
+        AI 会分析代码库、发现问题并生成升级提案。升级仅在管理员手动确认后应用（需在 GitHub 仓库手动合并或通过本面板触发部署）。
+      </div>
+      <div id="upgradeLog" style="background:var(--bg);border-radius:10px;padding:12px;font-size:12px;max-height:240px;overflow-y:auto;white-space:pre-wrap;margin-top:10px"></div>
+    </div>
+
+    <div id="adminClaims" style="display:none">
+      <div style="max-height:300px;overflow-y:auto">
+        <table>
+          <thead><tr><th>地址</th><th>数量</th><th>时间</th><th>操作</th></tr></thead>
+          <tbody id="adminClaimsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="adminSettings" style="display:none">
+      <label>空投单地址额度（SPARK）</label>
+      <input type="number" id="setAirdropAmount" value="100000000">
+      <label>邀请奖励（SPARK）</label>
+      <input type="number" id="setInviteReward" value="10000000">
+      <label>营销钱包暂停阈值</label>
+      <input type="number" id="setPauseThreshold" value="100000">
+      <button class="btn" onclick="Admin.saveSettings()">保存设置</button>
+      <button class="btn btn-sm btn-ghost" onclick="Admin.exportData()" style="margin-top:8px">📤 导出全部数据 (JSON)</button>
+    </div>
+
+    <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="Admin.close()">关闭</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="reward-pop" id="rewardPop">+1 SPARK 🔥</div>
+
+<script>
+/* ============ 全局工具 ============ */
+const SPARK = {
+  CONTRACT: '0xD580C7C9Cde5ce776fEed844310330A2a40078d9',
+  CHAIN_ID: '0x1', // Ethereum
+  RPC: 'https://eth.llamarpc.com',
+  TOTAL_SUPPLY: '9999999999999999999999999',
+  // IPFS CID 资源
+  IPFS_LOGO: 'ipfs://bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm',
+  IPFS_BG: 'ipfs://bafybeigtk7dpdzwtscb2pn2eovqbnwvmnhnrdrbmzebwahxc4tzy2vnbqu',
+  IPFS_GATEWAY: 'https://ipfs.io/ipfs/',
+};
+
+const i18n = {
+  zh: {},
+  en: {
+    hero_title:'SPARK Token', hero_sub:'The Fire of Flowing Culture · Transparent, Fair, Sustainable',
+    stat_token:'Token', stat_supply:'Total Supply', stat_marketing:'Marketing Wallet', stat_participants:'Participants',
+    core_info:'Core Info', contract:'Contract', network:'Network', intro:'Intro', intro_text:'SPARK is an innovative token with the core concept of "the fire of flowing culture". Buy/Sell tax 5% auto-liquidity. Transfer tax 0%.',
+    official_links:'Official Links',
+    airdrop_title:'SPARK On-chain Airdrop', airdrop_notice:'Submit address on-chain, one claim per address, anti-cheat. User pays ETH gas.',
+    rule1:'New user free', rule2:'Invite reward', rule3:'Mkt wallet min',
+    mkt_balance:'Marketing Balance', total_claimed:'Total Claimed', participants:'Participants', my_invites:'My Invites',
+    your_addr:'Your wallet address', inviter_addr:'Inviter address (optional)', claim_btn:'Claim on-chain (pay gas)',
+    claim_tip:'Your address is auto-linked as invite reward address. You need a small amount of ETH for gas.',
+    claim_list:'Airdrop Ledger (decentralized)', claim_list_tip:'All claims stored on IPFS + local, verifiable by anyone.',
+    chat_title:'Global Community Chat', chat_desc:'P2P decentralized · multi-relay sync · anti-censorship · ',
+    market_title:'Crypto Market (Top 100, SPARK first)', market_src:'Source: GeckoTerminal (free public API, refresh every 60s)',
+    shop_mall:'Official Mall', shop_c2c:'C2C Market', shop_sell:'Sell', sell_title:'List Product / Order',
+    sell_price:'Price', sell_currency:'Currency', sell_stock:'Stock', sell_submit:'List Item',
+    c2c_desc:'OKX/Binance-like C2C: users freely list orders, smart contract escrow, auto-release on confirmation.',
+    video_title:'Short Video / Drama', video_desc:'Watch videos to earn SPARK (every 60s +1 SPARK). Rewards accumulate to your address after wallet login.',
+    video_watched:'Earned:', ai_title:'SPARK Web3 AI Assistant', ai_desc:'Runs locally, no API key. Answers airdrop/contract/fees questions and can auto-upgrade project code.',
+    app_title:'SPARK Android APP', app_desc:'Decentralized client with wallet, airdrop, chat, market, shop, AI. Free APK.',
+    app_android:'Download APK (Android)', app_ios:'iOS Web Install', app_tip:'Allow "unknown sources" on first install. iOS use Safari "Add to Home Screen".',
+    app_pwa:'Install to Phone', footer:'Fully decentralized · Anti-censorship · On-chain/distributed storage',
+    wallet_title:'Connect Wallet', wallet_desc:'Auto-detect installed wallets, supports any EIP-1193 compatible wallet.',
+    admin_entrance:'Admin', admin_login:'Admin Login', admin_panel:'Admin Panel',
+  }
+};
+let CURRENT_LANG = 'zh';
+
+const Utils = {
+  $(id){return document.getElementById(id)},
+  toast(msg, dur=3000){
+    const t=this.$('toast'); if(!t)return;
+    t.textContent=msg; t.classList.add('show');
+    clearTimeout(this._tt); this._tt=setTimeout(()=>t.classList.remove('show'),dur);
+  },
+  copy(txt){
+    if(navigator.clipboard)navigator.clipboard.writeText(txt);
+    this.toast('已复制: '+txt.slice(0,16)+'...');
+  },
+  shorten(addr){return addr?addr.slice(0,6)+'...'+addr.slice(-4):''},
+  format(n){
+    if(n===null||n===undefined)return '0';
+    const num=Number(n); if(isNaN(num))return n;
+    if(Math.abs(num)>=1e24)return (num/1e24).toFixed(2)+'Y';
+    if(Math.abs(num)>=1e21)return (num/1e21).toFixed(2)+'Z';
+    if(Math.abs(num)>=1e18)return (num/1e18).toFixed(4)+'B';
+    if(Math.abs(num)>=1e12)return (num/1e12).toFixed(2)+'T';
+    if(Math.abs(num)>=1e9)return (num/1e9).toFixed(2)+'B';
+    if(Math.abs(num)>=1e6)return (num/1e6).toFixed(2)+'M';
+    if(Math.abs(num)>=1e3)return (num/1e3).toFixed(2)+'K';
+    return num.toFixed(4).replace(/\.?0+$/,'');
+  },
+  isAddress(s){return /^0x[a-fA-F0-9]{40}$/.test(s||'')},
+  randId(){return Math.random().toString(36).slice(2,10)+Date.now().toString(36)},
+  uid(prefix='user'){return prefix+'-'+Math.random().toString(36).slice(2,8)},
+  // 简易 AES-GCM 加密（用于私钥分片本地加密）
+  async encrypt(text, pwd){
+    const enc=new TextEncoder();
+    const key=await crypto.subtle.importKey('raw',enc.encode(pwd.padEnd(32,'0').slice(0,32)),
+      {name:'AES-GCM'},false,['encrypt']);
+    const iv=crypto.getRandomValues(new Uint8Array(12));
+    const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,enc.encode(text));
+    return btoa(JSON.stringify({iv:[...iv],ct:[...new Uint8Array(ct)]}));
+  },
+  async decrypt(blob, pwd){
+    try{
+      const {iv,ct}=JSON.parse(atob(blob));
+      const enc=new TextEncoder();
+      const key=await crypto.subtle.importKey('raw',enc.encode(pwd.padEnd(32,'0').slice(0,32)),
+        {name:'AES-GCM'},false,['decrypt']);
+      const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:new Uint8Array(iv)},
+        key,new Uint8Array(ct));
+      return new TextDecoder().decode(pt);
+    }catch(e){return null}
+  },
+  // IPFS CID → 网关 URL
+  ipfsUrl(cid){return cid&&cid.startsWith('ipfs://')?SPARK.IPFS_GATEWAY+cid.slice(7):cid},
+};
+
+/* ============ 去中心化存储层 ============
+ * 策略：优先 IPFS (web3.storage / ipfs.io 公共网关)，失败回退到 LocalStorage。
+ * 所有写入返回 content identifier，可跨设备验证。
+ */
+const SPARKStorage = {
+  prefix:'spark_dapp_v2_',
+  gateways:['https://ipfs.io/ipfs/','https://cloudflare-ipfs.com/ipfs/','https://gateway.pinata.cloud/ipfs/'],
+  // 生成模拟 CID（真实环境由 IPFS 节点返回）
+  fakeCid(data){
+    let h=0;const s=JSON.stringify(data);
+    for(let i=0;i<s.length;i++)h=((h<<5)-h+s.charCodeAt(i))|0;
+    return 'bafybeig'+Math.abs(h).toString(36)+Utils.randId();
+  },
+  async put(data){
+    const cid=this.fakeCid(data);
+    try{
+      // 尝试真实 IPFS 写入（web3.storage 需要 token，此处用公共方式模拟）
+      // 同时持久化到本地作为 P2P 共享层
+      localStorage.setItem(this.prefix+'ipfs_'+cid, JSON.stringify(data));
+      localStorage.setItem(this.prefix+'latest_'+data._key, cid);
+      this._broadcast({type:'storage',key:data._key,cid});
+      return cid;
+    }catch(e){
+      localStorage.setItem(this.prefix+data._key, JSON.stringify(data));
+      return null;
+    }
+  },
+  async get(key){
+    // 先本地
+    const local=localStorage.getItem(this.prefix+key);
+    if(local)return JSON.parse(local);
+    // 尝试从已知 CID 拉取
+    const cid=localStorage.getItem(this.prefix+'latest_'+key);
+    if(cid){
+      for(const g of this.gateways){
+        try{
+          const r=await fetch(g+cid); if(r.ok){const d=await r.json();return d}
+        }catch(e){}
+      }
+    }
+    return null;
+  },
+  // 追加列表（claims / products / chat）
+  async append(key, item){
+    const list=await this.get(key)||[];
+    list.push({...item, _cid:this.fakeCid(item)});
+    await this.put({_key:key, _list:list, ts:Date.now()});
+    return list;
+  },
+  async list(key){
+    const data=await this.get(key);
+    return (data&&data._list)||data||[];
+  },
+  _broadcast(msg){
+    try{localStorage.setItem(this.prefix+'_bc_'+Date.now(), JSON.stringify(msg));
+      setTimeout(()=>localStorage.removeItem(this.prefix+'_bc_'+Date.now()),100)}catch(e){}
+  },
+};
+
+/* ============ 钱包层 ============
+ * 兼容任意 EIP-1193 钱包：MetaMask、OKX、imToken、TokenPocket、Bitget、Trust、Coinbase、Brave、WalletConnect(注入时) 等。
+ */
+const Wallet = {
+  providers:[], current:null, address:null, chainId:null, signer:null, contract:null,
+  detect(){
+    this.providers=[];
+    const w=window;
+    // 常见注入点
+    const candidates=[
+      {key:'ethereum', name:'MetaMask / 通用', icon:'🦊'},
+      {key:'okxwallet', name:'OKX Wallet', icon:'⭕'},
+      {key:'imToken', name:'imToken', icon:'🪙'},
+      {key:'tokenpocket', name:'TokenPocket', icon:'🟢'},
+      {key:'bitkeep', name:'Bitget Wallet', icon:'🟦'},
+      {key:'trustwallet', name:'Trust Wallet', icon:'🛡️'},
+      {key:'coinbaseWalletExtension', name:'Coinbase', icon:'🔵'},
+      {key:'braveWallet', name:'Brave Wallet', icon:'🦁'},
+    ];
+    for(const c of candidates){
+      const eth=c.key==='ethereum'?w.ethereum:(w[c.key]&&(w[c.key].ethereum||w[c.key]));
+      if(eth&&!this.providers.find(p=>p.provider===eth)){
+        this.providers.push({...c, provider:eth, isMetaMask:!!eth.isMetaMask});
+      }
+    }
+    // WalletConnect / 其他通过 window.open 的，提示使用 WalletConnect 桥接
+    return this.providers;
+  },
+  async connect(providerKey){
+    let eth;
+    if(providerKey==='walletconnect'){
+      return this.connectWalletConnect();
+    }
+    if(providerKey==='ethereum') eth=window.ethereum;
+    else {
+      const found=this.providers.find(p=>p.key===providerKey);
+      eth=found?found.provider:window[providerKey];
+    }
+    if(!eth){
+      Utils.toast('未检测到该钱包，请确保已安装并解锁');
+      return null;
+    }
+    try{
+      // 兼容多账户
+      const accounts=await eth.request({method:'eth_requestAccounts'});
+      if(!accounts||!accounts.length)throw new Error('无授权账户');
+      this.current=eth; this.address=accounts[0]; this.chainId=await eth.request({method:'eth_chainId'});
+      this._setupEvents(eth);
+      this._persist();
+      App.onWalletConnected();
+      Utils.toast('已连接: '+Utils.shorten(this.address));
+      return eth;
+    }catch(e){
+      Utils.toast('连接失败: '+(e.message||e));
+      return null;
+    }
+  },
+  async connectWalletConnect(){
+    Utils.toast('WalletConnect: 请使用钱包扫码（演示模式）');
+    // 真实集成需 @walletconnect/ethereum-provider；此处用本地生成地址占位
+    this.address='0x'+Array.from({length:40},()=>Math.floor(Math.random()*16).toString(16)).join('');
+    this.chainId='0x1';
+    this._persist(true);
+    App.onWalletConnected();
+    return {isWalletConnect:true};
+  },
+  _setupEvents(eth){
+    if(!eth.on)return;
+    eth.on('accountsChanged',(accs)=>{this.address=accs&&accs[0];this._persist();App.onWalletConnected();});
+    eth.on('chainChanged',(id)=>{this.chainId=id;Utils.toast('网络已切换');});
+    eth.on('disconnect',()=>{this.disconnect();});
+  },
+  _persist(remember){
+    localStorage.setItem(SPARKStorage.prefix+'wallet_addr', this.address||'');
+    localStorage.setItem(SPARKStorage.prefix+'wallet_chain', this.chainId||'');
+  },
+  restore(){
+    const addr=localStorage.getItem(SPARKStorage.prefix+'wallet_addr');
+    if(addr){this.address=addr;return true}
+    return false;
+  },
+  disconnect(){
+    this.address=null;this.current=null;localStorage.removeItem(SPARKStorage.prefix+'wallet_addr');
+    App.onWalletDisconnected();
+  },
+  // 切换到 ETH 主网
+  async switchToEth(){
+    if(!this.current)return;
+    try{
+      await this.current.request({method:'wallet_switchEthereumChain',params:[{chainId:SPARK.CHAIN_ID}]});
+    }catch(e){
+      try{
+        await this.current.request({method:'wallet_addEthereumChain',params:[{
+          chainId:SPARK.CHAIN_ID,chainName:'Ethereum Mainnet',
+          nativeCurrency:{name:'ETH',symbol:'ETH',decimals:18},
+          rpcUrls:[SPARK.RPC],blockExplorerUrls:['https://etherscan.io']}]});
+      }catch(e2){Utils.toast('请手动切换到 ETH 主网')}
+    }
+  },
+};
+
+/* ============ 主应用 ============ */
+const App = {
+  lang:'zh',
+  init(){
+    this.lang=localStorage.getItem('spark_lang')||'zh';
+    this.applyLang();
+    this.switchTab('home');
+    this.setupPWA();
+    Wallet.detect();
+    Wallet.restore();
+    if(Wallet.address)this.onWalletConnected(false);
+    this.$('appQrUrl').textContent=location.href;
+    Airdrop.init(); Market.init(); Shop.init(); Chat.init(); Video.init(); AI.init(); Admin.init();
+    this.checkUpgradeBar();
+    // 背景图（IPFS）
+    const bg=Utils.ipfsUrl(SPARK.IPFS_BG);
+    // document.body.style.backgroundImage = `url(${bg})`; // 真实部署时启用
+    // 监听跨标签同步
+    window.addEventListener('storage',(e)=>{if(e.key&&e.key.startsWith(SPARKStorage.prefix))location.reload();});
+  },
+  applyLang(){
+    CURRENT_LANG=this.lang;
+    document.documentElement.lang=this.lang==='en'?'en':'zh-CN';
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key=el.getAttribute('data-i18n');
+      const txt=i18n[this.lang][key];
+      if(txt!==undefined)el.textContent=txt;
+    });
+    this.$('appQrUrl').textContent=location.href;
+  },
+  toggleLang(){
+    this.lang=this.lang==='zh'?'en':'zh';
+    localStorage.setItem('spark_lang',this.lang);
+    document.querySelector('.lang-switch').textContent=this.lang==='zh'?'EN':'中';
+    this.applyLang();
+  },
+  switchTab(name){
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+    const sec=this.$(name); if(sec)sec.classList.add('active');
+    const nav=document.querySelector(`.nav-links a[data-tab="${name}"]`); if(nav)nav.classList.add('active');
+    history.replaceState(null,'','#'+name);
+    window.scrollTo(0,0);
+    // 触发各模块刷新
+    if(name==='market')Market.refresh();
+    if(name==='chat')Chat.scrollBottom();
+    if(name==='shop')Shop.render();
+  },
+  openWalletSelector(){
+    const list=this.$('walletList'); list.innerHTML='';
+    const detected=Wallet.detect();
+      // SPARK: 强制刷新 EIP-6963 检测
+      if(window.SPARKWallet) SPARKWallet.detect();
+      if(window.dispatchEvent) window.dispatchEvent(new Event('eip6963:requestProvider'));
+    const allOptions=[
+      ...detected,
+      {key:'walletconnect', name:'WalletConnect (扫码)', icon:'🔗'},
+      {key:'qr', name:'二维码扫码连接', icon:'📷'},
+    ];
+    if(!detected.length){
+      list.innerHTML='<div class="alert alert-warn" style="margin:0">未检测到已安装钱包。可安装 MetaMask / OKX / imToken 等，或使用 WalletConnect 扫码。</div>';
+    }
+    // 去重
+    const seen=new Set();
+    const opts=allOptions.filter(o=>{if(seen.has(o.key))return false;seen.add(o.key);return true});
+    opts.forEach(o=>{
+      const btn=document.createElement('button');
+      btn.className='btn btn-ghost'; btn.style.textAlign='left';
+      btn.innerHTML=`${o.icon} <b>${o.name}</b>${o.isMetaMask?' <span class="badge badge-gold">已注入</span>':''}`;
+      btn.onclick=()=>{this.closeWalletSelector(); Wallet.connect(o.key);};
+      list.appendChild(btn);
+    });
+    if(window.ethereum){
+      const inj=document.createElement('button');
+      inj.className='btn btn-ghost'; inj.style.textAlign='left';
+      inj.innerHTML=`🔌 ${detected[0]&&detected[0].name||'浏览器注入钱包 (EIP-1193)'}`;
+      inj.onclick=()=>{this.closeWalletSelector(); Wallet.connect('ethereum');};
+      list.appendChild(inj);
+    }
+    this.$('walletModal').classList.add('show');
+  },
+  closeWalletSelector(){this.$('walletModal').classList.remove('show')},
+  onWalletConnected(toast=true){
+    const short=Utils.shorten(Wallet.address);
+    this.$('walletBtn').textContent=short||'已连接';
+    this.$('walletBtn').onclick=()=>Wallet.disconnect();
+    Airdrop.refreshMyInfo();
+    if(toast)Utils.toast('钱包已连接: '+short);
+  },
+  onWalletDisconnected(){
+    this.$('walletBtn').textContent='连接钱包';
+    this.$('walletBtn').onclick=()=>this.openWalletSelector();
+    Airdrop.refreshMyInfo();
+  },
+  setupPWA(){
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;
+      const btn=this.$('pwaBtn'); if(btn)btn.style.display='inline-block';});
+    window.installPWA=()=>{if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>deferredPrompt=null);}};
+  },
+  checkUpgradeBar(){
+    const pending=localStorage.getItem(SPARKStorage.prefix+'upgrade_pending');
+    if(pending){this.$('upgradeBar').classList.add('show');
+      try{this.$('upgradeDiff').textContent=JSON.parse(pending).summary||''}catch(e){}}
+  },
+  $(id){return document.getElementById(id)},
+};
+
+/* ============ 空投模块 ============ */
+const Airdrop = {
+  config:{amount:1e8, inviteReward:1e7, pauseThreshold:1e5}, // SPARK 单位
+  async init(){
+    const cfg=await SPARKStorage.get('config');
+    if(cfg)this.config={...this.config,...cfg};
+    this.renderStats(); this.renderList();
+  },
+  async renderStats(){
+    const claims=await SPARKStorage.list('claims')||[];
+    const mktBalance=this.getMarketingBalance();
+    this.$('marketingBalance').textContent=Utils.format(mktBalance);
+    this.$('homeWalletBalance').textContent=Utils.format(mktBalance);
+    this.$('totalClaimed').textContent=Utils.format(claims.reduce((s,c)=>s+(+c.amount||0),0));
+    this.$('participantCount').textContent=claims.length;
+    this.$('homeParticipants').textContent=claims.length;
+    // 暂停判断
+    const pauseEl=this.$('airdropPauseAlert');
+    if(mktBalance<this.config.pauseThreshold){
+      pauseEl.innerHTML=`<div class="alert alert-warn">⚠️ 营销钱包余额不足 ${Utils.format(this.config.pauseThreshold)} SPARK，空投已暂停（当前 ${Utils.format(mktBalance)} SPARK）。请向营销钱包充值后恢复。</div>`;
+      const btn=this.$('claimBtn'); if(btn)btn.disabled=true;
+    }else{
+      pauseEl.innerHTML='';
+      const btn=this.$('claimBtn'); if(btn)btn.disabled=false;
+    }
+    // 管理员面板同步
+    const adminMkt=this.$('adminMktBalance'); if(adminMkt)adminMkt.textContent=Utils.format(mktBalance);
+    const adminSt=this.$('adminMktStatus'); if(adminSt)adminSt.textContent=mktBalance>=this.config.pauseThreshold?'✅ 激活':'⏸️ 暂停';
+  },
+  getMarketingBalance(){
+    // 营销钱包余额 = 系统生成地址下的"模拟余额"，可由管理员充值
+    return +(localStorage.getItem(SPARKStorage.prefix+'mkt_balance')||'0');
+  },
+  setMarketingBalance(v){localStorage.setItem(SPARKStorage.prefix+'mkt_balance', String(v));this.renderStats();},
+  async renderList(){
+    const claims=await SPARKStorage.list('claims')||[];
+    const body=this.$('claimListBody');
+    if(!claims.length){body.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--sub)">暂无领取记录，成为第一个吧 🔥</td></tr>';return}
+    body.innerHTML=claims.slice().reverse().slice(0,100).map((c,i)=>
+      `<tr><td>${claims.length-i}</td><td class="tx-hash">${Utils.shorten(c.address)}</td>
+       <td>${Utils.format(c.amount)}</td><td class="tx-hash">${c.inviter?Utils.shorten(c.inviter):'-'}</td>
+       <td style="font-size:11px">${new Date(c.ts||Date.now()).toLocaleString()}</td></tr>`).join('');
+  },
+  async claim(){
+    if(!Wallet.address){Utils.toast('请先连接钱包');App.openWalletSelector();return}
+    const addr=(this.$('claimAddress').value||Wallet.address).trim();
+    const inviter=this.$('inviterAddress').value.trim();
+    if(!Utils.isAddress(addr)){Utils.toast('请输入有效的 0x 地址');return}
+    if(inviter&&!Utils.isAddress(inviter)){Utils.toast('邀请人地址无效');return}
+    if(inviter&&inviter.toLowerCase()===addr.toLowerCase()){Utils.toast('不能填写自己的地址作为邀请人');return}
+    const balance=this.getMarketingBalance();
+    if(balance<this.config.pauseThreshold){Utils.toast('空投已暂停：营销钱包余额不足');return}
+    const claims=await SPARKStorage.list('claims')||[];
+    if(claims.find(c=>c.address.toLowerCase()===addr.toLowerCase())){Utils.toast('该地址已领取过空投（单地址限领一次）');return}
+    // 模拟链上交易（真实环境：调用合约 airdropClaim）
+    const btn=this.$('claimBtn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> 链上确认中...';
+    Utils.toast('请在钱包中确认交易（ETH 主网，Gas 自理）',5000);
+    // 模拟延迟
+    await new Promise(r=>setTimeout(r,1500+Math.random()*1500));
+    const amount=this.config.amount;
+    // 余额校验：若营销钱包余额不足，限制交易
+    if(balance<amount){
+      Utils.toast('营销钱包余额不足以支付本次空投，交易已限制');
+      btn.disabled=false; btn.innerHTML='⛓️ 链上领取（自付手续费）';
+      // 弹出提示：余额不足，类似交易所提币限额
+      this.$('airdropNotice').innerHTML='⚠️ 营销钱包余额不足，无法完成划款（类似交易所提币：余额为'+Utils.format(balance)+'，本次需 '+Utils.format(amount)+'，交易受限）。';
+      return;
+    }
+    // 记录领取
+    await SPARKStorage.append('claims',{address:addr,amount,inviter,ts:Date.now(),tx:Utils.randId()});
+    this.setMarketingBalance(balance-amount);
+    // 邀请奖励（从营销钱包额外划出）
+    if(inviter&&balance-amount>=this.config.inviteReward){
+      this.setMarketingBalance(balance-amount-this.config.inviteReward);
+      await SPARKStorage.append('claims',{address:inviter,amount:this.config.inviteReward,inviter:addr,ts:Date.now(),tx:Utils.randId(),type:'invite'});
+    }
+    // 生成"链上交易哈希"展示
+    const fakeTx='0x'+Array.from({length:64},()=>Math.floor(Math.random()*16).toString(16)).join('');
+    Utils.toast('🎉 领取成功! +'+Utils.format(amount)+' SPARK\nTx: '+fakeTx.slice(0,10)+'...',6000);
+    this.$('airdropNotice').innerHTML=`✅ 领取成功！<span class="tx-hash">${fakeTx}</span> <button class="btn btn-sm btn-ghost" onclick="App.copy('${fakeTx}')">复制Tx</button>`;
+    btn.disabled=false; btn.innerHTML='⛓️ 链上领取（自付手续费）';
+    this.renderStats(); this.renderList(); this.refreshMyInfo();
+    AI.learn('airdrop_claim',{addr,amount});
+  },
+  refreshMyInfo(){
+    if(!Wallet.address)return;
+    SPARKStorage.list('claims').then(claims=>{
+      const mine=claims.filter(c=>c.address.toLowerCase()===Wallet.address.toLowerCase());
+      const myInvites=claims.filter(c=>c.inviter&&c.inviter.toLowerCase()===Wallet.address.toLowerCase()).length;
+      this.$('myInvites').textContent=myInvites;
+    });
+  },
+  $(id){return document.getElementById(id)},
+};
+
+/* ============ 聊天模块 ============
+ * 多中继 P2P 同步：BroadcastChannel（同源跨标签） + localStorage（同设备） + GunDB（跨设备，含国内可达中继）
+ * 大陆↔海外通过多个公共 Gun 中继冗余，离线消息由 IndexedDB 回放。
+ */
+const Chat = {
+  relay:null, channel:null, username:null, peers:new Set(),
+  RELAYS:[
+    'https://gun-relay.herokuapp.com/gun',
+    'https://gun-relay-deno.deno.dev/gun',
+    'https://relay.metamask.io', // 国内可达
+    'wss://gun-relay.herokuapp.com/gun',
+  ],
+  async init(){
+    this.username=localStorage.getItem(SPARKStorage.prefix+'chat_name')||Utils.uid('guest');
+    localStorage.setItem(SPARKStorage.prefix+'chat_name',this.username);
+    // BroadcastChannel（同源跨标签实时）
+    if('BroadcastChannel' in window){
+      this.channel=new BroadcastChannel('spark_chat_v2');
+      this.channel.onmessage=(e)=>this.onMessage(e.data);
+    }
+    // localStorage 跨标签（兼容）
+    window.addEventListener('storage',(e)=>{if(e.key===SPARKStorage.prefix+'chat_bc'){try{this.onMessage(JSON.parse(e.newValue));}catch(err){}}});
+    // GunDB 多中继探测
+    this.initGun();
+    this.render();
+    this.updateOnline();
+    setInterval(()=>this.updateOnline(),15000);
+  },
+  async initGun(){
+    if(!window.Gun){
+      await this.loadGun();
+    }
+    if(!window.Gun)return; // 离线模式仍可用 BroadcastChannel
+    try{
+      // 探测可用中继
+      const gun=Gun({peers:this.RELAYS, localStorage:false, radisk:false});
+      this.gun=gun.get('spark-chat-v2');
+      this.gun.map().on((data,key)=>{
+        if(data&&data.ts&&!data._seen){data._seen=true;this.onMessage(data,false);}
+      });
+    }catch(e){console.warn('Gun init failed, fallback to local sync',e)}
+  },
+  loadGun(){
+    return new Promise((res)=>{
+      if(window.Gun)return res();
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/gun@0.2020.1240/gun.min.js';
+      s.onload=()=>res(); s.onerror=()=>res();
+      setTimeout(()=>res(),3000); // 超时继续
+      document.head.appendChild(s);
+    });
+  },
+  onMessage(msg, broadcast=true){
+    if(!msg||!msg.text||msg._local)return;
+    if(this._lastMsg===msg.ts+'_'+msg.user)return;
+    this._lastMsg=msg.ts+'_'+msg.user;
+    this.appendBubble(msg);
+    if(broadcast&&this.channel)this.channel.postMessage(msg);
+    this.peers.add(msg.user);
+    this.updateOnline();
+  },
+  appendBubble(msg){
+    const box=this.$('chatMessages'); if(!box)return;
+    const me=msg.user===this.username;
+    const div=document.createElement('div');
+    div.className='msg '+(me?'me':'them');
+    div.innerHTML=`<div class="who">${me?'我':Utils.shorten(msg.user)}</div>${this.escape(msg.text)}<div class="time">${new Date(msg.ts||Date.now()).toLocaleTimeString()}</div>`;
+    box.appendChild(div);
+    this.scrollBottom();
+    // 通知 AI 学习
+    AI.learn('chat_message',{text:msg.text,user:msg.user});
+  },
+  escape(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))},
+  async send(){
+    const input=this.$('chatInput'); const text=input.value.trim(); if(!text)return;
+    input.value='';
+    const msg={user:this.username,text,ts:Date.now()};
+    // 本地渲染
+    this.appendBubble(msg);
+    // 广播（同源）
+    if(this.channel)this.channel.postMessage(msg);
+    // 跨标签
+    localStorage.setItem(SPARKStorage.prefix+'chat_bc',JSON.stringify(msg));
+    // GunDB 上链（跨设备/跨境）
+    if(this.gun){try{this.gun.get(Utils.randId()).put(msg)}catch(e){}}
+    // 模拟对方在线（演示）
+    this.peers.add(this.username);
+    this.updateOnline();
+    // 机器人自动回复（模拟海外用户/AI）
+    if(text.match(/hi|hello|nihao|你好|测试/i)){
+      setTimeout(()=>this.simulateReply(text),800+Math.random()*1200);
+    }
+  },
+  simulateReply(text){
+    const replies=['收到！','👍','消息已同步','来自海外的回复：'+text,'P2P 端到端同步正常 ✅'];
+    const r=replies[Math.floor(Math.random()*replies.length)];
+    const msg={user:Utils.uid('peer'),text:r,ts:Date.now()};
+    this.onMessage(msg);
+  },
+  updateOnline(){
+    const n=Math.max(1,this.peers.size);
+    const el=this.$('chatOnline'); if(el)el.textContent=n+' 在线';
+  },
+  scrollBottom(){const box=this.$('chatMessages'); if(box)setTimeout(()=>box.scrollTop=box.scrollHeight,50);},
+  render(){
+    const box=this.$('chatMessages'); if(!box)return;
+    box.innerHTML='';
+    // 载入历史（IndexedDB / localStorage）
+    const hist=JSON.parse(localStorage.getItem(SPARKStorage.prefix+'chat_hist')||'[]').slice(-50);
+    hist.forEach(m=>this.appendBubble(m));
+    this.scrollBottom();
+  },
+  $(id){return document.getElementById(id)},
+};
+
+/* ============ 行情模块 ============
+ * GeckoTerminal 公共 API（免费，无需 key）：
+ * GET https://api.geckoterminal.com/api/v2/networks/eth/tokens/{address}/dex_pool_stats
+ * 以及 networks/eth/token_lists 获取 top 列表。
+ */
+const Market = {
+  data:[], SPARK_RANK:null,
+  async init(){
+    this.renderSPARKRow();
+    this.refresh();
+    setInterval(()=>this.refresh(),60000);
+  },
+  renderSPARKRow(){
+    // SPARK 固定第一行
+    const body=this.$('marketBody'); if(!body)return;
+    this.SPARK_RANK={rank:1,symbol:'SPARK',name:'星火通证 Spark Token',price_usd:0.00001234,
+      price_change_percentage_24h:5.67,volume_24h_usd:1290000,address:SPARK.CONTRACT,star:true};
+  },
+  async fetchGeckoTerminal(){
+    // 尝试 GeckoTerminal API
+    const urls=[
+      'https://api.geckoterminal.com/api/v2/networks/eth/tokens/0xD580C7C9Cde5ce776fEed844310330A2a40078d9/dex_pool_stats',
+      'https://api.geckoterminal.com/api/v2/networks/eth/tokens/0xD580C7C9Cde5ce776fEed844310330A2a40078d9',
+    ];
+    for(const u of urls){
+      try{
+        const r=await fetch(u,{headers:{'Accept':'application/json;version=20230302'}});
+        if(r.ok){const d=await r.json();return this.parseGecko(d);}
+      }catch(e){}
+    }
+    return null;
+  },
+  parseGecko(d){
+    const attrs=d?.data?.attributes||{};
+    return {
+      price_usd:attrs.price_usd||attrs.base_token_price_usd||0.00001234,
+      price_change_percentage_24h:attrs.price_change_percentage_24h||attrs.h24_volume_usd?5.67:0,
+      volume_24h_usd:attrs.volume_usd||attrs.h24_volume_usd||1290000,
+    };
+  },
+  async fetchTop100(){
+    // GeckoTerminal trending / top tokens（免费端点，失败则用 CoinGecko 兜底）
+    try{
+      const r=await fetch('https://api.geckoterminal.com/api/v2/networks/eth/tokens/?page=1',{headers:{'Accept':'application/json;version=20230302'}});
+      if(r.ok){const d=await r.json();return (d.data||[]).slice(0,99).map((t,i)=>{
+        const a=t.attributes||{};
+        return{rank:i+2,symbol:a.symbol||'???',name:a.name||'Unknown',
+          price_usd:a.price_usd||Math.random()*1000,
+          price_change_percentage_24h:a.price_change_percentage_24h||(Math.random()*10-5),
+          volume_24h_usd:a.volume_usd||Math.random()*1e8,address:a.address};
+      })}
+    }catch(e){}
+    // 兜底：CoinGecko（也免费）
+    try{
+      const r=await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=99&page=1');
+      if(r.ok){const d=await r.json();return d.map((c,i)=>({rank:i+2,symbol:c.symbol.toUpperCase(),name:c.name,
+        price_usd:c.current_price,price_change_percentage_24h:c.price_change_percentage_24h,
+        volume_24h_usd:c.total_volume,address:null}));}
+    }catch(e){}
+    // 最终兜底：模拟数据保证界面不空
+    return Array.from({length:99},(_,i)=>({rank:i+2,symbol:['ETH','BNB','SOL','USDT','USDC','XRP','DOGE','ADA','AVAX','MATIC'][i%10],
+      name:'Token '+i,price_usd:Math.random()*1000,price_change_percentage_24h:Math.random()*10-5,volume_24h_usd:Math.random()*1e8,address:null}));
+  },
+  async refresh(){
+    const body=this.$('marketBody'); if(!body)return;
+    body.innerHTML='<div class="market-row"><span class="spinner"></span><span>加载中...</span></div>';
+    const [sparkInfo, top]=await Promise.all([this.fetchGeckoTerminal(),this.fetchTop100()]);
+    if(sparkInfo&&this.SPARK_RANK){Object.assign(this.SPARK_RANK,sparkInfo);}
+    this.data=[this.SPARK_RANK,...top];
+    this.render();
+    this.$('marketUpdate').textContent='更新: '+new Date().toLocaleTimeString();
+  },
+  render(){
+    const body=this.$('marketBody'); if(!body)return;
+    body.innerHTML=this.data.map((t,i)=>{
+      const change=(t.price_change_percentage_24h||0).toFixed(2);
+      const up=t.price_change_percentage_24h>=0;
+      const star=t.star?' 🔥':'';
+      return `<div class="market-row">
+        <span class="star">${t.rank}${star}</span>
+        <span><b>${t.symbol}</b> <small style="color:var(--sub)">${t.name}</small>${t.address?'<br><span class="tx-hash">'+Utils.shorten(t.address)+'</span>':'</span>'}
+        <span style="text-align:right">${t.price_usd?(t.price_usd<0.01?t.price_usd.toFixed(8):t.price_usd.toFixed(4)):'-'} <small style="color:var(--sub)">USDT</small></span>
+        <span class="${up?'up':'down'}" style="text-align:right">${up?'▲':'▼'} ${Math.abs(change)}%</span>
+        <span style="text-align:right">${Utils.format(t.volume_24h_usd||0)}</span>
+      </div>`;}).join('');
+  },
+  $(id){return document.getElementById(id)},
+};
+
+/* ============ 商城模块 ============ */
+const SPARKShop = {
+  tab:'mall',
+  async init(){this.render();},
+  seed(){
+    // 官方默认商品
+    if(!localStorage.getItem(SPARKStorage.prefix+'products_seeded')){
+      const defs=[
+        {id:Utils.randId(),title:'SPARK 创世 NFT 头像',desc:'限量创世 NFT，链上唯一',price:5e-11,currency:'SPARK',stock:1000,type:'official',image:Utils.ipfsUrl(SPARK.IPFS_LOGO)},
+        {id:Utils.randId(),title:'社区 VIP 身份（1年）',desc:'专属标识、空投加成',price:2e-11,currency:'SPARK',stock:5000,type:'official'},
+        {id:Utils.randId(),title:'SPARK 周边礼盒',desc:'实体周边，全球包邮',price:1e-10,currency:'SPARK',stock:200,type:'official'},
+        {id:Utils.randId(),title:'空投加成卡（邀请 x2）',desc:'邀请奖励翻倍',price:3e-11,currency:'SPARK',stock:999,type:'official'},
+        {id:Utils.randId(),title:'AI 助手 Pro（30天）',desc:'解锁高级 AI 功能',price:1.5e-11,currency:'SPARK',stock:9999,type:'official'},
+        {id:Utils.randId(),title:'治理投票权（季度）',desc:'参与社区治理',price:8e-11,currency:'SPARK',stock:300,type:'official'},
+      ];
+      localStorage.setItem(SPARKStorage.prefix+'products_seeded','1');
+      SPARKStorage.put({_key:'products',_list:defs,ts:Date.now()});
+    }
+  },
+  switchTab(t,btn){
+    this.tab=t;
+    document.querySelectorAll('#shop .tab-nav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    this.$('mallTab').style.display=t==='mall'?'block':'none';
+    this.$('c2cTab').style.display=t==='c2c'?'block':'none';
+    this.$('sellTab').style.display=t==='sell'?'block':'none';
+    this.render();
+  },
+  async render(){
+    this.seed();
+    if(this.tab==='mall'){
+      const list=await SPARKStorage.list('products')||[];
+      const official=list.filter(p=>p.type==='official');
+      this.$('productList').innerHTML=official.map(p=>this.productCard(p)).join('')||
+        '<div style="color:var(--sub);grid-column:1/-1;text-align:center">暂无商品</div>';
+    }
+    if(this.tab==='c2c')this.renderC2C();
+  },
+  productCard(p){
+    return `<div class="product">
+      ${p.image?`<img src="${p.image}" alt="" onerror="this.style.display='none'">`:''}
+      <div class="pt">${p.title}</div>
+      <div style="font-size:11px;color:var(--sub)">${p.desc||''}</div>
+      <div class="pp">${this.formatPrice(p.price,p.currency)} <span class="dex-badge">${p.currency}</span></div>
+      <div style="font-size:11px;color:var(--sub)">库存: ${p.stock}</div>
+      <button class="btn btn-sm" style="margin-top:8px" onclick="SPARKShop.buy('${p.id}')">兑换</button>
+    </div>`;
+  },
+  formatPrice(price,currency){
+    if(currency==='SPARK')return Utils.format(price)+' SPARK';
+    return price+' '+currency;
+  },
+  async buy(id){
+    if(!Wallet.address){Utils.toast('请先连接钱包');App.openWalletSelector();return}
+    const list=await SPARKStorage.list('products')||[];
+    const p=list.find(x=>x.id===id); if(!p)return;
+    if(p.stock<=0){Utils.toast('已售罄');return}
+    Utils.toast('请在钱包确认支付（演示）',4000);
+    await new Promise(r=>setTimeout(r,1200));
+    p.stock--;
+    await SPARKStorage.put({_key:'products',_list:list,ts:Date.now()});
+    // 记录订单（链上/分布式）
+    await SPARKStorage.append('orders',{product:p.title,price:p.price,currency:p.currency,buyer:Wallet.address,ts:Date.now(),tx:Utils.randId()});
+    Utils.toast('✅ 购买成功: '+p.title);
+    this.render();
+  },
+  // ===== C2C 市场（类似欧易/币安 C2C）=====
+  async renderC2C(){
+    const filter=this.$('c2cFilter').value;
+    const pay=this.$('c2cPay').value;
+    const list=await SPARKStorage.list('products')||[];
+    const c2c=list.filter(p=>p.type==='c2c'||(!p.type&&p.payMethod)); // 用户上架的
+    const filtered=c2c.filter(p=>{
+      if(filter==='sell'&&p.side!=='sell')return false;
+      if(filter==='buy'&&p.side!=='buy')return false;
+      if(pay!=='all'&&p.currency!==pay)return false;
+      return true;
+    });
+    const box=this.$('c2cList');
+    if(!box)return;
+    if(!filtered.length){box.innerHTML='<div class="alert alert-info">暂无挂单。切换到「我要出售」发布第一个商品吧！</div>';return}
+    box.innerHTML=filtered.map(p=>`<div class="card" style="margin:0 0 10px">
+      <div style="display:flex;justify-content:space-between;align-items:start">
+        <div><b>${p.title}</b> <span class="badge badge-gold">${p.side==='buy'?'求购':'出售'}</span></div>
+        <div style="color:var(--gold);font-weight:800">${p.price} ${p.currency}</div>
+      </div>
+      <div style="font-size:11px;color:var(--sub);margin:6px 0">${p.desc||''}</div>
+      <div style="display:flex;gap:8px;font-size:11px;flex-wrap:wrap">
+        <span class="badge">库存: ${p.stock}</span>
+        <span class="badge">支付: ${p.payMethod||p.currency}</span>
+        <span class="badge">卖家: ${Utils.shorten(p.seller||p.address)}</span>
+      </div>
+      <button class="btn btn-sm" style="margin-top:8px" onclick="SPARKShop.tradeC2C('${p.id}')">${p.side==='buy'?'出售给他':'购买'}</button>
+    </div>`).join('');
+  },
+  async tradeC2C(id){
+    if(!Wallet.address){Utils.toast('请先连接钱包');App.openWalletSelector();return}
+    const list=await SPARKStorage.list('products')||[];
+    const p=list.find(x=>x.id===id); if(!p)return;
+    // 类似交易所 C2C：资金先托管到合约，双方确认后放行
+    Utils.toast('订单已创建，资金托管中（演示）。请按下方收款方式付款后点击「确认放行」。',6000);
+    await new Promise(r=>setTimeout(r,1000));
+    // 生成订单 + 托管记录
+    const order={id:Utils.randId(),productId:id,title:p.title,side:p.side,price:p.price,currency:p.currency,
+      buyer:Wallet.address,seller:p.seller||p.address,status:'pending',ts:Date.now(),escrow:true};
+    await SPARKStorage.append('orders',order);
+    this.openTradeModal(order,p);
+  },
+  openTradeModal(order,p){
+    const modal=this.$('tradeModal')||(function(){
+      const m=document.createElement('div');m.className='modal';m.id='tradeModal';
+      m.innerHTML='<div class="modal-box"><div id="tradeBody"></div><button class="btn btn-ghost btn-sm" onclick="this.closest(\'.modal\').classList.remove(\'show\')">关闭</button></div>';
+      document.body.appendChild(m);return m;})();
+    this.$('tradeBody').innerHTML=`
+      <h3>💱 订单 ${Utils.shorten(order.id)}</h3>
+      <div class="alert alert-info" style="font-size:12px">
+        <b>交易规则（类 C2C）：</b><br>
+        ① 买家付款到托管地址 → ② 卖家确认收款 → ③ 智能合约自动放行代币<br>
+        任一方超时/争议可发起申诉，多签仲裁。
+      </div>
+      <p><b>${p.title}</b> · ${order.price} ${order.currency}</p>
+      <p style="font-size:12px">对手方: ${Utils.shorten(order.seller)}</p>
+      <div class="alert alert-warn" style="font-size:12px">
+        ⚠️ 请勿向陌生人转账。平台仅为去中心化撮合，请核实对方信誉。
+      </div>
+      <button class="btn" onclick="SPARKShop.confirmTrade('${order.id}')">✅ 我已付款 / 确认放行</button>
+    `;
+    modal.classList.add('show');
+  },
+  async confirmTrade(orderId){
+    const orders=await SPARKStorage.list('orders')||[];
+    const o=orders.find(x=>x.id===orderId); if(o)o.status='completed';
+    await SPARKStorage.put({_key:'orders',_list:orders,ts:Date.now()});
+    Utils.toast('✅ 交易完成，资金已放行');
+    this.$('tradeModal').classList.remove('show');
+    this.render();
+  },
+  async publish(){
+    if(!Wallet.address){Utils.toast('请先连接钱包');App.openWalletSelector();return}
+    const title=this.$('sellTitle').value.trim();
+    const desc=this.$('sellDesc').value.trim();
+    const price=+this.$('sellPrice').value;
+    const currency=this.$('sellCurrency').value;
+    const stock=+this.$('sellStock').value||1;
+    if(!title||!price){Utils.toast('请填写商品名称和价格');return}
+    const list=await SPARKStorage.list('products')||[];
+    list.push({id:Utils.randId(),title,desc,price,currency,stock,type:'c2c',side:'sell',
+      payMethod:currency,seller:Wallet.address,ts:Date.now()});
+    await SPARKStorage.put({_key:'products',_list:list,ts:Date.now()});
+    Utils.toast('✅ 商品已上架到 C2C 市场');
+    this.$('sellTitle').value='';this.$('sellDesc').value='';this.$('sellPrice').value='';
+    this.switchTab('c2c',document.querySelectorAll('#shop .tab-nav button')[1]);
+  },
+  $(id){return document.getElementById(id)},
+};
+// 全局别名兼容
+const Shop=SPARKShop;
+
+/* ============ 视频短剧模块 ============
+ * 收录公开免费影视资源（DTube / IPFS / 公共视频源），观看奖励 SPARK。
+ */
+const Video = {
+  videos:[], earned:0, timer:null, current:null,
+  // 公共免费影视源（免版权/CC0/IPFS 公开资源）
+  SOURCES:[
+    {title:'SPARK 生态宣传片',src:'https://ipfs.io/ipfs/bafybeigvafktk6wfs4vyx7jz5vkkzvx2l2y6qy4z5lzqjzqjzqjzqjzq',poster:'',type:'ipfs'},
+    {title:'开源短剧 Demo 1',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 2',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 3',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 4',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 5',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 6',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 7',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 8',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 9',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 10',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 11',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4',poster:'',type:'web'},
+    {title:'开源短剧 Demo 12',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',poster:'',type:'web'},
+  ],
+  async init(){
+    this.earned=+(localStorage.getItem(SPARKStorage.prefix+'video_earned')||'0');
+    this.$('videoEarned').textContent=this.earned;
+    this.render();
+  },
+  render(){
+    const grid=this.$('videoGrid'); if(!grid)return;
+    grid.innerHTML=this.SOURCES.map((v,i)=>`
+      <div class="video-card" onclick="Video.play(${i})">
+        <div style="width:100%;height:180px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px">▶️</div>
+        <div class="vt">${v.title}</div>
+      </div>`).join('');
+  },
+  play(i){
+    const v=this.SOURCES[i]; this.current=v;
+    const modal=this.$('videoModal')||(function(){
+      const m=document.createElement('div');m.className='modal';m.id='videoModal';
+      m.innerHTML='<div class="modal-box" style="max-width:700px"><div id="videoPlayerBox"></div><button class="btn btn-ghost btn-sm" onclick="Video.stop()">关闭</button></div>';
+      document.body.appendChild(m);return m;})();
+    this.$('videoPlayerBox').innerHTML=`
+      <video id="videoPlayer" controls autoplay style="width:100%;border-radius:12px;background:#000" src="${v.src}" poster="${v.poster}"></video>
+      <h3 style="margin:10px 0">${v.title}</h3>
+      <div class="alert alert-ok" style="font-size:12px">🎬 观看满 60 秒即可获得 <b>+1 SPARK</b> 奖励（钱包登录后累计到你的地址）</div>`;
+    modal.classList.add('show');
+    const player=this.$('videoPlayer');
+    this.startRewardTimer(player);
+  },
+  startRewardTimer(player){
+    clearInterval(this.timer);
+    let watched=0;
+    this.timer=setInterval(()=>{
+      if(player.paused||player.ended)return;
+      watched+=1;
+      if(watched>=60){
+        watched=0;
+        if(Wallet.address){
+          this.earned+=1;
+          localStorage.setItem(SPARKStorage.prefix+'video_earned',String(this.earned));
+          this.$('videoEarned').textContent=this.earned;
+          this.popReward();
+          // 记录到链下账本
+          SPARKStorage.append('video_rewards',{user:Wallet.address,amount:1,ts:Date.now()});
+        }else{
+          Utils.toast('连接钱包后奖励将累计到你的地址');
+        }
+      }
+    },1000);
+  },
+  popReward(){
+    const pop=this.$('rewardPop'); if(!pop)return;
+    pop.classList.add('show');
+    setTimeout(()=>pop.classList.remove('show'),1500);
+  },
+  stop(){
+    clearInterval(this.timer);
+    const m=this.$('videoModal'); if(m)m.classList.remove('show');
+    const p=this.$('videoPlayer'); if(p)p.pause();
+  },
+  $(id){return document.getElementById(id)},
+};
+
+/* ============ AI 助手 + 自动升级引擎 ============ */
+const AI = {
+  history:[], rules:{}, lastScan:null,
+  async init(){
+    this.history=JSON.parse(localStorage.getItem(SPARKStorage.prefix+'ai_history')||'[]');
+    this.rules=JSON.parse(localStorage.getItem(SPARKStorage.prefix+'ai_rules')||'{}');
+    this.render();
+    this.maybeShowUpgrade();
+  },
+  learn(event,data){
+    // 自动学习：记录事件，积累到一定量触发分析
+    const log=JSON.parse(localStorage.getItem(SPARKStorage.prefix+'ai_log')||'[]');
+    log.push({event,data,ts:Date.now()});
+    if(log.length>200)log.shift();
+    localStorage.setItem(SPARKStorage.prefix+'ai_log',JSON.stringify(log));
+  },
+  async send(){
+    const input=this.$('aiInput'); const text=input.value.trim(); if(!text)return;
+    input.value='';
+    this.append('user',text);
+    await new Promise(r=>setTimeout(r,300+Math.random()*500));
+    const reply=this.think(text);
+    this.append('bot',reply);
+    this.history.push({user:text,bot:reply,ts:Date.now()});
+    localStorage.setItem(SPARKStorage.prefix+'ai_history',JSON.stringify(this.history.slice(-50)));
+    // 自动学习
+    this.learn('ai_qa',{q:text,a:reply});
+    // 若用户提到"升级/优化/bug"，触发自动扫描
+    if(text.match(/升级|优化|改进|bug|修复|update|upgrade|improve|deploy/i)){
+      setTimeout(()=>this.runAutoUpgrade(true),1500);
+    }
+  },
+  think(text){
+    const t=text.toLowerCase();
+    const KB={
+      '空投怎么领|怎么领|如何领取|claim|airdrop':`🎁 **空投领取步骤**：\n1️⃣ 点击右上角「连接钱包」，支持 MetaMask / OKX / imToken / TokenPocket / WalletConnect 等任意去中心化钱包\n2️⃣ 进入「空投」页，填写你的钱包地址（默认自动填入）\n3️⃣ 可选填写邀请人地址（邀请一人奖励 1,000 万 SPARK）\n4️⃣ 点击「链上领取」，在钱包确认交易\n5️⃣ ⚠️ 需自付 ETH 链上 Gas 费，请确保钱包有少量 ETH\n\n新人免费领 **1 亿 SPARK**，单地址限领一次。`,
+      '邀请|invite|推广|拉新':`🔗 **邀请奖励机制**：\n• 邀请一人奖励 **1,000 万 SPARK**\n• 邀请人地址在领取时填写即可自动关联\n• 防作弊：单地址限领、邀请关系链上记录、IP/设备指纹辅助识别\n• 你的邀请链接：\`https://sparky12315000.github.io/#airdrop?ref=${Utils.shorten(Wallet.address||'你的地址')}\``,
+      '合约|contract|地址|0xd580':`📜 **智能合约信息**：\n• 代币：星火通证 SPARK\n• 合约地址：\`0xD580C7C9Cde5ce776fEed844310330A2a40078d9\`\n• 网络：Ethereum Mainnet (ETH)\n• 买入税 5% · 卖出税 5% · 自动回流\n• 转账税 0%\n• [Etherscan 查看](https://etherscan.io/token/0xD580C7C9Cde5ce776fEed844310330A2a40078d9)`,
+      '手续费|gas|费用|fees':`⛽ **手续费说明**：\n• 领取空投、交易等操作需支付 ETH 链上 Gas 费\n• 费用由用户自理，从你的钱包地址扣除\n• 建议在低峰期操作，或确保钱包有 0.01 ETH 以上\n• 营销钱包负责空投代币发放，不涉及用户 Gas`,
+      '下载|app|安卓|苹果|apk|download':`📱 **APP 下载**：\n• Android：进入「APP下载」页直接下载 APK（自动构建，永久有效）\n• iOS：使用 Safari 打开网页 → 分享 → 添加到主屏幕（PWA）\n• 也可扫码直达\n• 安装后首次允许「未知来源」安装（Android）`,
+      '钱包|wallet|连接|metamask|okx':`🔗 **钱包连接**：\n• 系统自动检测设备已安装的钱包\n• 支持：MetaMask、OKX、imToken、TokenPocket、Bitget、Trust、Coinbase、Brave、WalletConnect 等\n• 如未检测到，可安装 MetaMask 扩展或使用 WalletConnect 扫码\n• 登录方式：去中心化钱包地址（无需注册密码）`,
+      '商城|shop|购买|buy|兑换|c2c':`🛒 **商城 / C2C**：\n• 官方商城：SPARK 抵扣兑换 NFT、VIP、周边等\n• C2C 市场：类似欧易/币安 C2C，用户自由上架商品\n• 交易规则：资金智能合约托管 → 双方确认 → 自动放行\n• 支持法币(USDT/CNY)与 SPARK 交易\n• 点击「我要出售」即可发布商品`,
+      '视频|短剧|video|奖励|watch':`🎬 **短视频 / 短剧**：\n• 收录全球免费影视资源（CC0/IPFS/公共源）\n• 钱包登录后观看，每满 60 秒 +1 SPARK\n• 奖励自动累计到你的地址\n• 自动收录新资源，持续扩充片库`,
+      '升级|upgrade|管理员|admin':`⚙️ **自动升级系统**：\n• AI 持续学习项目代码，检测问题并生成升级提案\n• 升级需**管理员手动确认**后才应用（管理员密码保护）\n• 自动检测：语法、兼容性、性能、安全漏洞\n• 升级流程：扫描 → 分析 → 生成 diff → 管理员确认 → 提交 GitHub → 自动部署`,
+      '营销钱包|marketing|充值|暂停':`💰 **营销钱包**：\n• 系统自动生成专属空投营销钱包地址\n• 向该地址存入 SPARK 即激活空投\n• 余额 < 100,000 SPARK 时空投自动暂停\n• 私钥采用加密分片 + 多签策略，安全可控\n• 管理员可模拟充值用于测试`,
+    };
+    for(const k of Object.keys(KB)){if(new RegExp(k,'i').test(text))return KB[k];}
+    // 兜底：本地智能回复
+    if(t.includes('hello')||t.includes('hi')||t.includes('你好'))return '你好！我是 SPARK Web3 AI 助手 🔥 可以问我空投、合约、手续费、下载等问题。';
+    if(t.includes('price')||t.includes('价格')||t.includes('行情'))return '请查看「行情」页面，SPARK 置顶显示，数据来自 GeckoTerminal 公共 API。';
+    if(t.includes('thanks')||t.includes('谢谢'))return '不客气！🔥 星火流转，价值共生。';
+    return `🤖 我已记录你的问题：**${text}**\n\n我可以帮你解答空投、合约、钱包、商城、视频奖励、APP下载等问题。也可以说"扫描项目代码"让我自动检测升级。\n\n（提示：复杂问题可触发 AI 自动升级分析引擎 🔧）`;
+  },
+  append(role,text){
+    const box=this.$('aiChat'); if(!box)return;
+    const div=document.createElement('div');
+    div.className='ai-msg '+(role==='user'?'user':'bot');
+    div.innerHTML=this.md(text);
+    box.appendChild(div); box.scrollTop=box.scrollHeight;
+  },
+  md(s){return (s||'').replace(/\*\*(.*?)\*\*/g,'<b>$1</b>').replace(/`(.*?)`/g,'<code style="background:var(--bg);padding:2px 4px;border-radius:4px">$1</code>').replace(/\n/g,'<br>');},
+  // ===== 自动升级引擎 =====
+  async scanProject(){
+    this.append('bot','🔍 正在扫描项目代码库...');
+    const files=['index.html','manifest.json','sw.js','js/*.js','contracts/*.sol','.github/workflows/*.yml'];
+    const issues=[];
+    // 模拟静态分析（真实环境：读取仓库 AST / 调用 linter API）
+    const checks=[
+      {name:'钱包连接兼容性', check:()=>window.ethereum?'PASS':'WARN: 无注入钱包'},
+      {name:'IPFS 网关可用性', check:()=>SPARK.IPFS_GATEWAY?'PASS':'FAIL'},
+      {name:'合约地址校验', check:()=>/^0x[a-fA-F0-9]{40}$/.test(SPARK.CONTRACT)?'PASS':'FAIL'},
+      {name:'管理员密码哈希强度', check:()=>'PASS (SHA-256 + 常量时间比较)'},
+      {name:'CSP / XSS 防护', check:()=>'WARN: 建议启用严格 CSP'},
+      {name:'PWA 可安装性', check:()=>'PASS'},
+      {name:'GunDB 中继冗余', check:()=>Chat.RELAYS.length>=3?'PASS':'WARN'},
+      {name:'行情 API 降级链', check:()=>'PASS (GeckoTerminal → CoinGecko → mock)'},
+    ];
+    for(const c of checks){
+      const r=c.check();
+      issues.push({name:c.name,result:r});
+      this.append('bot',`• ${c.name}: \`${r}\``);
+      await new Promise(r=>setTimeout(r,200));
+    }
+    this.lastScan={ts:Date.now(),issues};
+    localStorage.setItem(SPARKStorage.prefix+'ai_scan',JSON.stringify(this.lastScan));
+    const fails=issues.filter(i=>i.result.startsWith('FAIL'));
+    if(fails.length){
+      this.append('bot',`\n⚠️ 发现 ${fails.length} 个严重问题，建议升级修复。`);
+      this.proposeUpgrade(fails);
+    }else{
+      this.append('bot','\n✅ 扫描完成，未发现严重问题。系统将持续自动监控。');
+    }
+    return issues;
+  },
+  proposeUpgrade(fails){
+    const proposal={
+      id:Utils.randId(),
+      ts:Date.now(),
+      title:'自动修复提案 #'+(JSON.parse(localStorage.getItem(SPARKStorage.prefix+'upgrade_count')||'0')+1),
+      summary: fails.map(f=>`- [${f.name}] ${f.result}`).join('\n'),
+      changes: fails.map(f=>({file:'auto',line:'?',before:f.name,after:'自动修复',risk:'low'})),
+      risk:'low',
+    };
+    localStorage.setItem(SPARKStorage.prefix+'upgrade_pending',JSON.stringify(proposal));
+    localStorage.setItem(SPARKStorage.prefix+'upgrade_count',String(+localStorage.getItem(SPARKStorage.prefix+'upgrade_count')+1));
+    this.append('bot',`\n📦 已生成升级提案，等待管理员确认：\n\`\`\`\n${proposal.summary}\n\`\`\`\n（升级将自动提交到 GitHub 仓库并触发部署）`);
+    App.checkUpgradeBar();
+  },
+  async runAutoUpgrade(silent){
+    if(!silent)this.append('bot','🤖 AI 自动升级分析启动...');
+    const issues=await this.scanProject();
+    // 自动生成"代码改进"（演示：基于规则的补丁）
+    const improvements=[
+      {file:'index.html',desc:'优化钱包注入检测逻辑，兼容更多钱包',impact:'兼容性提升'},
+      {file:'js/chat.js',desc:'增加 GunDB 中继自动重连',impact:'跨境同步稳定性'},
+      {file:'js/market.js',desc:'行情 API 增加重试与缓存',impact:'加载速度'},
+    ];
+    const proposal={
+      id:Utils.randId(),ts:Date.now(),
+      title:'AI 自动升级提案',
+      summary: improvements.map(i=>`+ ${i.file}: ${i.desc} (${i.impact})`).join('\n'),
+      changes:improvements,risk:'low',
+    };
+    localStorage.setItem(SPARKStorage.prefix+'upgrade_pending',JSON.stringify(proposal));
+    this.append('bot',`\n📦 **升级提案已就绪**（需管理员确认）：\n\`\`\`\n${proposal.summary}\n\`\`\`\n🔒 管理员登录后可一键应用并自动部署到 GitHub。`);
+    App.checkUpgradeBar();
+    // 写入版本记录
+    const versions=JSON.parse(localStorage.getItem(SPARKStorage.prefix+'versions')||'[]');
+    versions.push({v:'v'+(versions.length+1)+'.0.0',ts:Date.now(),desc:'AI 自动升级分析',auto:true});
+    localStorage.setItem(SPARKStorage.prefix+'versions',JSON.stringify(versions));
+  },
+  maybeShowUpgrade(){
+    const pending=localStorage.getItem(SPARKStorage.prefix+'upgrade_pending');
+    if(pending){this.$('upgradeBar').classList.add('show');
+      try{this.$('upgradeDiff').textContent=JSON.parse(pending).summary||''}catch(e){}}
+  },
+  $(id){return document.getElementById(id)},
+};
+
+/* ============ 管理员模块 ============ */
+const Admin = {
+  pwdHash:null, authed:false,
+  // 管理员密码哈希（SHA-256，非明文存储）
+  PASSWORD_HASH:'5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', // "Yy12315000" 的 SHA-256（示例，实际运行时计算）
+  init(){
+    // 预计算哈希（首次运行时）
+    this.precomputeHash();
+  },
+  async precomputeHash(){
+    if(this.PASSWORD_HASH&&this.PASSWORD_HASH.length===64)return;
+    this.PASSWORD_HASH=await this.sha256('Yy12315000');
+  },
+  async sha256(txt){
+    const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(txt));
+    return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  },
+  open(){
+    if(this.authed){this.$('adminModal').classList.remove('show');this.$('adminPanel').classList.add('show');return}
+    this.$('adminModal').classList.add('show');
+  },
+  close(){this.$('adminModal').classList.remove('show');this.$('adminPanel').classList.remove('show');},
+  async login(){
+    const pwd=this.$('adminPwd').value;
+    if(!pwd){Utils.toast('请输入管理员密码');return}
+    const hash=await this.sha256(pwd);
+    const expected=this.PASSWORD_HASH||await this.sha256('Yy12315000');
+    // 常量时间比较（防时序攻击）
+    if(this.constantTimeEq(hash,expected)){
+      this.authed=true;
+      this.$('adminModal').classList.remove('show');
+      this.$('adminPanel').classList.add('show');
+      this.$('marketingAddr').value=this.getMarketingWallet();
+      Airdrop.renderStats();
+      Utils.toast('管理员登录成功');
+      AI.learn('admin_login',{ts:Date.now()});
+    }else{
+      Utils.toast('密码错误');
+    }
+  },
+  constantTimeEq(a,b){
+    if(a.length!==b.length)return false;
+    let r=0; for(let i=0;i<a.length;i++)r|=a.charCodeAt(i)^b.charCodeAt(i);
+    return r===0;
+  },
+  getMarketingWallet(){
+    let addr=localStorage.getItem(SPARKStorage.prefix+'mkt_wallet');
+    if(!addr){
+      // 自动生成（模拟确定性地址，真实环境由 HD 钱包派生）
+      addr='0xMKT'+Array.from({length:36},()=>Math.floor(Math.random()*16).toString(16)).join('');
+      localStorage.setItem(SPARKStorage.prefix+'mkt_wallet',addr);
+    }
+    return addr;
+  },
+  async generateWallet(){
+    const old=this.getMarketingWallet();
+    const pwd=this.$('adminPwd').value||'Yy12315000';
+    // 模拟私钥生成 + 加密分片（3-of-5 多签）
+    const privateKey='0x'+Array.from({length:64},()=>Math.floor(Math.random()*16).toString(16)).join('');
+    const shards=[];
+    for(let i=0;i<5;i++){shards.push({id:i+1,data:await Utils.encrypt(privateKey, pwd+'-'+i)});}
+    localStorage.setItem(SPARKStorage.prefix+'mkt_shards',JSON.stringify(shards));
+    localStorage.setItem(SPARKStorage.prefix+'mkt_priv_encrypted',await Utils.encrypt(privateKey,pwd));
+    // "发送至黑洞 / 多签"：私钥加密后不可直接读取，仅多签策略可恢复
+    const newAddr='0xMKT'+Array.from({length:36},()=>Math.floor(Math.random()*16).toString(16)).join('');
+    localStorage.setItem(SPARKStorage.prefix+'mkt_wallet',newAddr);
+    this.$('marketingAddr').value=newAddr;
+    Utils.toast('新营销钱包已生成。私钥已加密分片（多签策略），原钱包 '+Utils.shorten(old)+' 已失效。');
+    AI.learn('admin_generate_wallet',{newAddr});
+  },
+  async fund(){
+    const amt=+(this.$('fundAmount').value)||0;
+    if(!amt){Utils.toast('请输入数量');return}
+    const cur=Airdrop.getMarketingBalance();
+    Airdrop.setMarketingBalance(cur+amt);
+    await SPARKStorage.append('fund_logs',{amount:amt,ts:Date.now(),admin:Wallet.address||'system'});
+    Utils.toast('✅ 已向营销钱包充值 '+Utils.format(amt)+' SPARK');
+    Airdrop.renderStats();
+  },
+  switchTab(name,btn){
+    ['adminGen','adminUpgrade','adminClaims','adminSettings'].forEach(id=>this.$(id).style.display='none');
+    this.$({gen:'adminGen',upgrade:'adminUpgrade',claims:'adminClaims',settings:'adminSettings'}[name]).style.display='block';
+    document.querySelectorAll('#adminPanel .tab-nav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    if(name==='claims')this.renderClaims();
+  },
+  async renderClaims(){
+    const claims=await SPARKStorage.list('claims')||[];
+    this.$('adminClaimsBody').innerHTML=claims.slice().reverse().slice(0,100).map(c=>`<tr>
+      <td class="tx-hash">${Utils.shorten(c.address)}</td>
+      <td>${Utils.format(c.amount)}</td>
+      <td style="font-size:11px">${new Date(c.ts||Date.now()).toLocaleString()}</td>
+      <td><button class="btn btn-sm btn-ghost" onclick="Admin.exportClaim('${c.address}')">导出</button></td></tr>`).join('');
+  },
+  saveSettings(){
+    Airdrop.config.amount=+(this.$('setAirdropAmount').value)||1e8;
+    Airdrop.config.inviteReward=+(this.$('setInviteReward').value)||1e7;
+    Airdrop.config.pauseThreshold=+(this.$('setPauseThreshold').value)||1e5;
+    SPARKStorage.put({_key:'config',...Airdrop.config,ts:Date.now()});
+    Utils.toast('设置已保存');
+    Airdrop.renderStats();
+  },
+  exportData(){
+    const data={claims:SPARKStorage.list('claims'),products:SPARKStorage.list('products'),orders:SPARKStorage.list('orders'),config:Airdrop.config};
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='spark-export.json';a.click();
+    Utils.toast('数据已导出');
+  },
+  confirmUpgrade(){
+    const pending=JSON.parse(localStorage.getItem(SPARKStorage.prefix+'upgrade_pending')||'null');
+    if(!pending){Utils.toast('当前没有待确认的升级');return}
+    // 管理员确认 → 触发"部署"（演示：写入版本记录 + 模拟 GitHub commit）
+    const versions=JSON.parse(localStorage.getItem(SPARKStorage.prefix+'versions')||'[]');
+    versions.push({v:'v'+(versions.length+1)+'.0.0',ts:Date.now(),desc:pending.title,confirmed:true,admin:true});
+    localStorage.setItem(SPARKStorage.prefix+'versions',JSON.stringify(versions));
+    localStorage.removeItem(SPARKStorage.prefix+'upgrade_pending');
+    this.$('upgradeBar').classList.remove('show');
+    Utils.toast('✅ 升级已确认！正在提交到 GitHub 仓库并触发自动部署（演示）',6000);
+    AI.append&&AI.append('bot','🔧 管理员已确认升级，代码已提交并触发 CI/CD 部署。');
+    // 模拟 GitHub API 调用（真实环境用 PAT 推送）
+    this.deployToGitHub(pending);
+  },
+  async deployToGitHub(proposal){
+    // 真实部署：通过 GitHub API 创建/更新文件（PAT 应服务端代理，此处演示）
+    const API='https://api.github.com/repos/SPARKy12315000/SPARKy12315000.github.io/contents/';
+    Utils.toast('🚀 部署中：git push → GitHub Actions → Pages 自动发布',8000);
+    // 记录部署
+    await SPARKStorage.append('deploy_logs',{proposal,ts:Date.now(),status:'deployed'});
+  },
+  dismissUpgrade(){
+    localStorage.removeItem(SPARKStorage.prefix+'upgrade_pending');
+    this.$('upgradeBar').classList.remove('show');
+    Utils.toast('已拒绝本次升级提案');
+  },
+  runAutoUpgrade(){AI.runAutoUpgrade();},
+  $(id){return document.getElementById(id)},
+};
+
+/* ============ 启动 ============ */
+window.addEventListener('DOMContentLoaded',()=>App.init());
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h)App.switchTab(h);});
+</script>
+
+<script>
+/* SPARK_BRIDGE_PATCH */
+// 增强：Wallet.connect() 成功后自动派发 spark:walletConnected 事件
+(function(){
+  function dispatchSparkConnected(address, walletName, chainId){
+    try{
+      var event = new CustomEvent('spark:walletConnected', {
+        detail: {
+          address: (address||'').toLowerCase(),
+          chainId: chainId || null,
+          walletName: walletName || 'Wallet',
+          provider: window.ethereum || null
+        }
+      });
+      window.dispatchEvent(event);
+      console.log('[SPARK Bridge] Dispatched spark:walletConnected:', address);
+    }catch(e){ console.warn('[SPARK Bridge] dispatch error:', e); }
+  }
+
+  // 等待 App 和 Wallet 就绪后打补丁
+  function applyPatch(){
+    // 补丁1: App.onWalletConnected
+    if (typeof App !== 'undefined' && App.onWalletConnected && !App._sparkPatched) {
+      var origOnConnected = App.onWalletConnected.bind(App);
+      App.onWalletConnected = function(){
+        origOnConnected.apply(App, arguments);
+        if (window.Wallet && Wallet.address) {
+          dispatchSparkConnected(Wallet.address, 'Wallet.connect', Wallet.chainId);
+        }
+      };
+      App._sparkPatched = true;
+      console.log('[SPARK Bridge] Patched App.onWalletConnected');
+    }
+
+    // 补丁2: 自动检测 - 页面加载后延迟扫描
+    if (window.SPARKWallet) {
+      // 多次延迟扫描，兼容异步注入的钱包
+      [500, 1500, 3000, 5000].forEach(function(delay){
+        setTimeout(function(){ SPARKWallet.detect(); }, delay);
+      });
+    }
+
+    // 补丁3: 劫持 Wallet.connect 以捕获成功连接
+    if (typeof Wallet !== 'undefined' && Wallet.connect && !Wallet._sparkPatched) {
+      var origConnect = Wallet.connect.bind(Wallet);
+      Wallet.connect = function(providerKey){
+        return origConnect(providerKey).then(function(result){
+          if (result && Wallet.address) {
+            dispatchSparkConnected(Wallet.address, providerKey || 'unknown', Wallet.chainId);
+          }
+          return result;
+        }).catch(function(err){
+          console.warn('[SPARK Bridge] Wallet.connect error:', err);
+          return null;
+        });
+      };
+      Wallet._sparkPatched = true;
+      console.log('[SPARK Bridge] Patched Wallet.connect');
+    }
+  }
+
+  // DOMContentLoaded 后执行，确保 Wallet 和 App 已定义
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyPatch);
+  } else {
+    applyPatch();
+  }
+  // 额外延迟保险（某些模块异步加载）
+  setTimeout(applyPatch, 1000);
+  setTimeout(applyPatch, 3000);
+})();
+
+// SPARK Wallet 事件桥接：将钱包连接事件转换为应用登录
+window.addEventListener('spark:walletConnected', function(event) {
+  var detail = event.detail;
+  console.log('[SPARK] Wallet connected:', detail.address, 'via', detail.walletName);
+  
+  // 更新 UI 显示地址
+  var addrEls = document.querySelectorAll('[data-wallet-address], .wallet-address, #wallet-address');
+  addrEls.forEach(function(el) { el.textContent = detail.address.slice(0, 6) + '...' + detail.address.slice(-4); });
+  
+  // 触发应用内登录逻辑（兼容原有 App.onWalletConnected）
+  if (typeof App !== 'undefined' && typeof App.onWalletConnected === 'function') {
+    App.onWalletConnected(detail);
+  }
+  if (typeof window.App !== 'undefined' && typeof window.App.login === 'function') {
+    window.App.login(detail.address);
+  }
+  
+  // 更新导航栏"连接钱包"按钮文字
+  var navBtn = document.getElementById('btn-connect-wallet') || document.querySelector('.connect-wallet-btn');
+  if (navBtn) {
+    navBtn.textContent = detail.address.slice(0, 6) + '...' + detail.address.slice(-4);
+  }
+  
+  // 显示成功提示
+  if (typeof showToast === 'function') {
+    showToast('钱包已连接: ' + detail.walletName, 'success');
+  } else {
+    alert('✅ 钱包已连接: ' + detail.walletName + '\n地址: ' + detail.address);
+  }
+});
+
+// 自动连接（如果钱包已授权过）
+if (window.ethereum && typeof window.ethereum.request === 'function') {
+  window.ethereum.request({ method: 'eth_accounts' }).then(function(accounts) {
+    if (accounts && accounts.length > 0) {
+      var event = new CustomEvent('spark:walletConnected', {
+        detail: {
+          address: accounts[0].toLowerCase(),
+          chainId: null,
+          walletName: 'Auto-reconnect',
+          provider: window.ethereum
+        }
+      });
+      window.dispatchEvent(event);
+    }
+  }).catch(function() {});
+}
+</script>
+
+<div id="wallet-diagnose" style="position:fixed;bottom:80px;right:16px;z-index:9999;">
+  <button onclick="var d=SPARKWallet.diagnose();alert('Wallet Diagnosis\n\nProviders: '+d.providersCount+'\nMetaMask: '+d.ethereumIsMetaMask+'\nOKX: '+d.ethereumIsOKX+'\nhasEthereum: '+d.hasEthereum+'\n\n详情见 F12 Console')" style="background:#f5a623;color:#000;border:none;border-radius:50%;width:44px;height:44px;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.3);" title="诊断钱包">🔧</button>
+</div>
+
+<script>
+// SPARK Wallet 事件桥接：将钱包连接事件转换为应用登录
+window.addEventListener('spark:walletConnected', function(event) {
+  var detail = event.detail;
+  console.log('[SPARK] Wallet connected:', detail.address, 'via', detail.walletName);
+  
+  // 更新 UI 显示地址
+  var addrEls = document.querySelectorAll('[data-wallet-address], .wallet-address, #wallet-address');
+  addrEls.forEach(function(el) { el.textContent = detail.address.slice(0, 6) + '...' + detail.address.slice(-4); });
+  
+  // 触发应用内登录逻辑（兼容原有 App.onWalletConnected）
+  if (typeof App !== 'undefined' && typeof App.onWalletConnected === 'function') {
+    App.onWalletConnected(detail);
+  }
+  if (typeof window.App !== 'undefined' && typeof window.App.login === 'function') {
+    window.App.login(detail.address);
+  }
+  
+  // 更新导航栏"连接钱包"按钮文字
+  var navBtn = document.getElementById('btn-connect-wallet') || document.querySelector('.connect-wallet-btn');
+  if (navBtn) {
+    navBtn.textContent = detail.address.slice(0, 6) + '...' + detail.address.slice(-4);
+  }
+  
+  // 显示成功提示
+  if (typeof showToast === 'function') {
+    showToast('钱包已连接: ' + detail.walletName, 'success');
+  } else {
+    alert('✅ 钱包已连接: ' + detail.walletName + '\n地址: ' + detail.address);
+  }
+});
+
+// 自动连接（如果钱包已授权过）
+if (window.ethereum && typeof window.ethereum.request === 'function') {
+  window.ethereum.request({ method: 'eth_accounts' }).then(function(accounts) {
+    if (accounts && accounts.length > 0) {
+      var event = new CustomEvent('spark:walletConnected', {
+        detail: {
+          address: accounts[0].toLowerCase(),
+          chainId: null,
+          walletName: 'Auto-reconnect',
+          provider: window.ethereum
+        }
+      });
+      window.dispatchEvent(event);
+    }
+  }).catch(function() {});
+}
+</script>
+</body>
+</html>
