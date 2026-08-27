@@ -1,0 +1,16 @@
+{
+  "name": "spark-exchange-server",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node ../test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "ethers": "^6.13.0",
+    "ws": "^8.17.0"
+  }
+}
