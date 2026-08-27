@@ -3,52 +3,112 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>星火通证 SPARK · 去中心化交易所</title>
+<title>星火通证 SPARK · 营销回流代币 · 去中心化交易所</title>
+<meta name="description" content="星火通证 (SPARK) — 基于以太坊的创新型营销回流代币，构建透明、公平、可持续的社区价值生态。流动的文化之火，星火流转，价值共生。" />
 <style>
   :root{
     --bg:#0b0e11; --panel:#161a1e; --border:#2b3139; --txt:#eaecef;
     --muted:#848e9c; --up:#2ebd85; --down:#f6465d; --gold:#f0b90b;
+    --hero1:#1a1f2e; --hero2:#241c14;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--txt);font:14px/1.5 -apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;}
+  body{background:var(--bg);color:var(--txt);font:14px/1.6 -apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;}
   a{color:var(--gold);text-decoration:none;}
   .wrap{max-width:1440px;margin:0 auto;padding:0 16px;}
-  /* header */
-  header{position:sticky;top:0;z-index:20;background:rgba(11,14,17,.92);border-bottom:1px solid var(--border);backdrop-filter:blur(8px);}
-  .top{display:flex;align-items:center;gap:24px;height:56px;flex-wrap:wrap;}
-  .logo{font-weight:800;font-size:18px;color:var(--gold);}
-  .logo small{color:var(--muted);font-weight:400;font-size:12px;margin-left:6px;}
-  nav{display:flex;gap:18px;font-size:13px;color:var(--muted);}
-  nav span{cursor:pointer;}
-  nav .on{color:var(--txt);font-weight:700;}
-  .wallet{margin-left:auto;}
   button{background:var(--gold);color:#1e1e1e;border:none;border-radius:6px;padding:8px 16px;font-weight:700;cursor:pointer;}
   button.ghost{background:transparent;border:1px solid var(--border);color:var(--txt);font-weight:500;}
   button:hover{opacity:.9;}
-  /* hero */
-  .hero{padding:26px 0 14px;}
-  .hero h1{font-size:24px;}
-  .hero p{color:var(--muted);margin-top:6px;}
-  .contract{font-size:12px;color:var(--muted);margin-top:8px;word-break:break-all;}
-  /* tickers */
-  .tickers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
-  .tk{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px;}
+
+  /* ===== Header ===== */
+  header{position:sticky;top:0;z-index:20;background:rgba(11,14,17,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(8px);}
+  .top{display:flex;align-items:center;gap:24px;height:60px;flex-wrap:wrap;}
+  .logo{font-weight:800;font-size:19px;color:var(--gold);display:flex;align-items:center;gap:8px;}
+  .logo .fire{font-size:20px;}
+  .logo small{color:var(--muted);font-weight:400;font-size:12px;margin-left:2px;}
+  nav{display:flex;gap:20px;font-size:13px;color:var(--muted);}
+  nav a{color:inherit;cursor:pointer;}
+  nav a:hover{color:var(--gold);}
+  .wallet{margin-left:auto;}
+  .menu-btn{display:none;background:transparent;border:1px solid var(--border);color:var(--txt);font-size:18px;}
+
+  /* ===== Hero ===== */
+  .hero{position:relative;overflow:hidden;padding:56px 0 40px;border-bottom:1px solid var(--border);
+    background:radial-gradient(1200px 400px at 70% -10%, rgba(240,185,11,.12), transparent 60%),
+               radial-gradient(800px 400px at 10% 10%, rgba(46,189,133,.08), transparent 60%);}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center;}
+  .badge-new{display:inline-block;font-size:12px;color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:3px 12px;margin-bottom:16px;}
+  .hero h1{font-size:40px;line-height:1.2;font-weight:900;}
+  .hero h1 em{color:var(--gold);font-style:normal;}
+  .hero .sub{color:var(--muted);margin-top:16px;font-size:15px;max-width:560px;}
+  .hero-actions{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;}
+  .hero-actions .primary{padding:12px 26px;font-size:15px;}
+  .hero-actions .ghost{padding:12px 22px;font-size:15px;}
+  .contract-box{margin-top:26px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--muted);}
+  .contract-box b{color:var(--txt);}
+  .contract-box code{color:var(--gold);word-break:break-all;}
+  .copy-btn{float:right;padding:4px 10px;font-size:12px;}
+
+  /* hero stats card */
+  .hero-card{background:linear-gradient(160deg,var(--panel),#1c2230);border:1px solid var(--border);border-radius:16px;padding:24px;}
+  .hero-card .row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px dashed var(--border);font-size:13px;}
+  .hero-card .row:last-child{border-bottom:none;}
+  .hero-card .row b{color:var(--gold);font-size:15px;}
+  .hero-card .label{color:var(--muted);}
+
+  /* ===== Sections ===== */
+  section{padding:44px 0;}
+  .sec-head{text-align:center;margin-bottom:30px;}
+  .sec-head .kicker{color:var(--gold);font-size:13px;font-weight:700;letter-spacing:2px;}
+  .sec-head h2{font-size:28px;margin-top:8px;}
+  .sec-head p{color:var(--muted);margin-top:8px;max-width:620px;margin-left:auto;margin-right:auto;}
+
+  /* philosophy cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px;transition:.2s;}
+  .card:hover{border-color:var(--gold);transform:translateY(-3px);}
+  .card .ico{font-size:30px;}
+  .card h3{margin:12px 0 6px;font-size:16px;}
+  .card p{color:var(--muted);font-size:13px;}
+
+  /* tokenomics */
+  .tok{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .tok .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;}
+  .tok .stat .v{font-size:22px;font-weight:800;color:var(--gold);}
+  .tok .stat .l{color:var(--muted);font-size:12px;margin-top:4px;}
+
+  /* flow (经济模型) */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;align-items:center;max-width:900px;margin:0 auto;}
+  .flow .step{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;position:relative;}
+  .flow .step .n{width:28px;height:28px;border-radius:50%;background:var(--gold);color:#1e1e1e;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;}
+  .flow .step h4{font-size:14px;margin-bottom:4px;}
+  .flow .step p{color:var(--muted);font-size:12px;}
+  .flow .arrow{font-size:24px;color:var(--gold);text-align:center;}
+
+  /* IPFS gallery */
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .ipfs-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .ipfs-card img{width:100%;display:block;}
+  .ipfs-card .meta{padding:12px;}
+  .ipfs-card .meta code{font-size:11px;color:var(--muted);word-break:break-all;}
+
+  /* DEX (原有交易模块) */
+  .dex-panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px;}
+  .tickers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+  .tk{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;}
+  .tk:hover{border-color:var(--gold);}
   .tk .p{font-size:18px;font-weight:700;}
   .chg{font-size:12px;}
   .up{color:var(--up);} .down{color:var(--down);}
-  /* layout */
   .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:24px;}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;}
-  .card h3{font-size:14px;margin-bottom:10px;}
+  .card-inner{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;}
+  .card-inner h3{font-size:14px;margin-bottom:10px;}
   .pair-tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
   .pair-tabs .tab{padding:5px 12px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12px;}
   .pair-tabs .tab.on{background:var(--gold);color:#1e1e1e;border-color:var(--gold);font-weight:700;}
   canvas{width:100%;background:#0e1216;border-radius:8px;}
-  /* depth */
   .depth{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;font-family:monospace;}
   .depth .row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:2px 6px;}
   .depth .head{color:var(--muted);}
-  /* trade form */
   .side{display:flex;gap:8px;margin-bottom:12px;}
   .side .tab{flex:1;text-align:center;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;}
   .side .tab.buy.on{background:var(--up);color:#fff;border-color:var(--up);}
@@ -62,370 +122,443 @@
   .full{width:100%;padding:11px;}
   .sellbtn{background:var(--down);color:#fff;}
   .buybtn{background:var(--up);color:#fff;}
-  /* trades / orders */
   table{width:100%;border-collapse:collapse;font-size:12px;}
   th,td{text-align:right;padding:5px 4px;}
   th:first-child,td:first-child{text-align:left;}
   th{color:var(--muted);font-weight:500;}
-  /* governance */
   .prop{background:#0e1216;border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;}
   .prop .id{color:var(--gold);font-weight:700;}
   .badge{font-size:11px;padding:2px 8px;border-radius:10px;background:#2b3139;}
   .badge.approved{background:var(--up);color:#fff;}
   .row2{display:flex;gap:10px;flex-wrap:wrap;}
   .row2>*{flex:1;min-width:160px;}
-  footer{color:var(--muted);font-size:12px;text-align:center;padding:20px 0;border-top:1px solid var(--border);margin-top:20px;}
-  @media(max-width:900px){.grid{grid-template-columns:1fr;}.tickers{grid-template-columns:1fr;}}
+
+  /* roadmap */
+  .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .rm{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;border-top:3px solid var(--gold);}
+  .rm .phase{color:var(--gold);font-weight:800;font-size:12px;}
+  .rm h4{margin:8px 0;}
+  .rm ul{padding-left:16px;color:var(--muted);font-size:12px;}
+  .rm li{margin:4px 0;}
+
+  footer{color:var(--muted);font-size:12px;text-align:center;padding:30px 0 40px;border-top:1px solid var(--border);margin-top:20px;}
+  footer .links{margin-bottom:12px;}
+  footer .links a{margin:0 10px;color:var(--muted);}
+  footer .links a:hover{color:var(--gold);}
+
+  @media(max-width:900px){
+    .hero-grid,.grid,.cards,.tok,.flow,.gallery,.roadmap{grid-template-columns:1fr;}
+    .hero h1{font-size:30px;}
+    .flow{display:block;}
+    .flow .arrow{transform:rotate(90deg);}
+    nav{display:none;}
+    .menu-btn{display:inline-block;}
+  }
 </style>
 </head>
 <body>
-<div id="app">
+
+<!-- ============ Header ============ -->
 <header>
   <div class="wrap top">
-    <div class="logo">🔥 SPARK DEX <small>星火通证 · 去中心化交易所</small></div>
+    <div class="logo"><span class="fire">🔥</span> 星火通证 <small>SPARK</small></div>
     <nav>
-      <span class="on">交易</span><span>市场</span><span>治理</span><span>文档</span>
+      <a href="#home">首页</a>
+      <a href="#about">项目理念</a>
+      <a href="#tokenomics">经济模型</a>
+      <a href="#exchange">交易所</a>
+      <a href="#governance">治理升级</a>
+      <a href="#ipfs">去中心化存储</a>
     </nav>
     <div class="wallet">
       <button id="connectBtn">连接钱包</button>
     </div>
+    <button class="menu-btn" onclick="window.scrollTo(0,document.querySelector('#exchange').offsetTop)">☰</button>
   </div>
 </header>
 
-<main class="wrap">
-  <section class="hero">
-    <h1>星火流转，价值共生</h1>
-    <p>基于以太坊的 SPARK 营销回流代币 · 5% 税费自动回流 · 透明、公平、可持续的社区价值生态</p>
-    <div class="contract">合约地址（以太坊）：0xD580C7C9Cde5ce776fEed844310330A2a40078d9 · 全网唯一通证</div>
-  </section>
-
-  <section class="tickers" id="tickers"></section>
-
-  <div class="grid">
-    <!-- 左侧：图表 + 深度 + 成交 -->
+<!-- ============ Hero ============ -->
+<section class="hero" id="home">
+  <div class="wrap hero-grid">
     <div>
-      <div class="card">
-        <div class="pair-tabs" id="pairTabs"></div>
-        <h3>K线图 <small style="color:var(--muted)">（Canvas 实时绘制）</small></h3>
-        <canvas id="kline" height="320"></canvas>
+      <span class="badge-new">🔥 基于以太坊 · 营销回流代币</span>
+      <h1>流动的文化之火<br><em>星火流转，价值共生</em></h1>
+      <p class="sub">星火通证 (SPARK) 以「流动的文化之火」为核心理念，将文化价值通过区块链技术进行重塑与流转，构建透明、公平、可持续的社区价值生态。</p>
+      <div class="hero-actions">
+        <button class="primary" onclick="location.href='#exchange'">进入交易所 🚀</button>
+        <button class="ghost" onclick="copyContract()">复制合约地址</button>
       </div>
-      <div class="card">
-        <h3>市场深度</h3>
-        <div class="depth" id="depth"></div>
-      </div>
-      <div class="card">
-        <h3>最新成交</h3>
-        <table>
-          <thead><tr><th>价格</th><th>数量</th><th>时间</th></tr></thead>
-          <tbody id="trades"></tbody>
-        </table>
+      <div class="contract-box">
+        <button class="ghost copy-btn" onclick="copyContract()">复制</button>
+        <div><b>合约地址（以太坊网络）</b></div>
+        <code id="contractAddr">0xD580C7C9Cde5ce776fEed844310330A2a40078d9</code>
       </div>
     </div>
+    <div class="hero-card">
+      <div class="row"><span class="label">代币名称</span><b>星火通证 (SPARK)</b></div>
+      <div class="row"><span class="label">代币精度</span><b>18</b></div>
+      <div class="row"><span class="label">发行总量</span><b id="totalSupply">—</b></div>
+      <div class="row"><span class="label">代币模式</span><b>营销回流代币</b></div>
+      <div class="row"><span class="label">买入税 / 卖出税</span><b>5% / 5%</b></div>
+      <div class="row"><span class="label">转账税</span><b>0%</b></div>
+      <div class="row"><span class="label">网络</span><b>以太坊 (Ethereum)</b></div>
+    </div>
+  </div>
+</section>
 
-    <!-- 右侧：交易 + 订单簿 + 治理 -->
-    <div>
+<!-- ============ 项目理念 ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">ABOUT</div>
+      <h2>流动的文化之火</h2>
+      <p>我们致力于将文化价值通过区块链技术进行重塑与流转，构建一个「星火流转，价值共生」的可持续生态。</p>
+    </div>
+    <div class="cards">
       <div class="card">
-        <div class="side">
-          <div class="tab buy on" data-side="buy">买入</div>
-          <div class="tab sell" data-side="sell">卖出</div>
-        </div>
-        <div class="field">
-          <label>价格</label>
-          <input id="price" type="number" step="any" placeholder="市场价格" />
-        </div>
-        <div class="field">
-          <label>数量</label>
-          <input id="amount" type="number" step="any" placeholder="0.00" />
-          <div class="pcts">
-            <span data-pct="0.25">25%</span><span data-pct="0.5">50%</span>
-            <span data-pct="0.75">75%</span><span data-pct="1">100%</span>
-          </div>
-        </div>
-        <div class="summary" id="summary">预估税费（5% 回流）：0.0000 SPARK</div>
-        <button id="submitBtn" class="full buybtn">买入 SPARK</button>
+        <div class="ico">🔥</div>
+        <h3>透明</h3>
+        <p>合约开源、税费规则链上可查，每一笔回流清晰可见，杜绝暗箱操作。</p>
       </div>
-
       <div class="card">
-        <h3>订单簿</h3>
-        <div class="depth" id="orderbook"></div>
+        <div class="ico">⚖️</div>
+        <h3>公平</h3>
+        <p>无预挖、无团队预留，所有参与者在同一规则下共建价值生态。</p>
       </div>
-
       <div class="card">
-        <h3>🔧 治理升级 <small style="color:var(--muted)">管理员授权确认 + 自动部署</small></h3>
-        <div class="field">
-          <label>提案版本（如 1.1.0）</label>
-          <input id="propVersion" placeholder="1.1.0" />
-        </div>
-        <div class="field">
-          <label>更新日志</label>
-          <input id="propChangelog" placeholder="优化撮合引擎 / 新增交易对" />
-        </div>
-        <div class="row2">
-          <button id="proposeBtn">提交提案</button>
-          <button id="approveBtn" class="ghost">管理员授权执行</button>
-        </div>
-        <div id="proposals" style="margin-top:12px;"></div>
+        <div class="ico">♻️</div>
+        <h3>可持续</h3>
+        <p>独特的营销回流经济模型形成内生价值增长飞轮，支撑长期稳定。</p>
       </div>
     </div>
   </div>
-</main>
+</section>
 
+<!-- ============ 经济模型 / Tokenomics ============ -->
+<section id="tokenomics" style="background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">TOKENOMICS</div>
+      <h2>营销回流经济模型</h2>
+      <p>所有买卖交易产生的税费（各 5%）将 <b style="color:var(--gold)">100% 自动注入资金池用于回流</b>，旨在支撑币价长期稳定，形成内生的价值增长飞轮。</p>
+    </div>
+    <div class="tok">
+      <div class="stat"><div class="v">5%</div><div class="l">买入税 → 自动回流</div></div>
+      <div class="stat"><div class="v">5%</div><div class="l">卖出税 → 自动回流</div></div>
+      <div class="stat"><div class="v">0%</div><div class="l">转账税</div></div>
+      <div class="stat"><div class="v">100%</div><div class="l">税费注入资金池</div></div>
+    </div>
+    <div class="flow" style="margin-top:30px;">
+      <div class="step"><div class="n">1</div><h4>买入 / 卖出</h4><p>每笔交易收取 5% 税费</p></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n">2</div><h4>自动注入</h4><p>100% 税费流入资金池</p></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n">3</div><h4>回流回购</h4><p>资金池用于市场回流</p></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n">4</div><h4>价值飞轮</h4><p>支撑币价长期稳定</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 交易所 DEX ============ -->
+<section id="exchange">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">DEX · 去中心化交易所</div>
+      <h2>SPARK 现货交易</h2>
+      <p>支持 SPARK/ETH · SPARK/USDT · SPARK/BNB 多交易对，实时行情、深度图、K线与订单簿。</p>
+    </div>
+    <div class="tickers" id="tickers"></div>
+    <div class="grid">
+      <!-- 左侧：图表 + 深度 + 成交 -->
+      <div>
+        <div class="card-inner">
+          <div class="pair-tabs" id="pairTabs"></div>
+          <canvas id="kline" height="320"></canvas>
+        </div>
+        <div class="card-inner">
+          <h3>订单簿 & 深度</h3>
+          <div class="depth" id="depth"></div>
+        </div>
+        <div class="card-inner">
+          <h3>最新成交</h3>
+          <table><thead><tr><th>价格</th><th>数量</th><th>时间</th></tr></thead><tbody id="trades"></tbody></table>
+        </div>
+      </div>
+      <!-- 右侧：交易 + 治理 -->
+      <div>
+        <div class="card-inner">
+          <div class="side">
+            <div class="tab buy on" data-side="buy">买入</div>
+            <div class="tab sell" data-side="sell">卖出</div>
+          </div>
+          <div class="field"><label>价格</label><input id="price" type="number" step="any"></div>
+          <div class="field"><label>数量</label><input id="amount" type="number" step="any"></div>
+          <div class="pcts"><span data-pct="0.25">25%</span><span data-pct="0.5">50%</span><span data-pct="0.75">75%</span><span data-pct="1">100%</span></div>
+          <div class="summary" id="summary">预估税费（5% 回流）：$0</div>
+          <button class="full buybtn" id="submitBtn">买入 SPARK</button>
+        </div>
+        <div class="card-inner" id="governance">
+          <h3>🔧 治理升级（管理员授权）</h3>
+          <div class="field"><label>新版本号</label><input id="propVersion" placeholder="如 1.2.0"></div>
+          <div class="field"><label>更新日志</label><input id="propChangelog" placeholder="本次升级内容"></div>
+          <div class="row2">
+            <button onclick="propose()">提交提案</button>
+            <button class="ghost" onclick="approve()">管理员授权确认</button>
+          </div>
+          <div id="proposals" style="margin-top:12px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 路线图 ============ -->
+<section id="roadmap" style="background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">ROADMAP</div>
+      <h2>发展路线图</h2>
+    </div>
+    <div class="roadmap">
+      <div class="rm"><div class="phase">Phase 1</div><h4>创世点火</h4><ul><li>合约部署 · 开源审计</li><li>初始流动性注入</li><li>官网 + DEX 上线</li></ul></div>
+      <div class="rm"><div class="phase">Phase 2</div><h4>生态扩张</h4><ul><li>多交易对开通</li><li>营销回流机制启动</li><li>社区治理投票</li></ul></div>
+      <div class="rm"><div class="phase">Phase 3</div><h4>价值共生</h4><ul><li>跨链桥接</li><li>NFT 文化资产</li><li>回流飞轮强化</li></ul></div>
+      <div class="rm"><div class="phase">Phase 4</div><h4>星火燎原</h4><ul><li>去中心化自治成熟</li><li>全球社区共建</li><li>生态应用落地</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IPFS 去中心化存储 ============ -->
+<section id="ipfs">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">IPFS · 去中心化存储</div>
+      <h2>永久资产存储</h2>
+      <p>Logo、背景等核心资产永久存储于 IPFS，自动修复补充，不可篡改、永久可访问。</p>
+    </div>
+    <div class="gallery">
+      <div class="ipfs-card">
+        <img src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" alt="SPARK Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22%3E%3Crect width=%22160%22 height=%22160%22 fill=%22%23161a1e%22/%3E%3Ctext x=%2280%22 y=%2290%22 font-size=%2260%22 text-anchor=%22middle%22%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E'">
+        <div class="meta"><b>SPARK Logo</b><br><code>CID: bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm</code></div>
+      </div>
+      <div class="ipfs-card">
+        <img src="https://azure-glamorous-impala-55.mypinata.cloud/ipfs/bafybeigtk7dpdzwtscb2pn2eovqbnwvmnhnrdrbmzebwahxc4tzy2vnbqu" alt="SPARK Background" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22%3E%3Crect width=%22160%22 height=%22160%22 fill=%22%23241c14%22/%3E%3C/svg%3E'">
+        <div class="meta"><b>SPARK 背景图</b><br><code>CID: bafybeigtk7dpdzwtscb2pn2eovqbnwvmnhnrdrbmzebwahxc4tzy2vnbqu</code></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
 <footer>
-  星火通证 SPARK · 去中心化自治应用 | 数据通过 WebSocket 实时同步 | 存储自动修复 · 合约可升级 · 管理员多签授权
+  <div class="links">
+    <a href="#home">首页</a>
+    <a href="#about">理念</a>
+    <a href="#exchange">交易所</a>
+    <a href="#ipfs">IPFS 存储</a>
+  </div>
+  <div>合约地址：<code style="color:var(--gold)">0xD580C7C9Cde5ce776fEed844310330A2a40078d9</code></div>
+  <div style="margin-top:8px;">© 星火通证 SPARK · 流动的文化之火 · 星火流转，价值共生</div>
+  <div style="margin-top:6px;font-size:11px;">本网站为去中心化应用，仅供参考，不构成任何投资建议。投资有风险，入市需谨慎。</div>
 </footer>
-</div>
 
 <script>
-/* ============ 全局状态 ============ */
-const API = ''; // 同源
-let WS_URL = (location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/ws';
-let currentPair = 'SPARK/USDT';
-let side = 'buy';
-let wallet = null;
+/* ============ 配置 ============ */
+const API = location.protocol + '//' + location.hostname + (location.port?':'+location.port:'') + '/api';
+const WS_URL = (location.protocol==='https:'?'wss://':'ws://') + location.hostname + (location.port?':'+location.port:'') + '/ws';
+const CONTRACT = '0xD580C7C9Cde5ce776fEed844310330A2a40078d9';
+const PAIRS = ['SPARK/ETH','SPARK/USDT','SPARK/BNB'];
+let currentPair = PAIRS[0], side='buy', wallet=null, backendAvailable=null;
 
-const $ = (s) => document.querySelector(s);
-const pairs = ['SPARK/ETH', 'SPARK/USDT', 'SPARK/BNB'];
+const $ = id => document.getElementById(id);
+const fmt = (n,d=2) => Number(n||0).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
 
-/* ============ 工具 ============ */
-function fmt(n, d=4){ return Number(n||0).toFixed(d); }
+/* ============ 后端不可达时自动 Mock（GitHub Pages 纯静态托管兼容） ============ */
+const MOCK = {
+  tickers: () => PAIRS.map(p=>({pair:p,price:+(Math.random()*10+0.1).toFixed(4),chg:+(Math.random()*10-5).toFixed(2),volume:+(Math.random()*1e6).toFixed(0)})),
+  ticker: (pair) => ({pair,price:+(Math.random()*10+0.1).toFixed(4),chg:+(Math.random()*10-5).toFixed(2),volume:+(Math.random()*1e6).toFixed(0),high:10,low:0.1}),
+  orderbook: (pair) => {
+    const bids=[],asks=[];let bp=1,ap=1.002;
+    for(let i=0;i<12;i++){bids.push([+(bp-=0.01).toFixed(4),+(Math.random()*5e4).toFixed(0)]);asks.push([+(ap+=0.01).toFixed(4),+(Math.random()*5e4).toFixed(0)]);}
+    return {bids,asks};
+  },
+  trades: () => Array.from({length:15},()=>({price:+(Math.random()*10+0.1).toFixed(4),amount:+(Math.random()*1e4).toFixed(0),side:Math.random()>0.5?'buy':'sell',time:Date.now()-Math.random()*1e6|0})),
+  pairs: () => PAIRS,
+  meta: () => ({name:'星火通证',symbol:'SPARK',decimals:18,totalSupply:'9999999999999999999999999999',taxRate:5,buyTax:5,sellTax:5,transferTax:0,contract:CONTRACT,network:'Ethereum'}),
+};
 
-// 后端可用性探测（同源部署的后端 /api/health）。GitHub Pages 为纯静态托管，无后端，
-// 此时自动降级为本地模拟数据驱动，保证页面开箱即用、UI 完整可交互。
-let backendAvailable = null; // null=未知, true/false
-async function probeBackend(){
-  if(backendAvailable!==null) return backendAvailable;
-  try{ const r=await fetch('/api/health',{cache:'no-store'}); backendAvailable = r.ok; }
-  catch(e){ backendAvailable = false; }
-  return backendAvailable;
-}
-function mockTicker(pair){
-  const base = { 'SPARK/ETH':0.00042,'SPARK/USDT':0.85,'SPARK/BNB':0.00135 }[pair]||1;
-  const change = (Math.random()-0.5)*8;
-  return { pair, price: base*(1+change/100), change24h:change, volume24h: Math.random()*50000+10000, high:base*1.05, low:base*0.95, time:Date.now() };
-}
-// 订单簿：对象数组 [{price,amount}]（对应后端 /api/orderbook）
-function mockOrderBook(pair){
-  const mid = { 'SPARK/ETH':0.00042,'SPARK/USDT':0.85,'SPARK/BNB':0.00135 }[pair]||1;
-  const asks=[], bids=[];
-  for(let i=0;i<10;i++){ asks.push({price:+(mid*(1+(i+1)*0.002)).toFixed(8), amount:+(Math.random()*2000+100).toFixed(2)}); bids.push({price:+(mid*(1-(i+1)*0.002)).toFixed(8), amount:+(Math.random()*2000+100).toFixed(2)}); }
-  return { pair, asks, bids };
-}
-// 深度：元组数组 [[price,amount],...]（对应后端 /api/depth，供 loadDepth 解构渲染）
-function mockDepth(pair){
-  const mid = { 'SPARK/ETH':0.00042,'SPARK/USDT':0.85,'SPARK/BNB':0.00135 }[pair]||1;
-  const asks=[], bids=[];
-  for(let i=0;i<10;i++){ asks.push([+(mid*(1+(i+1)*0.002)).toFixed(8), +(Math.random()*2000+100).toFixed(2)]); bids.push([+(mid*(1-(i+1)*0.002)).toFixed(8), +(Math.random()*2000+100).toFixed(2)]); }
-  return { pair, asks, bids };
-}
 async function get(path){
-  await probeBackend();
-  if(!backendAvailable){
-    // ---- 模拟数据兜底（静态托管 / 后端离线时 UI 仍完整）----
-    if(path==='/api/tickers') return pairs.map(mockTicker);
-    if(path==='/api/contract') return { address:'0xD580C7C9Cde5ce776fEed844310330A2a40078d9', symbol:'SPARK', name:'星火通证 SPARK', network:'ethereum', taxRate:0.05, decimals:18 };
-    if(path==='/api/pairs') return pairs;
-    if(path.startsWith('/api/ticker/')) return mockTicker(decodeURIComponent(path.slice('/api/ticker/'.length)));
-    if(path.startsWith('/api/orderbook/')) return mockOrderBook(decodeURIComponent(path.split('?')[0].slice('/api/orderbook/'.length)));
-    if(path.startsWith('/api/depth/')) return mockDepth(decodeURIComponent(path.split('?')[0].slice('/api/depth/'.length)));
-    if(path.startsWith('/api/trades/')){ const pair=decodeURIComponent(path.split('?')[0].slice('/api/trades/'.length)); const mid={ 'SPARK/ETH':0.00042,'SPARK/USDT':0.85,'SPARK/BNB':0.00135 }[pair]||1; const arr=[]; for(let i=0;i<20;i++){const buy=Math.random()>0.5;arr.push({id:i,side:buy?'buy':'sell',price:+(mid*(1+(Math.random()-0.5)*0.004)).toFixed(8),amount:+(Math.random()*500+10).toFixed(2),time:Date.now()-i*3000});} return arr; }
-    if(path.startsWith('/api/klines/')) return generateMockKlines();
-    if(path==='/api/upgrade/proposals') return [];
-    if(path==='/api/health') return {ok:true, service:'spark-dex', version:'1.0.0', time:Date.now(), mode:'mock'};
-  }
-  const r = await fetch(API+path); return r.json();
+  if(backendAvailable===false) return mockFor(path);
+  try{ const r=await fetch(API+path,{headers:{'X-Client':'spark-web'}}); if(!r.ok) throw 0; backendAvailable=true; return await r.json(); }
+  catch(e){ backendAvailable=false; return mockFor(path); }
 }
-async function post(path, body){
-  await probeBackend();
-  if(!backendAvailable){
-    if(path==='/api/order') return { ok:true, trade:{ id:'MOCK-'+Math.random().toString(36).slice(2,8), ...body, time:Date.now() } };
-    if(path==='/api/upgrade/propose') return { id:'prop_'+Date.now(), status:'pending', approvals:[], ...body };
-    if(path.startsWith('/api/upgrade/approve/')) return { id:path.split('/').pop(), status:'approved', approvals:['admin'] };
-    if(path==='/api/admin/persist') return { ok:true, file:'storage.json', mode:'mock' };
-  }
-  const r = await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})}); return r.json();
+async function post(path,body){
+  if(backendAvailable===false) return {ok:true,mock:true,id:'mock-'+Date.now()};
+  try{ const r=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json','X-Client':'spark-web'},body:JSON.stringify(body||{})}); backendAvailable=true; return await r.json(); }
+  catch(e){ backendAvailable=false; return {ok:true,mock:true,id:'mock-'+Date.now()}; }
+}
+function mockFor(path){
+  if(path.includes('/orderbook')||path==='/api/depth') return MOCK.orderbook();
+  if(path.includes('/trades')) return MOCK.trades();
+  if(path==='/api/tickers') return MOCK.tickers();
+  if(path==='/api/pairs') return MOCK.pairs();
+  if(path==='/api/meta') return MOCK.meta();
+  if(path.startsWith('/api/ticker/')) return MOCK.ticker(decodeURIComponent(path.split('/').pop()));
+  return {};
 }
 
-/* ============ 行情 Tickers ============ */
+/* ============ 行情 / 订单簿 / 成交 ============ */
 async function loadTickers(){
   const list = await get('/api/tickers');
-  const box = $('#tickers');
-  box.innerHTML = list.map(t=>{
-    const up = (t.change24h||0)>=0;
-    return `<div class="tk"><div class="p">${t.pair}</div>
-      <div class="${up?'up':'down'} chg">${fmt(t.price,6)} ${up?'▲':'▼'} ${fmt(t.change24h,2)}%</div>
-      <div style="font-size:11px;color:var(--muted)">24h量 ${fmt(t.volume24h,0)}</div></div>`;
-  }).join('');
+  $('tickers').innerHTML = list.map(t=>`
+    <div class="tk ${t.pair===currentPair?'':''}" onclick="switchPair('${t.pair}')">
+      <div style="color:var(--muted);font-size:12px">${t.pair}</div>
+      <div class="p">$${fmt(t.price,4)}</div>
+      <div class="chg ${t.chg>=0?'up':'down'}">${t.chg>=0?'▲':'▼'} ${fmt(Math.abs(t.chg),2)}%</div>
+    </div>`).join('');
 }
-
-/* ============ 交易对切换 ============ */
 function renderPairTabs(){
-  $('#pairTabs').innerHTML = pairs.map(p=>`<div class="tab ${p===currentPair?'on':''}" data-pair="${p}">${p}</div>`).join('');
-  $('#pairTabs').onclick = e=>{
-    if(!e.target.dataset.pair) return;
-    currentPair = e.target.dataset.pair; renderPairTabs(); refresh();
-  };
+  $('pairTabs').innerHTML = PAIRS.map(p=>`<div class="tab ${p===currentPair?'on':''}" onclick="switchPair('${p}')">${p}</div>`).join('');
+}
+function switchPair(p){ currentPair=p; renderPairTabs(); refresh(); }
+async function loadDepth(){
+  const o = await get(`/api/orderbook/${currentPair}`);
+  const bids = (o.bids||[]).slice(0,10).reverse();
+  const asks = (o.asks||[]).slice(0,10);
+  const maxv = Math.max(...bids.map(x=>x[1]),...asks.map(x=>x[1]),1);
+  const row=(p,a,c)=>`<div class="row"><span style="color:${c}">${fmt(p,4)}</span><span>${fmt(a,0)}</span><span style="background:${c}22;height:12px;width:${a/maxv*100}%"></span></div>`;
+  $('depth').innerHTML = '<div class="head row"><span>价格</span><span>数量</span><span>深度</span></div>'
+    + asks.map(([p,a])=>row(p,a,'var(--down)')).join('')
+    + bids.map(([p,a])=>row(p,a,'var(--up)')).join('');
+}
+async function loadOrderBook(){ /* 深度图已涵盖，预留 */ }
+async function loadTrades(){
+  const list = await get(`/api/trades/${currentPair}`);
+  $('trades').innerHTML = list.slice(0,15).map(t=>`<tr><td class="${t.side==='buy'?'up':'down'}">$${fmt(t.price,4)}</td><td>${fmt(t.amount,0)}</td><td style="color:var(--muted)">${new Date(t.time||Date.now()).toLocaleTimeString()}</td></tr>`).join('') || '<tr><td colspan="3" style="color:var(--muted);text-align:center">暂无成交</td></tr>';
 }
 
 /* ============ K线图（Canvas 手绘） ============ */
 async function drawKline(){
-  const data = await get(`/api/klines/${currentPair}?interval=1m`);
-  const c = $('#kline'); const ctx = c.getContext('2d');
-  const W = c.width = c.clientWidth, H = c.height = 320;
-  ctx.clearRect(0,0,W,H);
-  const list = data.length? data : generateMockKlines();
-  const N = list.length; if(!N) return;
-  const pad={l:44,r:12,t:12,b:20};
-  const prices = list.flatMap(k=>[k.high,k.low]);
-  let min=Math.min(...prices), max=Math.max(...prices);
-  const gap=(max-min)*0.1||1; min-=gap; max+=gap;
-  const xw=(W-pad.l-pad.r)/N;
-  // 网格 + Y 轴
-  ctx.strokeStyle='#2b3139'; ctx.fillStyle='#848e9c'; ctx.font='11px sans-serif';
-  ctx.beginPath();
-  for(let g=0;g<=4;g++){const y=pad.t+(H-pad.t-pad.b)*g/4; ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);
-    ctx.fillText(fmt(max-(max-min)*g/4, list[0].close<10?6:2),4,y+4);}
-  ctx.stroke();
-  // K线
-  list.forEach((k,i)=>{
-    const x=pad.l+i*xw+xw/2;
-    const y=(v)=>pad.t+(H-pad.t-pad.b)*(1-(v-min)/(max-min));
-    const up=k.close>=k.open;
-    ctx.strokeStyle=ctx.fillStyle=up?'#2ebd85':'#f6465d';
-    ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(x,y(k.high));ctx.lineTo(x,y(k.low));ctx.stroke();
-    const bw=Math.max(xw*0.6,2);
-    ctx.fillRect(x-bw/2,y(k.open),bw,y(k.close)-y(k.open));
+  const c=$('kline'); const dpr=window.devicePixelRatio||1;
+  const W=c.clientWidth, H=320;
+  c.width=W*dpr; c.height=H*dpr;
+  const ctx=c.getContext('2d'); ctx.scale(dpr,dpr); ctx.clearRect(0,0,W,H);
+  const data=Array.from({length:40},()=>({o:+(Math.random()*2+8).toFixed(2),c:+(Math.random()*2+8).toFixed(2),h:+(Math.random()*2+9).toFixed(2),l:+(Math.random()*2+7).toFixed(2)}));
+  const min=Math.min(...data.map(k=>k.l)), max=Math.max(...data.map(k=>k.h));
+  const pad=28, bw=(W-pad*2)/data.length*0.7, gap=(W-pad*2)/data.length;
+  const sy=v=>pad+(1-(v-min)/(max-min||1))*(H-pad*2);
+  ctx.strokeStyle='#2b3139'; ctx.beginPath(); ctx.moveTo(pad,H/2); ctx.lineTo(W-pad,H/2); ctx.stroke();
+  data.forEach((k,i)=>{
+    const x=pad+gap*i+gap/2;
+    ctx.strokeStyle=k.c>=k.o?'#2ebd85':'#f6465d'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(x,sy(k.h)); ctx.lineTo(x,sy(k.l)); ctx.stroke();
+    ctx.fillStyle=k.c>=k.o?'#2ebd85':'#f6465d';
+    ctx.fillRect(x-bw/2,sy(Math.max(k.o,k.c)),bw,Math.max(1,Math.abs(sy(k.c)-sy(k.o))));
   });
-}
-function generateMockKlines(){
-  let p=0.85; const arr=[]; const now=Date.now();
-  for(let i=0;i<60;i++){const o=p;p*=1+(Math.random()-0.5)*0.02;arr.push({time:now-i*60000,open:o,high:Math.max(o,p)*1.001,low:Math.min(o,p)*0.999,close:p,volume:Math.random()*1000});}
-  return arr.reverse();
-}
-
-/* ============ 深度 ============ */
-async function loadDepth(){
-  const d = await get(`/api/depth/${currentPair}`);
-  const row=(arr,cls)=>arr.slice(0,8).map(([p,a])=>`<div class="row"><span class="${cls}">${fmt(p,6)}</span><span>${fmt(a,2)}</span><span></span></div>`).join('');
-  $('#depth').innerHTML = `<div><div class="row head"><span>卖价</span><span>数量</span><span></span></div>${row(d.asks,'down')}</div>
-    <div><div class="row head"><span>买价</span><span>数量</span><span></span></div>${row(d.bids,'up')}</div>`;
-}
-
-/* ============ 订单簿 ============ */
-async function loadOrderBook(){
-  const ob = await get(`/api/orderbook/${currentPair}`);
-  const row=(arr,cls)=>arr.slice(0,8).map(o=>`<tr><td class="${cls}">${fmt(o.price,6)}</td><td>${fmt(o.amount,2)}</td><td></td></tr>`).join('');
-  $('#orderbook').innerHTML = `<table><thead><tr><th>价格</th><th>数量</th><th></th></tr></thead>
-    <tbody>${row(ob.asks,'down')}</tbody></table>
-    <table><thead><tr><th>价格</th><th>数量</th><th></th></tr></thead>
-    <tbody>${row(ob.bids,'up')}</tbody></table>`;
-}
-
-/* ============ 最新成交 ============ */
-async function loadTrades(){
-  const list = await get(`/api/trades/${currentPair}`);
-  $('#trades').innerHTML = list.slice(0,20).map(t=>`<tr><td class="${t.side==='buy'?'up':'down'}">${fmt(t.price,6)}</td><td>${fmt(t.amount,2)}</td><td>${new Date(t.time).toLocaleTimeString()}</td></tr>`).join('') || '<tr><td colspan=3 style="color:var(--muted);text-align:center">暂无成交</td></tr>';
 }
 
 /* ============ 交易表单 ============ */
 function bindTradeForm(){
-  $('#price').oninput = $('#amount').oninput = updateSummary;
+  $('price').oninput=$('amount').oninput=updateSummary;
   document.querySelectorAll('.side .tab').forEach(t=>{
-    t.onclick=()=>{
-      document.querySelectorAll('.side .tab').forEach(x=>x.classList.remove('on'));
-      t.classList.add('on'); side=t.dataset.side; updateSummary();
-    };
+    t.onclick=()=>{document.querySelectorAll('.side .tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');side=t.dataset.side;updateSummary();};
   });
   document.querySelectorAll('.pcts span').forEach(sp=>{
     sp.onclick=()=>{
-      const tick = window._lastTicker || {price:1};
-      const bal = 1000; // 模拟余额
-      $('#price').value = tick.price;
-      $('#amount').value = (bal * parseFloat(sp.dataset.pct) / tick.price).toFixed(4);
+      const tick=window._lastTicker||{price:1};
+      $('price').value=tick.price;
+      $('amount').value=(1000*parseFloat(sp.dataset.pct)/tick.price).toFixed(4);
       updateSummary();
     };
   });
-  $('#submitBtn').onclick = async ()=>{
-    if(!wallet){ alert('请先连接钱包'); return; }
-    const price=$('#price').value, amount=$('#amount').value;
-    const r = await post('/api/order',{pair:currentPair,side,price,amount,user:wallet});
+  $('submitBtn').onclick=async()=>{
+    if(!wallet) return alert('请先连接钱包');
+    const price=$('price').value,amount=$('amount').value;
+    if(!price||!amount) return alert('请填写价格和数量');
+    const r=await post('/api/order',{pair:currentPair,side,price,amount,user:wallet});
     if(r.error) alert('下单失败：'+r.error);
-    else { alert(`✅ 订单已提交！成交 ${r.trade.id}`); refresh(); }
+    else alert(`✅ 订单已提交！${r.trade?('成交 '+r.trade.id):''}`);
+    refresh();
   };
 }
 function updateSummary(){
-  const amt = parseFloat($('#amount').value)||0;
-  const tax = amt*0.05;
-  $('#summary').textContent = `预估税费（5% 回流）：${fmt(tax,4)} SPARK`;
-  const btn=$('#submitBtn'); btn.textContent = (side==='buy'?'买入':'卖出')+' SPARK';
-  btn.className = 'full '+(side==='buy'?'buybtn':'sellbtn');
+  const amt=parseFloat($('amount').value)||0;
+  const tax=amt*0.05;
+  $('summary').textContent=`预估税费（5% 回流）：${fmt(tax,4)} SPARK`;
+  const btn=$('submitBtn');btn.textContent=(side==='buy'?'买入':'卖出')+' SPARK';btn.className='full '+(side==='buy'?'buybtn':'sellbtn');
 }
 
 /* ============ 治理升级 ============ */
-function bindGovernance(){
-  $('#proposeBtn').onclick = async ()=>{
-    const version=$('#propVersion').value, changelog=$('#propChangelog').value;
-    if(!version) return alert('请填写版本号');
-    const r = await post('/api/upgrade/propose',{version,changelog,proposer:wallet||'system'});
-    alert('提案已提交：'+r.id); loadProposals();
-  };
-  $('#approveBtn').onclick = async ()=>{
-    if(!wallet) return alert('请先连接钱包（管理员地址）');
-    const list = await get('/api/upgrade/proposals');
-    const target = list.find(p=>p.status==='pending'||p.status==='approved');
-    if(!target) return alert('无待处理提案');
-    const r = await post(`/api/upgrade/approve/${target.id}`,{approver:wallet});
-    alert('授权结果：'+r.status); loadProposals();
-  };
-}
+window.propose=async()=>{
+  const version=$('propVersion').value,changelog=$('propChangelog').value;
+  if(!version) return alert('请填写版本号');
+  const r=await post('/api/upgrade/propose',{version,changelog,proposer:wallet||'system'});
+  alert('提案已提交：'+(r.id||r.mock&&'本地模拟模式'));loadProposals();
+};
+window.approve=async()=>{
+  if(!wallet) return alert('请先连接钱包（管理员地址）');
+  const list=await get('/api/upgrade/proposals');
+  const target=list.find(p=>p.status==='pending'||p.status==='approved');
+  if(!target) return alert('无待处理提案');
+  const r=await post(`/api/upgrade/approve/${target.id}`,{approver:wallet});
+  alert('授权结果：'+r.status);loadProposals();
+};
 async function loadProposals(){
-  const list = await get('/api/upgrade/proposals');
-  $('#proposals').innerHTML = list.length? list.slice().reverse().map(p=>`
+  const list=await get('/api/upgrade/proposals');
+  $('proposals').innerHTML=list.length?list.slice().reverse().map(p=>`
     <div class="prop"><div><span class="id">${p.id}</span> → v${p.version}
     <span class="badge ${p.status==='approved'?'approved':''}">${p.status}</span></div>
     <div style="font-size:12px;color:var(--muted);margin-top:4px">${p.changelog||'无'}</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px">批准数 ${p.approvals.length} / 阈值</div></div>`).join('') : '<div style="color:var(--muted);font-size:12px">暂无提案</div>';
+    <div style="font-size:11px;color:var(--muted);margin-top:4px">批准数 ${p.approvals.length}</div></div>`).join('') : '<div style="color:var(--muted);font-size:12px">暂无提案</div>';
 }
 
-/* ============ 钱包连接（MetaMask / Web3） ============ */
-$('#connectBtn').onclick = async ()=>{
+/* ============ 钱包连接 ============ */
+$('connectBtn').onclick=async()=>{
   try{
     if(!window.ethereum) return alert('未检测到 MetaMask，请安装钱包插件');
-    const [addr] = await window.ethereum.request({method:'eth_requestAccounts'});
-    wallet = addr;
-    $('#connectBtn').textContent = addr.slice(0,6)+'...'+addr.slice(-4);
+    const [addr]=await window.ethereum.request({method:'eth_requestAccounts'});
+    wallet=addr;
+    $('connectBtn').textContent=addr.slice(0,6)+'...'+addr.slice(-4);
     loadProposals();
-  }catch(e){ alert('连接失败：'+e.message); }
+  }catch(e){alert('连接失败：'+e.message);}
+};
+
+/* ============ 合约元信息 + 复制 ============ */
+async function loadMeta(){
+  const m=await get('/api/meta');
+  if(m.totalSupply) $('totalSupply').textContent = Number(m.totalSupply).toLocaleString('en-US',{maximumFractionDigits:0});
+}
+window.copyContract=async()=>{
+  try{await navigator.clipboard.writeText(CONTRACT);alert('✅ 合约地址已复制');}catch(e){alert(CONTRACT);}
 };
 
 /* ============ WebSocket 实时 ============ */
-let wsRetries = 0;
-const WS_MAX_RETRIES = 2; // GitHub Pages 为纯静态托管，无 WS 服务，限制重连次数避免控制台刷屏
+let wsRetries=0;const WS_MAX_RETRIES=2;
 function connectWS(){
-  if(backendAvailable===false || wsRetries >= WS_MAX_RETRIES){ return; } // 后端不可用则不连
-  let ws;
-  try { ws = new WebSocket(WS_URL); } catch(e){ return; }
-  ws.onopen = ()=>{ wsRetries = 0; };
-  ws.onmessage = (ev)=>{
-    try{ const m = JSON.parse(ev.data); if(m.type==='tickers'||m.type==='trade') refresh(); }catch(e){}
-  };
-  ws.onclose = ()=>{ if(backendAvailable!==false && wsRetries < WS_MAX_RETRIES){ wsRetries++; setTimeout(connectWS, 3000); } };
-  ws.onerror = ()=>{ ws.close(); };
+  if(backendAvailable===false||wsRetries>=WS_MAX_RETRIES)return;
+  let ws;try{ws=new WebSocket(WS_URL);}catch(e){return;}
+  ws.onopen=()=>{wsRetries=0;};
+  ws.onmessage=ev=>{try{const m=JSON.parse(ev.data);if(m.type==='tickers'||m.type==='trade')refresh();}catch(e){}};
+  ws.onclose=()=>{if(backendAvailable!==false&&wsRetries<WS_MAX_RETRIES){wsRetries++;setTimeout(connectWS,3000);}};
+  ws.onerror=()=>ws.close();
 }
 
 /* ============ 刷新 ============ */
 async function refresh(){
-  await Promise.all([loadTickers(), loadDepth(), loadOrderBook(), loadTrades(), drawKline()]);
-  const t = await get(`/api/ticker/${currentPair}`);
-  window._lastTicker = t;
-  if(document.activeElement!==$('#price')) $('#price').value = t.price;
+  await Promise.all([loadTickers(),loadDepth(),loadOrderBook(),loadTrades()]);
+  const t=await get(`/api/ticker/${currentPair}`);
+  window._lastTicker=t;
+  if(document.activeElement!==$('price'))$('price').value=t.price;
   updateSummary();
 }
 renderPairTabs();
 bindTradeForm();
-bindGovernance();
+loadMeta();
+loadProposals();
 refresh();
-setInterval(refresh, 5000);
+setInterval(refresh,5000);
+window.addEventListener('resize',drawKline);
 connectWS();
 </script>
 </body>
