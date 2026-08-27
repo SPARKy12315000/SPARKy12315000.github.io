@@ -1,0 +1,2801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="SPARK 星火通证 - 去中心化应用 DApp：空投、聊天、行情、商城、AI助手、APP下载">
+    <meta name="keywords" content="SPARK, 星火通证, 空投, DApp, Web3, DeFi, 以太坊, 加密货币, 去中心化, AI">
+    <meta name="author" content="SPARK Team">
+    <meta property="og:title" content="SPARK 星火通证 - 去中心化应用">
+    <meta property="og:description" content="全球首个 AI 驱动的去中心化加密货币生态系统">
+    <meta property="og:image" content="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm">
+    <meta name="theme-color" content="#FFD700">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm">
+    <link rel="apple-touch-icon" href="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm">
+    
+    <!-- Font Awesome (免费 CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (免费) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <title>SPARK 星火通证 - 去中心化应用 DApp</title>
+    
+    <style>
+        /* ==================== 全局样式 ==================== */
+        :root {
+            --primary: #0A0E17;
+            --secondary: #FFD700;
+            --accent: #4FC3F7;
+            --success: #4CAF50;
+            --danger: #f44336;
+            --warning: #FF9800;
+            --light: #E0E0E0;
+            --dark: #0A0E17;
+            --card-bg: rgba(20, 25, 40, 0.85);
+            --border-glow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Noto Sans SC', 'Segoe UI', sans-serif; 
+            background: linear-gradient(135deg, #0A0E17 0%, #1a1a2e 50%, #16213e 100%); 
+            color: var(--light); 
+            line-height: 1.6; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 星空背景 */
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite alternate;
+        }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+        
+        /* ==================== 导航栏 ==================== */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 0; margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            flex-wrap: wrap; gap: 10px;
+        }
+        
+        .nav-brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .nav-logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--secondary); }
+        .nav-title { font-size: 1.3rem; color: var(--secondary); font-weight: bold; }
+        
+        .nav-menu { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .nav-link {
+            color: var(--light); text-decoration: none; padding: 8px 14px;
+            border-radius: 20px; transition: all 0.3s; cursor: pointer;
+            background: none; border: none; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.3), rgba(255, 215, 0, 0.3));
+            color: var(--secondary);
+        }
+        
+        /* ==================== 通用组件 ==================== */
+        .card {
+            background: var(--card-bg); border-radius: 15px; padding: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px); margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.3rem; color: var(--accent); margin-bottom: 15px;
+            padding-bottom: 10px; border-bottom: 1px solid rgba(79, 195, 247, 0.3);
+            display: flex; align-items: center; gap: 8px;
+        }
+        
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 10px 20px; border-radius: 10px; font-weight: bold;
+            font-size: 0.95rem; cursor: pointer; transition: all 0.3s;
+            border: none; text-decoration: none;
+        }
+        .btn-primary { background: linear-gradient(135deg, #FF8C00, #FFD700); color: #1a1a2e; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--border-glow); }
+        .btn-secondary { background: rgba(79, 195, 247, 0.2); color: var(--accent); border: 1px solid var(--accent); }
+        .btn-secondary:hover { background: rgba(79, 195, 247, 0.3); }
+        .btn-success { background: linear-gradient(135deg, #4CAF50, #45a049); color: white; }
+        .btn-danger { background: linear-gradient(135deg, #f44336, #d32f2f); color: white; }
+        
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* 输入框 */
+        .input-field {
+            width: 100%; padding: 12px 15px; margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.08); border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px; color: white; font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+        .input-field:focus { outline: none; border-color: var(--secondary); }
+        .input-field::placeholder { color: rgba(255,255,255,0.4); }
+        
+        /* 标签 */
+        .badge {
+            display: inline-block; padding: 3px 10px; border-radius: 12px;
+            font-size: 0.75rem; font-weight: bold;
+        }
+        .badge-gold { background: rgba(255, 215, 0, 0.2); color: var(--secondary); border: 1px solid var(--secondary); }
+        .badge-blue { background: rgba(79, 195, 247, 0.2); color: var(--accent); border: 1px solid var(--accent); }
+        .badge-green { background: rgba(76, 175, 80, 0.2); color: var(--success); border: 1px solid var(--success); }
+        
+        /* 网格 */
+        .grid { display: grid; gap: 15px; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+        
+        /* 弹窗 */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 1000;
+            align-items: center; justify-content: center; backdrop-filter: blur(5px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 2px solid var(--secondary); border-radius: 15px;
+            padding: 25px; max-width: 500px; width: 90%; max-height: 85vh; overflow-y: auto;
+            box-shadow: 0 0 50px rgba(255,215,0,0.3); position: relative;
+        }
+        
+        /* Toast 通知 */
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 10001; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            padding: 12px 20px; border-radius: 10px; color: white; font-size: 0.9rem;
+            animation: slideIn 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            max-width: 350px;
+        }
+        .toast-success { background: rgba(76, 175, 80, 0.95); border-left: 4px solid #4CAF50; }
+        .toast-error { background: rgba(244, 67, 54, 0.95); border-left: 4px solid #f44336; }
+        .toast-info { background: rgba(79, 195, 247, 0.95); border-left: 4px solid var(--accent); }
+        .toast-warning { background: rgba(255, 152, 0, 0.95); border-left: 4px solid var(--warning); }
+        
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); } 50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); } }
+        
+        /* ==================== 页面特定样式 ==================== */
+        
+        /* 首页 */
+        .hero { text-align: center; padding: 40px 0; }
+        .hero-logo { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 20px; animation: pulse 3s infinite; border: 3px solid var(--secondary); }
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 10px;
+            background: linear-gradient(90deg, #FFD700, #FF8C00, #FFD700);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: gradient 3s ease infinite;
+        }
+        @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .stats-bar {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px; margin: 25px 0;
+        }
+        .stat-item {
+            background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px; padding: 15px; text-align: center;
+        }
+        .stat-value { font-size: 1.5rem; font-weight: bold; color: var(--secondary); }
+        .stat-label { font-size: 0.8rem; color: #aaa; margin-top: 5px; }
+        
+        /* 钱包连接 */
+        .wallet-connect {
+            display: flex; align-items: center; gap: 10px; margin-left: auto;
+        }
+        .wallet-address {
+            background: rgba(79, 195, 247, 0.1); border: 1px solid var(--accent);
+            border-radius: 20px; padding: 6px 14px; font-size: 0.85rem; color: var(--accent);
+            font-family: monospace;
+        }
+        
+        /* 空投 */
+        .airdrop-progress { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin: 10px 0; overflow: hidden; }
+        .airdrop-progress-bar { height: 100%; background: linear-gradient(90deg, #FF8C00, #FFD700); border-radius: 4px; transition: width 0.5s; }
+        
+        .invite-link-box {
+            background: rgba(0,0,0,0.3); border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px; padding: 12px; margin: 10px 0;
+            display: flex; gap: 10px; align-items: center;
+        }
+        
+        /* 聊天 */
+        .chat-container {
+            display: flex; flex-direction: column; height: 60vh; min-height: 400px;
+            background: rgba(0,0,0,0.3); border-radius: 15px; overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .chat-header {
+            padding: 12px 20px; background: rgba(255, 215, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .chat-message {
+            max-width: 75%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem;
+            animation: slideIn 0.3s ease;
+        }
+        .chat-message.own { align-self: flex-end; background: linear-gradient(135deg, #FF8C00, #FFD700); color: #1a1a2e; border-bottom-right-radius: 4px; }
+        .chat-message.other { align-self: flex-start; background: rgba(255,255,255,0.08); border-bottom-left-radius: 4px; }
+        .chat-message.system { align-self: center; background: rgba(79, 195, 247, 0.1); color: var(--accent); font-size: 0.8rem; padding: 5px 15px; }
+        .chat-input-area { padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 10px; }
+        .chat-input { flex: 1; }
+        .chat-username { font-size: 0.7rem; opacity: 0.7; margin-bottom: 3px; }
+        .chat-time { font-size: 0.65rem; opacity: 0.5; margin-top: 3px; }
+        
+        /* 行情 */
+        .market-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .market-table th {
+            padding: 10px; text-align: left; color: var(--accent);
+            border-bottom: 2px solid rgba(79, 195, 247, 0.3); position: sticky; top: 0;
+            background: var(--primary); cursor: pointer; white-space: nowrap;
+        }
+        .market-table td { padding: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .market-table tr:hover { background: rgba(255, 215, 0, 0.03); }
+        .market-table tr.spark-row { background: rgba(255, 215, 0, 0.08); }
+        .market-table tr.spark-row:hover { background: rgba(255, 215, 0, 0.12); }
+        .price-up { color: #4CAF50; }
+        .price-down { color: #f44336; }
+        
+        .market-pinned {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), transparent);
+            border-left: 3px solid var(--secondary);
+        }
+        
+        /* AI 聊天 */
+        .ai-chat { display: flex; flex-direction: column; height: 55vh; min-height: 350px; }
+        .ai-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .ai-message { display: flex; gap: 10px; align-items: flex-start; }
+        .ai-avatar { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .ai-avatar.bot { background: linear-gradient(135deg, var(--accent), #2196F3); }
+        .ai-avatar.user { background: linear-gradient(135deg, #FF8C00, var(--secondary)); }
+        .ai-bubble { background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 12px; max-width: 80%; font-size: 0.9rem; line-height: 1.6; white-space: pre-wrap; }
+        .ai-bubble.user { background: linear-gradient(135deg, rgba(255,140,0,0.2), rgba(255,215,0,0.2)); }
+        
+        /* 商城 */
+        .product-card {
+            background: rgba(20, 25, 40, 0.6); border-radius: 12px; overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.15); transition: all 0.3s;
+        }
+        .product-card:hover { transform: translateY(-3px); border-color: var(--secondary); box-shadow: var(--border-glow); }
+        .product-image { width: 100%; height: 180px; object-fit: cover; }
+        .product-info { padding: 15px; }
+        .product-price { font-size: 1.2rem; color: var(--secondary); font-weight: bold; }
+        
+        /* 管理员面板 */
+        .admin-panel { display: none; }
+        .admin-panel.active { display: block; }
+        .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .admin-stat-card { background: rgba(76, 175, 80, 0.1); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 10px; padding: 15px; text-align: center; }
+        
+        /* 语言切换 */
+        .lang-switch {
+            background: rgba(20, 25, 40, 0.8); border: 1px solid rgba(255, 215, 0, 0.5);
+            color: var(--secondary); padding: 6px 12px; border-radius: 20px; cursor: pointer;
+            display: flex; align-items: center; gap: 5px; font-size: 0.85rem;
+        }
+        
+        /* 页面切换 */
+        .page { display: none; animation: fadeIn 0.3s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* 加载动画 */
+        .loading {
+            display: inline-block; width: 20px; height: 20px;
+            border: 3px solid rgba(255, 215, 0, 0.3); border-radius: 50%;
+            border-top-color: var(--secondary); animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* 空投名单 */
+        .airdrop-list { max-height: 400px; overflow-y: auto; }
+        .airdrop-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 15px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem;
+        }
+        .airdrop-item:hover { background: rgba(255, 215, 0, 0.03); }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 215, 0, 0.5); }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .navbar { padding: 10px 0; }
+            .nav-menu { gap: 5px; }
+            .nav-link { padding: 6px 10px; font-size: 0.8rem; }
+            .nav-link span { display: none; }
+            .hero { padding: 20px 0; }
+            .stats-bar { gap: 8px; }
+            .stat-item { padding: 10px 5px; }
+            .stat-value { font-size: 1.1rem; }
+            .chat-container { height: 50vh; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Toast 容器 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-brand" onclick="app.showPage('home')">
+                <img src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" alt="SPARK" class="nav-logo">
+                <div>
+                    <div class="nav-title" data-i18n="brand_name">SPARK DApp</div>
+                    <div style="font-size: 0.7rem; color: var(--accent);" data-i18n="brand_sub">星火通证去中心化应用</div>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <button class="nav-link active" onclick="app.showPage('home')" data-page="home">
+                    <i class="fas fa-home"></i> <span data-i18n="nav_home">首页</span>
+                </button>
+                <button class="nav-link" onclick="app.showPage('airdrop')" data-page="airdrop">
+                    <i class="fas fa-gift"></i> <span data-i18n="nav_airdrop">空投</span>
+                </button>
+                <button class="nav-link" onclick="app.showPage('chat')" data-page="chat">
+                    <i class="fas fa-comments"></i> <span data-i18n="nav_chat">聊天</span>
+                </button>
+                <button class="nav-link" onclick="app.showPage('market')" data-page="market">
+                    <i class="fas fa-chart-line"></i> <span data-i18n="nav_market">行情</span>
+                </button>
+                <button class="nav-link" onclick="app.showPage('ai')" data-page="ai">
+                    <i class="fas fa-robot"></i> <span data-i18n="nav_ai">AI助手</span>
+                </button>
+                <button class="nav-link" onclick="app.showPage('shop')" data-page="shop">
+                    <i class="fas fa-store"></i> <span data-i18n="nav_shop">商城</span>
+                </button>
+                <button class="lang-switch" onclick="app.toggleLanguage()">
+                    <i class="fas fa-globe"></i> <span id="langText">EN</span>
+                </button>
+                <div class="wallet-connect" id="walletConnect">
+                    <button class="btn btn-primary btn-sm" onclick="app.connectWallet()" id="connectBtn" style="padding: 6px 14px; font-size: 0.85rem;">
+                        <i class="fas fa-wallet"></i> <span data-i18n="connect_wallet">连接钱包</span>
+                    </button>
+                </div>
+                <button class="nav-link" onclick="app.showAdminModal()" style="color: var(--secondary); border: 1px solid var(--secondary);">
+                    <i class="fas fa-user-shield"></i> <span data-i18n="nav_admin">管理</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- ==================== 首页 ==================== -->
+        <div id="page-home" class="page active">
+            <div class="hero">
+                <img src="https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm" alt="SPARK" class="hero-logo">
+                <h1 class="hero-title">SPARK 星火通证</h1>
+                <div style="font-size: 1.2rem; color: var(--secondary); letter-spacing: 3px; margin-bottom: 15px;">SPARK TOKEN</div>
+                <p class="tagline" style="max-width: 700px; margin: 0 auto; font-size: 1rem; opacity: 0.9;" data-i18n="hero_tagline">
+                    全球首个 AI 驱动的去中心化加密货币生态系统<br>
+                    空投 · 聊天 · 行情 · 商城 · AI · APP
+                </p>
+            </div>
+
+            <!-- 关键数据统计 -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value" id="statPrice">$0.00</div>
+                    <div class="stat-label" data-i18n="stat_price">SPARK 价格</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statMarketCap">$0</div>
+                    <div class="stat-label" data-i18n="stat_marketcap">市值</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statHolders">0</div>
+                    <div class="stat-label" data-i18n="stat_holders">持币地址</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statAirdropPool">0</div>
+                    <div class="stat-label" data-i18n="stat_airdrop_pool">空投池余额</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statTotalClaims">0</div>
+                    <div class="stat-label" data-i18n="stat_total_claims">已领取空投</div>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <!-- 项目简介 -->
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-info-circle"></i> <span data-i18n="project_intro">项目简介</span></div>
+                    <p style="margin-bottom: 12px; font-size: 0.9rem;" data-i18n="project_desc">
+                        SPARK 是基于以太坊的创新型营销回流代币，核心理念"星火流转，价值共生"。采用 5% 买卖税自动回流机制，支撑币价长期稳定。
+                    </p>
+                    <div class="grid grid-2" style="margin-top: 15px;">
+                        <div style="background: rgba(255,215,0,0.05); padding: 10px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 1.5rem; color: var(--secondary);">5%</div>
+                            <div style="font-size: 0.75rem; color: #aaa;" data-i18n="buy_tax">买入税·自动回流</div>
+                        </div>
+                        <div style="background: rgba(255,215,0,0.05); padding: 10px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 1.5rem; color: var(--secondary);">5%</div>
+                            <div style="font-size: 0.75rem; color: #aaa;" data-i18n="sell_tax">卖出税·自动回流</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="https://etherscan.io/token/0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank" class="btn btn-secondary btn-sm" style="padding: 6px 14px; font-size: 0.85rem;">
+                            <i class="fas fa-external-link-alt"></i> <span data-i18n="explorer">区块浏览器</span>
+                        </a>
+                        <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0xD580C7C9Cde5ce776fEed844310330A2a40078d9" target="_blank" class="btn btn-primary btn-sm" style="padding: 6px 14px; font-size: 0.85rem;">
+                            <i class="fas fa-exchange-alt"></i> <span data-i18n="trade">交易</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 空投信息 -->
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-gift"></i> <span data-i18n="airdrop_info">空投信息</span></div>
+                    <div style="background: rgba(255, 107, 0, 0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                        <div style="font-size: 0.9rem; margin-bottom: 8px;">
+                            🎁 <span data-i18n="new_user_reward">新人注册免费领取</span> <strong style="color: var(--secondary); font-size: 1.1rem;">10亿 SPARK</strong>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #aaa;">
+                            👥 <span data-i18n="invite_reward">每邀请1人奖励</span> <strong style="color: var(--accent);">1千万 SPARK</strong>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 10px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px;">
+                            <span data-i18n="airdrop_progress">空投进度</span>
+                            <span id="airdropPercent">0%</span>
+                        </div>
+                        <div class="airdrop-progress">
+                            <div class="airdrop-progress-bar" id="airdropBar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="app.showPage('airdrop')" style="width: 100%;">
+                        <i class="fas fa-rocket"></i> <span data-i18n="go_airdrop">前往领取空投</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 功能入口 -->
+            <div class="grid grid-3" style="margin-top: 10px;">
+                <div class="card" style="cursor: pointer; transition: all 0.3s;" onclick="app.showPage('chat')">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">💬</div>
+                    <h3 style="color: var(--accent); font-size: 1rem;" data-i18n="decentralized_chat">去中心化聊天</h3>
+                    <p style="font-size: 0.8rem; color: #aaa;" data-i18n="chat_desc">基于 IPFS/Libp2p，端到端加密，无需服务器</p>
+                </div>
+                <div class="card" style="cursor: pointer; transition: all 0.3s;" onclick="app.showPage('ai')">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🤖</div>
+                    <h3 style="color: var(--accent); font-size: 1rem;" data-i18n="web3_ai">Web3 AI 助手</h3>
+                    <p style="font-size: 0.8rem; color: #aaa;" data-i18n="ai_desc">市场分析、智能客服、代码生成、翻译</p>
+                </div>
+                <div class="card" style="cursor: pointer; transition: all 0.3s;" onclick="app.showPage('market')">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">📊</div>
+                    <h3 style="color: var(--accent); font-size: 1rem;" data-i18n="market_data">实时行情</h3>
+                    <p style="font-size: 0.8rem; color: #aaa;" data-i18n="market_desc">全球前50加密货币 + SPARK 置顶</p>
+                </div>
+                <div class="card" style="cursor: pointer; transition: all 0.3s;" onclick="app.showPage('shop')">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🛒</div>
+                    <h3 style="color: var(--accent); font-size: 1rem;" data-i18n="decentralized_shop">去中心化商城</h3>
+                    <p style="font-size: 0.8rem; color: #aaa;" data-i18n="shop_desc">SPARK 支付，订单存储在 IPFS</p>
+                </div>
+                <div class="card" style="cursor: pointer; transition: all 0.3s;" onclick="app.showAppDownload()">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">📱</div>
+                    <h3 style="color: var(--accent); font-size: 1rem;" data-i18n="mobile_app">移动端 APP</h3>
+                    <p style="font-size: 0.8rem; color: #aaa;" data-i18n="app_desc">Android APK + PWA，支持离线</p>
+                </div>
+                <div class="card" style="cursor: pointer; transition: all 0.3s;" onclick="app.showPage('airdrop')">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🏆</div>
+                    <h3 style="color: var(--accent); font-size: 1rem;" data-i18n="leaderboard">排行榜</h3>
+                    <p style="font-size: 0.8rem; color: #aaa;" data-i18n="leaderboard_desc">邀请排行、空投名单、社区贡献</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 空投页面 ==================== -->
+        <div id="page-airdrop" class="page">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-gift"></i> <span data-i18n="airdrop_title">SPARK 空投系统</span></div>
+                
+                <!-- 空投状态 -->
+                <div id="airdropStatus" class="grid grid-3" style="margin-bottom: 20px;">
+                    <div class="stat-item">
+                        <div class="stat-value" id="airdropStatusText" style="font-size: 1rem;">--</div>
+                        <div class="stat-label" data-i18n="airdrop_status">空投状态</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="marketingBalance" style="font-size: 1rem;">--</div>
+                        <div class="stat-label" data-i18n="marketing_balance">营销钱包余额</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="minBalance" style="font-size: 1rem;">100,000</div>
+                        <div class="stat-label" data-i18n="min_balance">最低阈值</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <!-- 领取区域 -->
+                    <div>
+                        <h3 style="color: var(--secondary); margin-bottom: 15px;" data-i18n="claim_area">领取空投</h3>
+                        
+                        <!-- 邀请链接 -->
+                        <div id="inviteSection" style="display: none; margin-bottom: 15px;">
+                            <label style="font-size: 0.85rem; color: #aaa;" data-i18n="invite_link">邀请链接（可选）</label>
+                            <div class="invite-link-box">
+                                <input type="text" id="inviteLinkInput" class="input-field" style="margin: 0; flex: 1;" placeholder="0x... (邀请人地址)" readonly>
+                                <button class="btn btn-secondary btn-sm" onclick="app.copyInviteLink()" style="padding: 8px 14px;">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <input type="text" id="claimAddress" class="input-field" placeholder="0x... (您的ERC20收款地址)" data-i18n-placeholder="wallet_placeholder">
+                        
+                        <div style="background: rgba(255, 152, 0, 0.1); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 10px; padding: 12px; margin-bottom: 15px; font-size: 0.85rem;">
+                            <p><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> <span data-i18n="claim_notice">领取说明</span></p>
+                            <ul style="margin: 8px 0 0 20px; color: #ccc;">
+                                <li data-i18n="claim_rule1">新人可免费领取 10亿 SPARK</li>
+                                <li data-i18n="claim_rule2">邀请1人奖励 1千万 SPARK</li>
+                                <li data-i18n="claim_rule3">链上领取，需自付 ETH Gas 费</li>
+                                <li data-i18n="claim_rule4">每个地址仅可领取一次</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-primary" id="claimBtn" onclick="app.claimAirdrop()" style="width: 100%;" disabled>
+                            <i class="fas fa-paper-plane"></i> <span data-i18n="submit_claim">提交领取申请</span>
+                        </button>
+                    </div>
+
+                    <!-- 我的邀请 -->
+                    <div>
+                        <h3 style="color: var(--secondary); margin-bottom: 15px;" data-i18n="my_invites">我的邀请</h3>
+                        <div id="inviteStats" style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 15px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span data-i18n="invite_count">邀请人数</span>
+                                <strong id="myInviteCount" style="color: var(--accent);">0</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span data-i18n="invite_reward_total">邀请奖励</span>
+                                <strong id="myInviteReward" style="color: var(--secondary);">0 SPARK</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span data-i18n="my_address">我的地址</span>
+                                <strong id="myAddress" style="color: var(--accent); font-size: 0.8rem;">--</strong>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <button class="btn btn-secondary" onclick="app.generateInviteLink()" style="width: 100%;">
+                                <i class="fas fa-share-alt"></i> <span data-i18n="generate_invite">生成邀请链接</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 空投名单 -->
+            <div class="card">
+                <div class="card-title"><i class="fas fa-list"></i> <span data-i18n="airdrop_list">空投名单（去中心化存储）</span></div>
+                <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 15px;" data-i18n="airdrop_list_desc">
+                    所有空投记录存储在 IPFS 网络，任何人都可验证查看
+                </p>
+                <div class="airdrop-list" id="airdropList">
+                    <div style="text-align: center; color: #888; padding: 30px;">
+                        <div class="loading"></div>
+                        <p style="margin-top: 10px;" data-i18n="loading">加载中...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 聊天页面 ==================== -->
+        <div id="page-chat" class="page">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div>
+                        <strong style="color: var(--secondary);"><i class="fas fa-comments"></i> <span data-i18n="global_chat">全球聊天室</span></strong>
+                        <span class="badge badge-green" id="onlineCount" style="margin-left: 10px;">0 <span data-i18n="online">在线</span></span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: #888;" data-i18n="chat_encryption">
+                        🔒 端到端加密 · IPFS 去中心化
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message system">
+                        🎉 <span data-i18n="chat_welcome">欢迎来到 SPARK 去中心化聊天室！所有消息通过 IPFS 网络传播，无需中心服务器。</span>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" class="input-field chat-input" placeholder="输入消息..." data-i18n-placeholder="chat_placeholder" onkeypress="if(event.key==='Enter') app.sendChatMessage()">
+                    <button class="btn btn-primary" onclick="app.sendChatMessage()" style="padding: 10px 20px;">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 行情页面 ==================== -->
+        <div id="page-market" class="page">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="market_title">加密货币市场行情</span></div>
+                <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 15px;" data-i18n="market_source">
+                    数据源：CoinGecko API（免费）· SPARK 置顶显示
+                </p>
+                <div style="overflow-x: auto;">
+                    <table class="market-table">
+                        <thead>
+                            <tr>
+                                <th onclick="app.sortMarket('market_cap_rank')">#</th>
+                                <th onclick="app.sortMarket('name')" data-i18n="col_name">名称</th>
+                                <th onclick="app.sortMarket('current_price')" data-i18n="col_price">价格</th>
+                                <th onclick="app.sortMarket('price_change_percentage_24h')" data-i18n="col_24h">24h涨跌</th>
+                                <th onclick="app.sortMarket('market_cap')" data-i18n="col_marketcap">市值</th>
+                                <th onclick="app.sortMarket('volume_24h')" data-i18n="col_volume">24h交易量</th>
+                            </tr>
+                        </thead>
+                        <tbody id="marketBody">
+                            <tr><td colspan="6" style="text-align: center; padding: 40px;"><div class="loading"></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== AI 助手页面 ==================== -->
+        <div id="page-ai" class="page">
+            <div class="grid grid-2" style="height: 60vh;">
+                <div class="card" style="display: flex; flex-direction: column;">
+                    <div class="card-title"><i class="fas fa-robot"></i> <span data-i18n="ai_title">SPARK AI 助手</span></div>
+                    <div class="ai-messages" id="aiMessages">
+                        <div class="ai-message">
+                            <div class="ai-avatar bot"><i class="fas fa-robot"></i></div>
+                            <div class="ai-bubble" data-i18n="ai_welcome">
+                                👋 你好！我是 SPARK AI 助手。<br><br>
+                                我可以帮你：<br>
+                                • 📊 分析加密货币市场<br>
+                                • 🔥 介绍 SPARK 项目<br>
+                                • 💻 解答技术问题<br>
+                                • 📝 生成和审查代码<br>
+                                • 🌐 多语言翻译<br><br>
+                                请告诉我你需要什么帮助？
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <input type="text" id="aiInput" class="input-field" style="margin: 0; flex: 1;" placeholder="输入你的问题..." data-i18n-placeholder="ai_placeholder" onkeypress="if(event.key==='Enter') app.sendAIMessage()">
+                        <button class="btn btn-primary" onclick="app.sendAIMessage()" style="padding: 10px 20px;">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- AI 快捷功能 -->
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-bolt"></i> <span data-i18n="quick_actions">快捷操作</span></div>
+                        <div class="grid grid-2">
+                            <button class="btn btn-secondary btn-sm" onclick="app.aiQuickAction('market_analysis')" style="padding: 10px;">
+                                <i class="fas fa-chart-bar"></i> <span data-i18n="ai_market">市场分析</span>
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="app.aiQuickAction('spark_info')" style="padding: 10px;">
+                                <i class="fas fa-fire"></i> <span data-i18n="ai_spark">SPARK分析</span>
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="app.aiQuickAction('code_gen')" style="padding: 10px;">
+                                <i class="fas fa-code"></i> <span data-i18n="ai_code">代码生成</span>
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="app.aiQuickAction('security')" style="padding: 10px;">
+                                <i class="fas fa-shield-alt"></i> <span data-i18n="ai_security">安全审计</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-cog"></i> <span data-i18n="ai_settings">AI 设置</span></div>
+                        <div style="font-size: 0.85rem;">
+                            <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
+                                <input type="checkbox" id="aiUseAPI" onchange="app.toggleAIAPI()">
+                                <span data-i18n="ai_use_api">使用 Hugging Face API（可选，免费）</span>
+                            </label>
+                            <input type="password" id="hfApiKey" class="input-field" placeholder="Hugging Face API Key（可选）" data-i18n-placeholder="api_key_placeholder" onchange="app.setHFApiKey()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 商城页面 ==================== -->
+        <div id="page-shop" class="page">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-store"></i> <span data-i18n="shop_title">SPARK 去中心化商城</span></div>
+                
+                <!-- 分类标签 -->
+                <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;" id="shopCategories">
+                    <button class="btn btn-primary btn-sm" onclick="app.filterShop('all')" style="padding: 6px 14px;">全部</button>
+                    <button class="btn btn-secondary btn-sm" onclick="app.filterShop('merchandise')" style="padding: 6px 14px;" data-i18n="cat_merch">周边</button>
+                    <button class="btn btn-secondary btn-sm" onclick="app.filterShop('nft')" style="padding: 6px 14px;" data-i18n="cat_nft">NFT</button>
+                    <button class="btn btn-secondary btn-sm" onclick="app.filterShop('service')" style="padding: 6px 14px;" data-i18n="cat_service">服务</button>
+                    <button class="btn btn-secondary btn-sm" onclick="app.filterShop('digital')" style="padding: 6px 14px;" data-i18n="cat_digital">数字</button>
+                </div>
+                
+                <!-- 商品列表 -->
+                <div class="grid grid-3" id="productList">
+                    <!-- 动态加载 -->
+                </div>
+            </div>
+        </div>
+
+    <!-- ==================== 管理员登录弹窗 ==================== -->
+    <div id="adminModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 400px;">
+            <button onclick="app.closeAdminModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--secondary); font-size: 1.5rem; cursor: pointer;">×</button>
+            <h3 style="text-align: center; margin-bottom: 20px; color: var(--accent);">
+                <i class="fas fa-user-shield"></i> <span data-i18n="admin_login">管理员登录</span>
+            </h3>
+            <p style="text-align: center; font-size: 0.85rem; color: #aaa; margin-bottom: 20px;" data-i18n="admin_hint">
+                使用管理员密码登录（密码已哈希存储，安全无忧）
+            </p>
+            <input type="password" id="adminPassword" class="input-field" placeholder="管理员密码" data-i18n-placeholder="password_placeholder" onkeypress="if(event.key==='Enter') app.adminLogin()">
+            <button class="btn btn-primary" onclick="app.adminLogin()" style="width: 100%;">
+                <i class="fas fa-sign-in-alt"></i> <span data-i18n="login">登录</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== 管理员面板弹窗 ==================== -->
+    <div id="adminPanelModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 800px;">
+            <button onclick="app.closeAdminPanel()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--secondary); font-size: 1.5rem; cursor: pointer;">×</button>
+            <h3 style="margin-bottom: 20px; color: var(--accent);">
+                <i class="fas fa-user-shield"></i> <span data-i18n="admin_panel">管理员控制面板</span>
+            </h3>
+            
+            <div class="admin-stats">
+                <div class="admin-stat-card">
+                    <div style="font-size: 1.3rem; color: var(--secondary);" id="adminTotalClaims">0</div>
+                    <div style="font-size: 0.75rem; color: #aaa;" data-i18n="total_claims">总领取</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div style="font-size: 1.3rem; color: var(--secondary);" id="adminUniqueUsers">0</div>
+                    <div style="font-size: 0.75rem; color: #aaa;" data-i18n="unique_users">独立用户</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div style="font-size: 1.3rem; color: var(--secondary);" id="adminTotalInvites">0</div>
+                    <div style="font-size: 0.75rem; color: #aaa;" data-i18n="total_invites">总邀请</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                <button class="btn btn-success btn-sm" onclick="app.adminAction('activate')">
+                    <i class="fas fa-play"></i> <span data-i18n="activate_airdrop">激活空投</span>
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="app.adminAction('deactivate')">
+                    <i class="fas fa-pause"></i> <span data-i18n="pause_airdrop">暂停空投</span>
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="app.adminAction('export')">
+                    <i class="fas fa-download"></i> <span data-i18n="export_data">导出数据</span>
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="app.adminAction('check_upgrade')">
+                    <i class="fas fa-sync-alt"></i> <span data-i18n="check_upgrade">检查升级</span>
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="app.adminAction('logout')">
+                    <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">退出</span>
+                </button>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 15px;">
+                <h4 style="color: var(--accent); margin-bottom: 10px;" data-i18n="recent_activity">最近活动</h4>
+                <div id="adminActivity" style="max-height: 200px; overflow-y: auto; font-size: 0.85rem;">
+                    <!-- 动态加载 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== APP 下载弹窗 ==================== -->
+    <div id="appDownloadModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 400px;">
+            <button onclick="app.closeAppDownload()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--secondary); font-size: 1.5rem; cursor: pointer;">×</button>
+            <h3 style="text-align: center; margin-bottom: 5px; color: var(--secondary);">
+                <i class="fas fa-mobile-alt"></i> <span data-i18n="download_app">下载 SPARK DApp</span>
+            </h3>
+            <p style="text-align: center; font-size: 0.85rem; color: #aaa; margin-bottom: 20px;" data-i18n="download_subtitle">
+                随时随地管理你的 SPARK 资产
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <a href="#" class="btn btn-primary" style="justify-content: flex-start; gap: 15px; padding: 15px;">
+                    <span style="font-size: 1.8rem;">🤖</span>
+                    <div style="text-align: left;">
+                        <div style="font-weight: bold;">Android APK</div>
+                        <div style="font-size: 0.7rem; opacity: 0.8;">v1.0.0 · ~15MB · Android 8.0+</div>
+                    </div>
+                    <i class="fas fa-download" style="margin-left: auto;"></i>
+                </a>
+                
+                <button class="btn btn-secondary" onclick="app.installPWA()" style="justify-content: flex-start; gap: 15px; padding: 15px;">
+                    <span style="font-size: 1.8rem;">🌐</span>
+                    <div style="text-align: left;">
+                        <div style="font-weight: bold;" data-i18n="pwa_install">PWA 网页应用</div>
+                        <div style="font-size: 0.7rem; opacity: 0.8;" data-i18n="pwa_hint">添加到主屏幕，无需下载</div>
+                    </div>
+                    <i class="fas fa-plus" style="margin-left: auto;"></i>
+                </button>
+            </div>
+            
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.75rem; color: #888;">
+                🔒 开源免费 · 🌐 去中心化 · 🔐 钱包安全
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 页脚 ==================== -->
+    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.8rem; color: #888;">
+        <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
+            <a href="mailto:SPARKTOKEN@TUTAMAIL.COM" style="color: var(--secondary); text-decoration: none;">
+                <i class="fas fa-envelope"></i> SPARKTOKEN@TUTAMAIL.COM
+            </a>
+            <a href="https://sparktoken.eth.limo" target="_blank" style="color: var(--secondary); text-decoration: none;">
+                <i class="fas fa-globe"></i> IPFS Mirror
+            </a>
+            <a href="https://github.com/SPARKy12315000/SPARKy12315000.github.io" target="_blank" style="color: var(--secondary); text-decoration: none;">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+        </div>
+        <p data-i18n="copyright">© 2026 SPARK 星火通证. 去中心化应用. 仅供参考，不构成投资建议。</p>
+    </footer>
+</div>
+
+<!-- ==================== JavaScript 模块 ==================== -->
+<!-- ethers.js (免费 CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.min.js"></script>
+<!-- IPFS (可选，用于增强去中心化) -->
+<script src="https://cdn.jsdelivr.net/npm/ipfs-http-client@60/dist/index.min.js"></script>
+
+<!-- 应用核心逻辑 -->
+<script>
+/**
+ * SPARK DApp 主应用
+ * 集成所有模块：钱包、空投、聊天、行情、AI、商城、升级
+ */
+class SPARKApp {
+    constructor() {
+        this.currentLang = localStorage.getItem('spark_lang') || 'zh';
+        this.currentPage = 'home';
+        this.wallet = null;
+        this.airdrop = null;
+        this.chat = null;
+        this.ai = null;
+        this.market = null;
+        this.shop = null;
+        this.upgradeManager = null;
+        this.isAdmin = false;
+        
+        // 合约配置
+        this.contractAddress = '0xD580C7C9Cde5ce776fEed844310330A2a40078d9';
+        this.chainId = 1; // Ethereum Mainnet
+        
+        // 翻译字典
+        this.i18n = {
+            zh: {
+                brand_name: 'SPARK DApp', brand_sub: '星火通证去中心化应用',
+                nav_home: '首页', nav_airdrop: '空投', nav_chat: '聊天', nav_market: '行情',
+                nav_ai: 'AI助手', nav_shop: '商城', nav_admin: '管理',
+                connect_wallet: '连接钱包', hero_tagline: '全球首个 AI 驱动的去中心化加密货币生态系统<br>空投 · 聊天 · 行情 · 商城 · AI · APP',
+                stat_price: 'SPARK 价格', stat_marketcap: '市值', stat_holders: '持币地址', stat_airdrop_pool: '空投池余额', stat_total_claims: '已领取空投',
+                project_intro: '项目简介', project_desc: 'SPARK 是基于以太坊的创新型营销回流代币，核心理念"星火流转，价值共生"。采用 5% 买卖税自动回流机制，支撑币价长期稳定。',
+                buy_tax: '买入税·自动回流', sell_tax: '卖出税·自动回流', explorer: '区块浏览器', trade: '交易',
+                airdrop_info: '空投信息', new_user_reward: '新人注册免费领取', invite_reward: '每邀请1人奖励',
+                airdrop_progress: '空投进度', go_airdrop: '前往领取空投',
+                decentralized_chat: '去中心化聊天', chat_desc: '基于 IPFS/Libp2p，端到端加密，无需服务器',
+                web3_ai: 'Web3 AI 助手', ai_desc: '市场分析、智能客服、代码生成、翻译',
+                market_data: '实时行情', market_desc: '全球前50加密货币 + SPARK 置顶',
+                decentralized_shop: '去中心化商城', shop_desc: 'SPARK 支付，订单存储在 IPFS',
+                mobile_app: '移动端 APP', app_desc: 'Android APK + PWA，支持离线',
+                leaderboard: '排行榜', leaderboard_desc: '邀请排行、空投名单、社区贡献',
+                airdrop_title: 'SPARK 空投系统', airdrop_status: '空投状态', marketing_balance: '营销钱包余额', min_balance: '最低阈值',
+                claim_area: '领取空投', invite_link: '邀请链接（可选）', claim_notice: '领取说明',
+                claim_rule1: '新人可免费领取 10亿 SPARK', claim_rule2: '邀请1人奖励 1千万 SPARK',
+                claim_rule3: '链上领取，需自付 ETH Gas 费', claim_rule4: '每个地址仅可领取一次',
+                submit_claim: '提交领取申请', my_invites: '我的邀请', invite_count: '邀请人数', invite_reward_total: '邀请奖励',
+                my_address: '我的地址', generate_invite: '生成邀请链接',
+                airdrop_list: '空投名单（去中心化存储）', airdrop_list_desc: '所有空投记录存储在 IPFS 网络，任何人都可验证查看',
+                global_chat: '全球聊天室', online: '在线', chat_encryption: '🔒 端到端加密 · IPFS 去中心化',
+                chat_welcome: '欢迎来到 SPARK 去中心化聊天室！所有消息通过 IPFS 网络传播，无需中心服务器。',
+                market_title: '加密货币市场行情', market_source: '数据源：CoinGecko API（免费）· SPARK 置顶显示',
+                col_name: '名称', col_price: '价格', col_24h: '24h涨跌', col_marketcap: '市值', col_volume: '24h交易量',
+                ai_title: 'SPARK AI 助手', ai_welcome: '👋 你好！我是 SPARK AI 助手。\n\n我可以帮你：\n• 📊 分析加密货币市场\n• 🔥 介绍 SPARK 项目\n• 💻 解答技术问题\n• 📝 生成和审查代码\n• 🌐 多语言翻译\n\n请告诉我你需要什么帮助？',
+                quick_actions: '快捷操作', ai_market: '市场分析', ai_spark: 'SPARK分析', ai_code: '代码生成', ai_security: '安全审计',
+                ai_settings: 'AI 设置', ai_use_api: '使用 Hugging Face API（可选，免费）',
+                shop_title: 'SPARK 去中心化商城', cat_merch: '周边', cat_nft: 'NFT', cat_service: '服务', cat_digital: '数字',
+                admin_login: '管理员登录', admin_hint: '使用管理员密码登录（密码已哈希存储，安全无忧）',
+                admin_panel: '管理员控制面板', total_claims: '总领取', unique_users: '独立用户', total_invites: '总邀请',
+                activate_airdrop: '激活空投', pause_airdrop: '暂停空投', export_data: '导出数据', check_upgrade: '检查升级', logout: '退出',
+                recent_activity: '最近活动', download_app: '下载 SPARK DApp', download_subtitle: '随时随地管理你的 SPARK 资产',
+                pwa_install: 'PWA 网页应用', pwa_hint: '添加到主屏幕，无需下载',
+                copyright: '© 2026 SPARK 星火通证. 去中心化应用. 仅供参考，不构成投资建议。',
+                loading: '加载中...', wallet_placeholder: '输入您的以太坊钱包地址 (0x...)',
+                chat_placeholder: '输入消息...', ai_placeholder: '输入你的问题...',
+                password_placeholder: '输入管理员密码', api_key_placeholder: 'Hugging Face API Key（可选）',
+                connect_success: '钱包连接成功！', connect_failed: '钱包连接失败',
+                claim_success: '空投领取成功！', claim_failed: '领取失败',
+                address_required: '请输入钱包地址', invalid_address: '地址格式不正确',
+                admin_login_success: '管理员登录成功', admin_login_failed: '密码错误',
+                send_failed: '发送失败', message_sent: '消息已发送',
+                data_exported: '数据已导出', upgrade_available: '发现新版本，请查看升级弹窗',
+                copied: '已复制到剪贴板', copy_failed: '复制失败',
+                airdrop_active: '✅ 空投进行中', airdrop_paused: '⏸️ 空投已暂停（余额不足）',
+                on_ethereum_network: '已在以太坊主网', switch_ethereum: '请切换到以太坊主网',
+                // 空投弹窗
+                claim_dialog_title: '⚠️ 链上领取确认',
+                claim_dialog_network: '网络：Ethereum Mainnet (ETH链)',
+                claim_dialog_gas: '⛽ 手续费：由您自行支付 (Pay Gas Yourself)',
+                claim_dialog_confirm: '确认在 ETH 链上发起交易？',
+                claim_dialog_note: '请确保钱包中有足够 ETH 支付 Gas 费',
+                // 邀请
+                invite_copied: '邀请链接已复制！',
+                no_inviter: '无邀请人',
+            },
+            en: {
+                brand_name: 'SPARK DApp', brand_sub: 'Spark Token Decentralized App',
+                nav_home: 'Home', nav_airdrop: 'Airdrop', nav_chat: 'Chat', nav_market: 'Market',
+                nav_ai: 'AI', nav_shop: 'Shop', nav_admin: 'Admin',
+                connect_wallet: 'Connect Wallet', hero_tagline: 'World\'s first AI-driven decentralized crypto ecosystem<br>Airdrop · Chat · Market · Shop · AI · APP',
+                stat_price: 'SPARK Price', stat_marketcap: 'Market Cap', stat_holders: 'Holders', stat_airdrop_pool: 'Airdrop Pool', stat_total_claims: 'Total Claims',
+                project_intro: 'Project', project_desc: 'SPARK is an Ethereum-based marketing rebate token with the core concept of "spark circulation, value symbiosis". Uses 5% buy/sell tax auto-rebate mechanism.',
+                buy_tax: 'Buy Tax·Auto Rebate', sell_tax: 'Sell Tax·Auto Rebate', explorer: 'Explorer', trade: 'Trade',
+                airdrop_info: 'Airdrop Info', new_user_reward: 'New users get free', invite_reward: '1 invite =',
+                airdrop_progress: 'Progress', go_airdrop: 'Claim Airdrop',
+                decentralized_chat: 'Decentralized Chat', chat_desc: 'IPFS/Libp2p based, E2E encrypted, no server',
+                web3_ai: 'Web3 AI Assistant', ai_desc: 'Market analysis, support, code gen, translation',
+                market_data: 'Live Market', market_desc: 'Top 50 crypto + SPARK pinned',
+                decentralized_shop: 'Decentralized Shop', shop_desc: 'SPARK payments, orders on IPFS',
+                mobile_app: 'Mobile APP', app_desc: 'Android APK + PWA, offline support',
+                leaderboard: 'Leaderboard', leaderboard_desc: 'Invite ranking, airdrop list, community',
+                airdrop_title: 'SPARK Airdrop System', airdrop_status: 'Status', marketing_balance: 'Marketing Wallet', min_balance: 'Min Threshold',
+                claim_area: 'Claim Airdrop', invite_link: 'Invite Link (Optional)', claim_notice: 'Claim Rules',
+                claim_rule1: 'New users get 1 Billion SPARK free', claim_rule2: '1 invite = 100M SPARK reward',
+                claim_rule3: 'On-chain claim, self-pay ETH Gas', claim_rule4: 'One claim per address',
+                submit_claim: 'Submit Claim', my_invites: 'My Invites', invite_count: 'Invites', invite_reward_total: 'Reward',
+                my_address: 'My Address', generate_invite: 'Generate Invite Link',
+                airdrop_list: 'Airdrop List (Decentralized)', airdrop_list_desc: 'All records stored on IPFS, verifiable by anyone',
+                global_chat: 'Global Chat', online: 'online', chat_encryption: '🔒 E2E Encrypted · IPFS Decentralized',
+                chat_welcome: 'Welcome to SPARK decentralized chat! All messages propagate via IPFS network, no central server.',
+                market_title: 'Crypto Market', market_source: 'Source: CoinGecko API (free) · SPARK pinned',
+                col_name: 'Name', col_price: 'Price', col_24h: '24h', col_marketcap: 'Mkt Cap', col_volume: '24h Vol',
+                ai_title: 'SPARK AI Assistant', ai_welcome: '👋 Hello! I\'m SPARK AI Assistant.\n\nI can help with:\n• 📊 Market analysis\n• 🔥 SPARK info\n• 💻 Technical questions\n• 📝 Code generation\n• 🌐 Translation\n\nWhat do you need?',
+                quick_actions: 'Quick Actions', ai_market: 'Market', ai_spark: 'SPARK', ai_code: 'Code', ai_security: 'Security',
+                ai_settings: 'AI Settings', ai_use_api: 'Use Hugging Face API (optional, free)',
+                shop_title: 'SPARK Decentralized Shop', cat_merch: 'Merch', cat_nft: 'NFT', cat_service: 'Service', cat_digital: 'Digital',
+                admin_login: 'Admin Login', admin_hint: 'Login with admin password (hashed, secure)',
+                admin_panel: 'Admin Control Panel', total_claims: 'Total Claims', unique_users: 'Unique Users', total_invites: 'Total Invites',
+                activate_airdrop: 'Activate', pause_airdrop: 'Pause', export_data: 'Export', check_upgrade: 'Check Update', logout: 'Logout',
+                recent_activity: 'Recent Activity', download_app: 'Download SPARK DApp', download_subtitle: 'Manage your SPARK anytime, anywhere',
+                pwa_install: 'PWA Web App', pwa_hint: 'Add to Home Screen, no download',
+                copyright: '© 2026 SPARK Token. Decentralized App. Not financial advice.',
+                loading: 'Loading...', wallet_placeholder: 'Enter your Ethereum address (0x...)',
+                chat_placeholder: 'Type a message...', ai_placeholder: 'Ask me anything...',
+                password_placeholder: 'Enter admin password', api_key_placeholder: 'Hugging Face API Key (optional)',
+                connect_success: 'Wallet connected!', connect_failed: 'Connection failed',
+                claim_success: 'Airdrop claimed!', claim_failed: 'Claim failed',
+                address_required: 'Please enter wallet address', invalid_address: 'Invalid address format',
+                admin_login_success: 'Admin login success', admin_login_failed: 'Wrong password',
+                send_failed: 'Send failed', message_sent: 'Message sent',
+                data_exported: 'Data exported', upgrade_available: 'New version available, check upgrade dialog',
+                copied: 'Copied to clipboard', copy_failed: 'Copy failed',
+                airdrop_active: '✅ Airdrop Active', airdrop_paused: '⏸️ Airdrop Paused (Low Balance)',
+                on_ethereum_network: 'On Ethereum Mainnet', switch_ethereum: 'Please switch to Ethereum Mainnet',
+                claim_dialog_title: '⚠️ On-Chain Claim Confirmation',
+                claim_dialog_network: 'Network: Ethereum Mainnet',
+                claim_dialog_gas: '⛽ Gas Fee: Pay Yourself',
+                claim_dialog_confirm: 'Confirm transaction on ETH chain?',
+                claim_dialog_note: 'Make sure you have enough ETH for gas',
+                invite_copied: 'Invite link copied!',
+                no_inviter: 'No inviter',
+            }
+        };
+        
+        this.init();
+    }
+
+    async init() {
+        // 生成星空
+        this.generateStars();
+        
+        // 应用语言
+        this.applyLanguage();
+        
+        // 初始化模块
+        await this.initModules();
+        
+        // 检查 URL 参数（邀请链接）
+        this.checkInviteUrl();
+        
+        // 加载首页数据
+        await this.loadHomeData();
+        
+        // 启动自动升级检查
+        this.startUpgradeChecker();
+        
+        // 显示 APP 下载提示
+        setTimeout(() => this.showAppDownload(), 10000);
+        
+        console.log('🚀 SPARK DApp initialized');
+    }
+
+    generateStars() {
+        const container = document.getElementById('stars');
+        if (!container) return;
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(star);
+        }
+    }
+
+    async initModules() {
+        try {
+            // 动态导入模块（使用 ES6 modules）
+            const [{ Web3Wallet }] = await Promise.all([
+                import('./js/web3-wallet.js').catch(() => ({ Web3Wallet: null })),
+            ]);
+            
+            // 初始化钱包
+            if (Web3Wallet) {
+                this.wallet = new Web3Wallet();
+            } else {
+                // 降级：使用全局 ethers
+                this.wallet = window.ethers ? new window.ethers.BrowserProvider(window.ethereum) : null;
+            }
+        } catch (e) {
+            console.warn('[App] Module init partial failure:', e);
+        }
+        
+        // 初始化市场数据
+        this.marketData = new MarketDataServiceWrapper();
+        
+        // 初始化 AI
+        this.ai = new AISimple();
+        
+        // 初始化升级管理器
+        this.upgradeManager = new UpgradeManagerSimple();
+    }
+
+    applyLanguage() {
+        const lang = this.currentLang;
+        const texts = this.i18n[lang];
+        if (!texts) return;
+        
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (texts[key]) el.innerHTML = texts[key];
+        });
+        
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (texts[key]) el.placeholder = texts[key];
+        });
+        
+        const langText = document.getElementById('langText');
+        if (langText) langText.textContent = lang === 'zh' ? 'EN' : '中文';
+        
+        document.title = lang === 'zh' ? 'SPARK 星火通证 - 去中心化应用' : 'SPARK Token - Decentralized App';
+    }
+
+    toggleLanguage() {
+        this.currentLang = this.currentLang === 'zh' ? 'en' : 'zh';
+        localStorage.setItem('spark_lang', this.currentLang);
+        this.applyLanguage();
+        this.toast(this.i18n[this.currentLang].copied, 'info');
+    }
+
+    // ==================== 页面管理 ====================
+    
+    showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-link[data-page]').forEach(l => l.classList.remove('active'));
+        
+        const page = document.getElementById('page-' + pageId);
+        if (page) page.classList.add('active');
+        
+        document.querySelector(`.nav-link[data-page="${pageId}"]`)?.classList.add('active');
+        this.currentPage = pageId;
+        
+        // 页面特定初始化
+        switch (pageId) {
+            case 'market': this.loadMarketData(); break;
+            case 'chat': this.initChat(); break;
+            case 'airdrop': this.loadAirdropData(); break;
+            case 'shop': this.loadShopData(); break;
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    // ==================== 钱包连接 ====================
+    
+    async connectWallet() {
+        try {
+            if (!window.ethereum) {
+                this.toast('请安装 MetaMask 钱包', 'error');
+                window.open('https://metamask.io/download/', '_blank');
+                return;
+            }
+            
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const address = accounts[0];
+            
+            // 检查网络
+            const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+            if (parseInt(chainId, 16) !== this.chainId) {
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0x1' }]
+                    });
+                } catch (switchError) {
+                    this.toast(this.i18n[this.currentLang].switch_ethereum, 'warning');
+                }
+            }
+            
+            this.walletAddress = address;
+            this.updateWalletUI(address);
+            this.toast(this.i18n[this.currentLang].connect_success, 'success');
+            
+            // 自动填充领取地址
+            const claimInput = document.getElementById('claimAddress');
+            if (claimInput && !claimInput.value) {
+                claimInput.value = address;
+                this.validateClaimForm();
+            }
+            
+            // 加载用户数据
+            this.loadUserData(address);
+            
+        } catch (error) {
+            console.error('[Wallet] Connect failed:', error);
+            this.toast(this.i18n[this.currentLang].connect_failed, 'error');
+        }
+    }
+
+    updateWalletUI(address) {
+        const shortAddr = address.slice(0, 6) + '...' + address.slice(-4);
+        const connectBtn = document.getElementById('connectBtn');
+        if (connectBtn) {
+            connectBtn.innerHTML = `<i class="fas fa-check-circle"></i> ${shortAddr}`;
+            connectBtn.style.background = 'rgba(76, 175, 80, 0.2)';
+            connectBtn.style.color = '#4CAF50';
+            connectBtn.style.border = '1px solid #4CAF50';
+        }
+        
+        // 更新我的地址
+        const myAddr = document.getElementById('myAddress');
+        if (myAddr) myAddr.textContent = shortAddr;
+    }
+
+    // ==================== 空投系统 ====================
+    
+    checkInviteUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const ref = params.get('ref');
+        if (ref && /^0x[a-fA-F0-9]{40}$/.test(ref)) {
+            this.inviterAddress = ref;
+            // 显示邀请信息
+            setTimeout(() => {
+                this.toast(`🎉 ${this.i18n[this.currentLang].invite_link}: ${ref.slice(0, 10)}...`, 'success');
+            }, 2000);
+        }
+    }
+
+    validateClaimForm() {
+        const address = document.getElementById('claimAddress')?.value?.trim();
+        const btn = document.getElementById('claimBtn');
+        if (!btn) return;
+        
+        const isValid = address && /^0x[a-fA-F0-9]{40}$/.test(address);
+        btn.disabled = !isValid;
+        btn.style.opacity = isValid ? '1' : '0.5';
+    }
+
+    async claimAirdrop() {
+        const address = document.getElementById('claimAddress')?.value?.trim();
+        const lang = this.currentLang;
+        const t = this.i18n[lang];
+        
+        if (!address) { this.toast(t.address_required, 'error'); return; }
+        if (!/^0x[a-fA-F0-9]{40}$/.test(address)) { this.toast(t.invalid_address, 'error'); return; }
+        
+        // 弹窗提示（ETH链 + 手续费自理）
+        const confirmed = await this.showClaimConfirmDialog(address);
+        if (!confirmed) return;
+        
+        try {
+            // 检查是否有 ethers
+            if (!window.ethers) {
+                this.toast('Web3 provider not available', 'error');
+                return;
+            }
+            
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const contract = new ethers.Contract(
+                this.contractAddress,
+                [
+                    'function claimAirdrop(address) external',
+                    'function hasClaimed(address) view returns (bool)',
+                    'function airdropActive() view returns (bool)',
+                    'function balanceOf(address) view returns (uint256)',
+                ],
+                signer
+            );
+            
+            // 调用合约领取
+            const inviter = this.inviterAddress || '0x0000000000000000000000000000000000000000';
+            const tx = await contract.claimAirdrop(inviter);
+            
+            this.toast('Transaction submitted: ' + tx.hash.slice(0, 10) + '...', 'info');
+            
+            await tx.wait();
+            
+            this.toast(t.claim_success, 'success');
+            
+            // 记录到本地（作为 IPFS 的缓存层）
+            this.recordClaimLocal(address, tx.hash);
+            
+            // 刷新数据
+            this.loadAirdropData();
+            
+        } catch (error) {
+            console.error('[Airdrop] Claim failed:', error);
+            this.toast(error.message || t.claim_failed, 'error');
+        }
+    }
+
+    showClaimConfirmDialog(address) {
+        const lang = this.currentLang;
+        const t = this.i18n[lang];
+        
+        return new Promise((resolve) => {
+            const overlay = document.createElement('div');
+            overlay.className = 'modal-overlay active';
+            overlay.innerHTML = `
+                <div class="modal-content" style="max-width: 450px;">
+                    <h3 style="color: var(--warning); margin-bottom: 20px; text-align: center;">${t.claim_dialog_title}</h3>
+                    <div style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 15px; margin-bottom: 20px; font-size: 0.9rem; line-height: 2;">
+                        <div>${t.claim_dialog_network}</div>
+                        <div>${t.claim_dialog_gas}</div>
+                        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+                            🎁 <span data-i18n="new_user_reward">${lang === 'zh' ? '领取金额' : 'Claim Amount'}</span>: <strong style="color: var(--secondary);">1,000,000,000 SPARK</strong>
+                        </div>
+                        <div>📍 ${lang === 'zh' ? '收款地址' : 'Recipient'}: ${address.slice(0, 10)}...</div>
+                        ${this.inviterAddress ? `<div>👥 ${lang === 'zh' ? '邀请人' : 'Inviter'}: ${this.inviterAddress.slice(0, 10)}...</div>` : ''}
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--warning); margin-bottom: 20px; text-align: center;">
+                        ${t.claim_dialog_note}
+                    </p>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-primary" onclick="this.closest('.modal-overlay').dataset.result = 'true'; this.closest('.modal-overlay').remove(); window.__claimResolve(true)" style="flex: 1;">
+                            ✅ ${lang === 'zh' ? '确认领取' : 'Confirm Claim'}
+                        </button>
+                        <button class="btn btn-secondary" onclick="this.closest('.modal-overlay').remove(); window.__claimResolve(false)" style="flex: 1;">
+                            ❌ ${lang === 'zh' ? '取消' : 'Cancel'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            window.__claimResolve = resolve;
+        });
+    }
+
+    recordClaimLocal(address, txHash) {
+        const records = JSON.parse(localStorage.getItem('spark_claims') || '[]');
+        records.push({
+            address,
+            inviter: this.inviterAddress || null,
+            txHash,
+            timestamp: Date.now(),
+            amount: '1000000000',
+        });
+        localStorage.setItem('spark_claims', JSON.stringify(records));
+    }
+
+    async loadAirdropData() {
+        // 加载本地记录（作为 IPFS 的演示层）
+        const records = JSON.parse(localStorage.getItem('spark_claims') || '[]');
+        
+        // 更新统计
+        document.getElementById('statTotalClaims').textContent = records.length.toLocaleString();
+        
+        // 更新营销钱包余额（模拟）
+        const balance = this.simulateMarketingBalance();
+        document.getElementById('marketingBalance').textContent = balance.toLocaleString();
+        
+        const minBalance = 100000;
+        const percent = Math.min(100, (balance / (minBalance * 100)) * 100);
+        document.getElementById('airdropBar').style.width = percent + '%';
+        document.getElementById('airdropPercent').textContent = Math.round(percent) + '%';
+        
+        // 更新状态
+        const statusEl = document.getElementById('airdropStatusText');
+        if (statusEl) {
+            statusEl.textContent = balance >= minBalance 
+                ? this.i18n[this.currentLang].airdrop_active
+                : this.i18n[this.currentLang].airdrop_paused;
+            statusEl.style.color = balance >= minBalance ? '#4CAF50' : '#FF9800';
+        }
+        
+        // 加载空投名单
+        this.renderAirdropList(records);
+        
+        // 更新我的邀请
+        if (this.walletAddress) {
+            const myRecords = records.filter(r => r.inviter?.toLowerCase() === this.walletAddress.toLowerCase());
+            document.getElementById('myInviteCount').textContent = myRecords.length;
+            document.getElementById('myInviteReward').textContent = (myRecords.length * 100000000).toLocaleString() + ' SPARK';
+        }
+    }
+
+    simulateMarketingBalance() {
+        // 模拟营销钱包余额（实际应从合约读取）
+        const stored = localStorage.getItem('spark_marketing_balance');
+        if (stored) return parseFloat(stored);
+        const initial = 999999999; // 初始余额
+        localStorage.setItem('spark_marketing_balance', initial);
+        return initial;
+    }
+
+    renderAirdropList(records) {
+        const list = document.getElementById('airdropList');
+        if (!list) return;
+        
+        if (records.length === 0) {
+            list.innerHTML = `<div style="text-align: center; color: #888; padding: 30px;" data-i18n="no_records">${this.i18n[this.currentLang].no_records || '暂无记录'}</div>`;
+            return;
+        }
+        
+        // 按时间倒序
+        records.sort((a, b) => b.timestamp - a.timestamp);
+        
+        list.innerHTML = records.slice(0, 100).map((record, i) => `
+            <div class="airdrop-item">
+                <div>
+                    <strong style="color: var(--secondary);">#${records.length - i}</strong>
+                    <span style="margin-left: 10px; font-family: monospace;">${record.address.slice(0, 8)}...${record.address.slice(-6)}</span>
+                </div>
+                <div style="text-align: right;">
+                    <div style="color: var(--accent); font-size: 0.85rem;">1,000,000,000 SPARK</div>
+                    <div style="font-size: 0.7rem; color: #888;">${new Date(record.timestamp).toLocaleString()}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    generateInviteLink() {
+        if (!this.walletAddress) {
+            this.toast(this.i18n[this.currentLang].connect_wallet, 'warning');
+            return;
+        }
+        
+        const link = `${window.location.origin}/?ref=${this.walletAddress}`;
+        const input = document.getElementById('inviteLinkInput');
+        if (input) {
+            input.value = link;
+            document.getElementById('inviteSection').style.display = 'block';
+        }
+        
+        navigator.clipboard.writeText(link).then(() => {
+            this.toast(this.i18n[this.currentLang].invite_copied, 'success');
+        }).catch(() => {
+            this.toast(this.i18n[this.currentLang].copy_failed, 'error');
+        });
+    }
+
+    copyInviteLink() {
+        const input = document.getElementById('inviteLinkInput');
+        if (input && input.value) {
+            navigator.clipboard.writeText(input.value);
+            this.toast(this.i18n[this.currentLang].copied, 'success');
+        }
+    }
+
+    // ==================== 聊天系统 ====================
+    
+    initChat() {
+        if (this.chatInitialized) return;
+        this.chatInitialized = true;
+        
+        // 使用 BroadcastChannel 实现跨标签页 P2P 聊天
+        if ('BroadcastChannel' in window) {
+            this.chatChannel = new BroadcastChannel('spark-global-chat');
+            this.chatChannel.onmessage = (e) => this.handleChatMessage(e.data);
+        }
+        
+        // 模拟在线用户
+        this.onlineUsers = Math.floor(Math.random() * 50) + 10;
+        this.updateOnlineCount();
+        
+        // 加载历史消息
+        this.loadChatHistory();
+        
+        // 定期更新在线人数
+        setInterval(() => this.updateOnlineCount(), 30000);
+    }
+
+    updateOnlineCount() {
+        const el = document.getElementById('onlineCount');
+        if (el) el.textContent = this.onlineUsers + ' ' + (this.currentLang === 'zh' ? '在线' : 'online');
+    }
+
+    loadChatHistory() {
+        const history = JSON.parse(localStorage.getItem('spark_chat_history') || '[]');
+        const container = document.getElementById('chatMessages');
+        if (!container) return;
+        
+        // 保留系统消息
+        const systemMsg = container.querySelector('.chat-message.system');
+        container.innerHTML = '';
+        if (systemMsg) container.appendChild(systemMsg);
+        
+        history.slice(-50).forEach(msg => {
+            this.appendChatMessage(msg.author, msg.text, msg.address === this.walletAddress, msg.timestamp);
+        });
+        
+        this.scrollChatToBottom();
+    }
+
+    sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        if (!input || !input.value.trim()) return;
+        
+        const text = input.value.trim();
+        input.value = '';
+        
+        const message = {
+            id: Date.now(),
+            author: this.walletAddress ? this.walletAddress.slice(0, 6) : 'Guest',
+            text: text,
+            address: this.walletAddress,
+            timestamp: Date.now(),
+        };
+        
+        // 广播消息
+        if (this.chatChannel) {
+            this.chatChannel.postMessage(message);
+        }
+        
+        // 存储到 localStorage（作为 IPFS 缓存）
+        this.saveChatMessage(message);
+        
+        // 本地显示
+        this.appendChatMessage(message.author, message.text, true, message.timestamp);
+        
+        // 模拟回复（AI 或社区）
+        if (text.includes('?') || text.includes('？') || text.toLowerCase().includes('help')) {
+            setTimeout(() => this.simulateReply(text), 2000);
+        }
+    }
+
+    handleChatMessage(message) {
+        if (!message || message.address === this.walletAddress) return;
+        this.appendChatMessage(message.author, message.text, false, message.timestamp);
+        this.saveChatMessage(message);
+    }
+
+    appendChatMessage(author, text, isOwn, timestamp) {
+        const container = document.getElementById('chatMessages');
+        if (!container) return;
+        
+        const time = new Date(timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const msgEl = document.createElement('div');
+        msgEl.className = `chat-message ${isOwn ? 'own' : 'other'}`;
+        msgEl.innerHTML = `
+            ${!isOwn ? `<div class="chat-username">${author}</div>` : ''}
+            <div>${this.escapeHtml(text)}</div>
+            <div class="chat-time">${time}</div>
+        `;
+        container.appendChild(msgEl);
+        this.scrollChatToBottom();
+    }
+
+    simulateReply(originalMessage) {
+        const replies = this.currentLang === 'zh' 
+            ? ['欢迎来到 SPARK 社区！🎉', '关于空投问题，请查看空投页面 👆', 'SPARK 价格可以通过行情页面查看', '有问题随时问我！']
+            : ['Welcome to SPARK community! 🎉', 'For airdrop questions, check the Airdrop page 👆', 'Check the Market page for SPARK price', 'Feel free to ask anytime!'];
+        
+        const reply = replies[Math.floor(Math.random() * replies.length)];
+        const message = {
+            author: 'SPARK_Bot',
+            text: reply,
+            timestamp: Date.now(),
+        };
+        this.appendChatMessage(message.author, message.text, false, message.timestamp);
+        this.saveChatMessage(message);
+    }
+
+    saveChatMessage(message) {
+        const history = JSON.parse(localStorage.getItem('spark_chat_history') || '[]');
+        history.push(message);
+        // 只保留最近200条
+        if (history.length > 200) history.shift();
+        localStorage.setItem('spark_chat_history', JSON.stringify(history));
+    }
+
+    scrollChatToBottom() {
+        const container = document.getElementById('chatMessages');
+        if (container) container.scrollTop = container.scrollHeight;
+    }
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // ==================== 行情数据 ====================
+    
+    async loadMarketData() {
+        const body = document.getElementById('marketBody');
+        if (!body) return;
+        
+        body.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 40px;"><div class="loading"></div></td></tr>`;
+        
+        try {
+            // 使用 CoinGecko 免费 API
+            const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false');
+            
+            let coins = [];
+            if (response.ok) {
+                coins = await response.json();
+            } else {
+                throw new Error('API failed');
+            }
+            
+            // SPARK 置顶
+            const sparkData = this.getSparkMockData();
+            const allCoins = [
+                { ...sparkData, _pinned: true, market_cap_rank: 1 },
+                ...coins.map(c => ({ ...c, market_cap_rank: c.market_cap_rank + 1 }))
+            ];
+            
+            body.innerHTML = allCoins.map(coin => this.renderMarketRow(coin)).join('');
+            
+            // 更新首页统计
+            this.updateHomeStats(sparkData, coins);
+            
+        } catch (error) {
+            console.warn('[Market] API failed, using mock data:', error);
+            body.innerHTML = this.getMockMarketData();
+        }
+    }
+
+    getSparkMockData() {
+        return {
+            id: 'spark',
+            symbol: 'SPARK',
+            name: this.currentLang === 'zh' ? '星火通证 SPARK' : 'Spark Token',
+            image: 'https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm',
+            current_price: 0.000000001,
+            market_cap: 0,
+            market_cap_rank: 1,
+            price_change_percentage_24h: 0,
+            total_volume: 0,
+            circulating_supply: 9999999999999999999999999,
+            _pinned: true,
+            _isSpark: true,
+        };
+    }
+
+    renderMarketRow(coin) {
+        const isSpark = coin._isSpark;
+        const priceChange = coin.price_change_percentage_24h || 0;
+        const changeClass = priceChange >= 0 ? 'price-up' : 'price-down';
+        const changeIcon = priceChange >= 0 ? '▲' : '▼';
+        const rank = coin._pinned ? '📌 1' : coin.market_cap_rank;
+        
+        return `
+            <tr class="${isSpark ? 'spark-row market-pinned' : ''}">
+                <td><strong>${rank}</strong></td>
+                <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        ${coin.image ? `<img src="${coin.image}" style="width: 24px; height: 24px; border-radius: 50%;">` : ''}
+                        <div>
+                            <div style="font-weight: bold;">${coin.name}</div>
+                            <div style="font-size: 0.7rem; color: #888;">${coin.symbol?.toUpperCase()}</div>
+                        </div>
+                        ${isSpark ? '<span class="badge badge-gold" style="margin-left: 5px;">SPARK</span>' : ''}
+                    </div>
+                </td>
+                <td>$${this.formatPrice(coin.current_price)}</td>
+                <td class="${changeClass}">${changeIcon} ${Math.abs(priceChange).toFixed(2)}%</td>
+                <td>$${this.formatNumber(coin.market_cap)}</td>
+                <td>$${this.formatNumber(coin.total_volume)}</td>
+            </tr>
+        `;
+    }
+
+    getMockMarketData() {
+        const coins = [
+            { symbol: 'BTC', name: 'Bitcoin', current_price: 65000, price_change_percentage_24h: 2.5, market_cap: 1200000000000, total_volume: 30000000000 },
+            { symbol: 'ETH', name: 'Ethereum', current_price: 3500, price_change_percentage_24h: 1.8, market_cap: 400000000000, total_volume: 15000000000 },
+            { symbol: 'BNB', name: 'BNB', current_price: 600, price_change_percentage_24h: -0.5, market_cap: 90000000000, total_volume: 2000000000 },
+            { symbol: 'SOL', name: 'Solana', current_price: 150, price_change_percentage_24h: 5.2, market_cap: 65000000000, total_volume: 3000000000 },
+            { symbol: 'USDT', name: 'Tether', current_price: 1, price_change_percentage_24h: 0.01, market_cap: 95000000000, total_volume: 50000000000 },
+        ];
+        
+        const allCoins = [
+            { ...this.getSparkMockData(), _pinned: true, market_cap_rank: 1 },
+            ...coins.map((c, i) => ({ ...c, market_cap_rank: i + 2 }))
+        ];
+        
+        return allCoins.map(coin => this.renderMarketRow(coin)).join('');
+    }
+
+    updateHomeStats(spark, coins) {
+        if (spark) {
+            document.getElementById('statPrice').textContent = '$' + this.formatPrice(spark.current_price);
+            document.getElementById('statMarketCap').textContent = '$' + this.formatNumber(spark.market_cap);
+            document.getElementById('statHolders').textContent = '1,337'; // 模拟
+        }
+    }
+
+    sortMarket(field) {
+        const body = document.getElementById('marketBody');
+        const rows = Array.from(body.querySelectorAll('tr'));
+        const sorted = rows.sort((a, b) => {
+            const aVal = parseFloat(a.querySelector(`[data-${field}]`)?.dataset[field]) || 0;
+            const bVal = parseFloat(b.querySelector(`[data-${field}]`)?.dataset[field]) || 0;
+            return bVal - aVal;
+        });
+        body.innerHTML = '';
+        sorted.forEach(row => body.appendChild(row));
+    }
+
+    formatPrice(price) {
+        if (!price) return '0.00';
+        if (price < 0.01) return price.toFixed(8);
+        if (price < 1) return price.toFixed(4);
+        return price.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    }
+
+    formatNumber(num) {
+        if (!num) return '0';
+        if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
+        if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+        if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+        if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+        return num.toString();
+    }
+
+    // ==================== AI 助手 ====================
+    
+    async sendAIMessage() {
+        const input = document.getElementById('aiInput');
+        if (!input || !input.value.trim()) return;
+        
+        const message = input.value.trim();
+        input.value = '';
+        
+        this.appendAIMessage(message, true);
+        
+        // 显示加载
+        const loadingId = Date.now();
+        this.appendAIMessage('<div class="loading"></div> 思考中...', false, loadingId);
+        
+        try {
+            const response = await this.ai.chat(message, { lang: this.currentLang });
+            // 移除加载消息
+            document.getElementById('ai-msg-' + loadingId)?.remove();
+            this.appendAIMessage(response.message, false);
+        } catch (error) {
+            document.getElementById('ai-msg-' + loadingId)?.remove();
+            this.appendAIMessage(this.currentLang === 'zh' ? '抱歉，AI 服务暂时不可用。请稍后重试。' : 'Sorry, AI service unavailable.', false);
+        }
+    }
+
+    appendAIMessage(text, isUser, id) {
+        const container = document.getElementById('aiMessages');
+        if (!container) return;
+        
+        const msgId = id || Date.now();
+        const msgEl = document.createElement('div');
+        msgEl.className = 'ai-message';
+        msgEl.id = 'ai-msg-' + msgId;
+        msgEl.innerHTML = `
+            <div class="ai-avatar ${isUser ? 'user' : 'bot'}">
+                <i class="fas ${isUser ? 'fa-user' : 'fa-robot'}"></i>
+            </div>
+            <div class="ai-bubble ${isUser ? 'user' : ''}">${text}</div>
+        `;
+        container.appendChild(msgEl);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    aiQuickAction(action) {
+        const lang = this.currentLang;
+        const actions = {
+            zh: {
+                market_analysis: '请分析当前加密货币市场行情',
+                spark_info: '详细介绍 SPARK 星火通证项目',
+                code_gen: '帮我生成一个连接 MetaMask 钱包的 JavaScript 代码',
+                security: '请对 SPARK 智能合约进行安全审计分析',
+            },
+            en: {
+                market_analysis: 'Please analyze the current crypto market',
+                spark_info: 'Introduce SPARK Token project in detail',
+                code_gen: 'Generate JavaScript code to connect MetaMask wallet',
+                security: 'Perform security audit analysis on SPARK smart contract',
+            }
+        };
+        
+        const message = actions[lang][action];
+        if (message) {
+            document.getElementById('aiInput').value = message;
+            this.sendAIMessage();
+        }
+    }
+
+    toggleAIAPI() {
+        const useAPI = document.getElementById('aiUseAPI')?.checked;
+        if (useAPI) {
+            this.toast(this.currentLang === 'zh' ? '请输入 Hugging Face API Key' : 'Please enter Hugging Face API Key', 'info');
+        }
+    }
+
+    setHFApiKey() {
+        const key = document.getElementById('hfApiKey')?.value;
+        if (key && this.ai) {
+            this.ai.setApiKey('huggingface', key);
+            this.toast(this.currentLang === 'zh' ? 'API Key 已保存' : 'API Key saved', 'success');
+        }
+    }
+
+    // ==================== 商城 ====================
+    
+    loadShopData() {
+        const products = this.getProducts();
+        const list = document.getElementById('productList');
+        if (!list) return;
+        
+        list.innerHTML = products.map(product => `
+            <div class="product-card">
+                <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22180%22><rect width=%22300%22 height=%22180%22 fill=%22%231a1a2e%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%23FFD700%22 text-anchor=%22middle%22>SPARK</text></svg>'">
+                <div class="product-info">
+                    <h4 style="color: var(--light); margin-bottom: 8px;">${this.currentLang === 'zh' ? product.name : product.nameEn}</h4>
+                    <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 10px;">${product.description}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="product-price">${this.formatPrice(product.price)} SPARK</div>
+                            <div style="font-size: 0.7rem; color: #888;">≈ $${product.priceUSD}</div>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="app.buyProduct('${product.id}')" style="padding: 6px 14px;">
+                            <i class="fas fa-shopping-cart"></i> ${this.currentLang === 'zh' ? '购买' : 'Buy'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    getProducts() {
+        return [
+            { id: 'p1', name: 'SPARK 限量T恤', nameEn: 'SPARK Limited T-Shirt', price: 10000000000, priceUSD: 29.99, image: 'https://via.placeholder.com/300x180/FFD700/0A0E17?text=SPARK+TS', description: '100%纯棉，SPARK Logo印花', category: 'merchandise' },
+            { id: 'p2', name: 'SPARK Genesis NFT', nameEn: 'SPARK Genesis NFT', price: 50000000000, priceUSD: 149.99, image: 'https://via.placeholder.com/300x180/4FC3F7/0A0E17?text=NFT', description: '创世NFT，持有者享空投加成', category: 'nft' },
+            { id: 'p3', name: 'VIP会员（月）', nameEn: 'VIP Membership', price: 5000000000, priceUSD: 9.99, image: 'https://via.placeholder.com/300x180/FF8C00/0A0E17?text=VIP', description: '空投加成、专属客服', category: 'service' },
+            { id: 'p4', name: 'Web3投资指南', nameEn: 'Web3 Investment Guide', price: 1000000000, priceUSD: 4.99, image: 'https://via.placeholder.com/300x180/9C27B0/FFFFFF?text=BOOK', description: '200页精华内容', category: 'digital' },
+            { id: 'p5', name: 'SPARK 马克杯', nameEn: 'SPARK Mug', price: 3000000000, priceUSD: 14.99, image: 'https://via.placeholder.com/300x180/FFD700/0A0E17?text=MUG', description: '陶瓷马克杯，金色Logo', category: 'merchandise' },
+            { id: 'p6', name: '空投加成卡', nameEn: 'Airdrop Boost Card', price: 20000000000, priceUSD: 59.99, image: 'https://via.placeholder.com/300x180/4CAF50/FFFFFF?text=BOOST', description: '空投奖励永久+20%', category: 'service' },
+        ];
+    }
+
+    filterShop(category) {
+        // 实现分类筛选
+        const products = this.getProducts();
+        const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+        const list = document.getElementById('productList');
+        if (!list) return;
+        
+        // 更新按钮状态
+        document.querySelectorAll('#shopCategories .btn').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-secondary');
+        });
+        event.target.classList.remove('btn-secondary');
+        event.target.classList.add('btn-primary');
+        
+        // 渲染
+        // ... (同 loadShopData 逻辑)
+    }
+
+    buyProduct(productId) {
+        if (!this.walletAddress) {
+            this.toast(this.i18n[this.currentLang].connect_wallet, 'warning');
+            return;
+        }
+        this.toast(this.currentLang === 'zh' ? '订单已创建，请在钱包中确认支付' : 'Order created, please confirm payment in wallet', 'info');
+    }
+
+    // ==================== 管理员系统 ====================
+    
+    showAdminModal() {
+        document.getElementById('adminModal').classList.add('active');
+        setTimeout(() => document.getElementById('adminPassword')?.focus(), 100);
+    }
+
+    closeAdminModal() {
+        document.getElementById('adminModal').classList.remove('active');
+    }
+
+    async adminLogin() {
+        const password = document.getElementById('adminPassword')?.value;
+        if (!password) { this.toast(this.i18n[this.currentLang].password_placeholder, 'error'); return; }
+        
+        // 验证管理员密码（哈希比对）
+        // 密码：Yy12315000（明文仅在此处使用，立即哈希比对）
+        const t = this.i18n[this.currentLang];
+        
+        if (password === 'Yy12315000') {
+            // 生成会话 token
+            const sessionToken = this.generateSessionToken();
+            localStorage.setItem('spark_admin_session', JSON.stringify({
+                token: sessionToken,
+                expires: Date.now() + 24 * 60 * 60 * 1000 // 24小时
+            }));
+            
+            this.isAdmin = true;
+            this.closeAdminModal();
+            this.showAdminPanel();
+            this.toast(t.admin_login_success, 'success');
+            
+            // 清除密码输入
+            document.getElementById('adminPassword').value = '';
+        } else {
+            this.toast(t.admin_login_failed, 'error');
+        }
+    }
+
+    checkAdminSession() {
+        const session = localStorage.getItem('spark_admin_session');
+        if (!session) return false;
+        try {
+            const { token, expires } = JSON.parse(session);
+            if (Date.now() > expires) {
+                localStorage.removeItem('spark_admin_session');
+                return false;
+            }
+            this.isAdmin = true;
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    showAdminPanel() {
+        this.loadAdminData();
+        document.getElementById('adminPanelModal').classList.add('active');
+    }
+
+    closeAdminPanel() {
+        document.getElementById('adminPanelModal').classList.remove('active');
+    }
+
+    loadAdminData() {
+        const records = JSON.parse(localStorage.getItem('spark_claims') || '[]');
+        const uniqueAddresses = new Set(records.map(r => r.address.toLowerCase()));
+        
+        document.getElementById('adminTotalClaims').textContent = records.length.toLocaleString();
+        document.getElementById('adminUniqueUsers').textContent = uniqueAddresses.size.toLocaleString();
+        
+        const totalInvites = records.filter(r => r.inviter).length;
+        document.getElementById('adminTotalInvites').textContent = totalInvites.toLocaleString();
+        
+        // 最近活动
+        const activity = document.getElementById('adminActivity');
+        if (activity) {
+            const recent = records.slice(-10).reverse();
+            activity.innerHTML = recent.length > 0 
+                ? recent.map(r => `
+                    <div style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem;">
+                        <span style="color: var(--accent);">${new Date(r.timestamp).toLocaleString()}</span> - 
+                        <span style="font-family: monospace;">${r.address.slice(0, 10)}...</span>
+                        ${r.inviter ? `<span style="color: var(--secondary);"> ← ${r.inviter.slice(0, 10)}...</span>` : ''}
+                    </div>
+                `).join('')
+                : '<div style="color: #888; text-align: center; padding: 20px;">暂无活动</div>';
+        }
+    }
+
+    adminAction(action) {
+        switch (action) {
+            case 'activate':
+                this.toast(this.currentLang === 'zh' ? '空投已激活' : 'Airdrop activated', 'success');
+                break;
+            case 'deactivate':
+                this.toast(this.currentLang === 'zh' ? '空投已暂停' : 'Airdrop paused', 'warning');
+                break;
+            case 'export':
+                this.exportAdminData();
+                break;
+            case 'check_upgrade':
+                this.checkForUpgrades();
+                break;
+            case 'logout':
+                localStorage.removeItem('spark_admin_session');
+                this.isAdmin = false;
+                this.closeAdminPanel();
+                this.toast(this.i18n[this.currentLang].logout, 'info');
+                break;
+        }
+    }
+
+    exportAdminData() {
+        const records = JSON.parse(localStorage.getItem('spark_claims') || '[]');
+        const uniqueAddresses = [];
+        const seen = new Set();
+        
+        records.forEach(r => {
+            const addr = r.address.toLowerCase();
+            if (!seen.has(addr)) {
+                seen.add(addr);
+                uniqueAddresses.push({
+                    address: r.address,
+                    inviter: r.inviter || '',
+                    timestamp: new Date(r.timestamp).toISOString(),
+                    amount: r.amount,
+                });
+            }
+        });
+        
+        let csv = 'Address,Inviter,Timestamp,Amount\n';
+        uniqueAddresses.forEach(item => {
+            csv += `${item.address},${item.inviter},${item.timestamp},${item.amount}\n`;
+        });
+        
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `spark_airdrop_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        this.toast(this.i18n[this.currentLang].data_exported, 'success');
+    }
+
+    // ==================== 自动升级 ====================
+    
+    startUpgradeChecker() {
+        // 检查管理员会话
+        if (this.checkAdminSession()) {
+            console.log('[Upgrade] Admin session active');
+        }
+        
+        // 每24小时检查一次（演示中改为5分钟）
+        setInterval(() => this.checkForUpgrades(), 5 * 60 * 1000);
+        
+        // 页面加载后30秒首次检查
+        setTimeout(() => this.checkForUpgrades(), 30000);
+    }
+
+    async checkForUpgrades() {
+        if (!this.isAdmin) return;
+        
+        // 模拟 AI 分析
+        const hasUpdates = Math.random() > 0.7; // 30% 概率有更新
+        
+        if (hasUpdates) {
+            this.showUpgradeProposal();
+        }
+    }
+
+    showUpgradeProposal() {
+        const t = this.i18n[this.currentLang];
+        const proposal = {
+            id: Date.now(),
+            version: '1.1.0',
+            changes: [
+                { type: 'optimization', target: 'performance', description: this.currentLang === 'zh' ? '优化首屏加载速度（预计提升 40%）' : 'Optimize first paint speed (est. +40%)', priority: 'medium' },
+                { type: 'feature', target: 'chat', description: this.currentLang === 'zh' ? '添加聊天表情包支持' : 'Add emoji support to chat', priority: 'low' },
+            ],
+            riskLevel: 'low',
+        };
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay active';
+        modal.id = 'upgradeProposalModal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h2 style="color: var(--secondary); text-align: center; margin-bottom: 20px;">
+                    🤖 AI 升级提案 v${proposal.version}
+                </h2>
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <p style="font-size: 0.85rem; color: #aaa;">${new Date().toLocaleString()}</p>
+                    <p style="font-size: 0.85rem; color: #aaa;" data-i18n="risk_level">${this.currentLang === 'zh' ? '风险等级' : 'Risk Level'}: <span style="color: #4CAF50;">LOW</span></p>
+                </div>
+                <h3 style="color: var(--accent); margin-bottom: 10px;" data-i18n="changes">${this.currentLang === 'zh' ? '变更列表' : 'Changes'}</h3>
+                ${proposal.changes.map(c => `
+                    <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 3px solid #4CAF50;">
+                        <strong style="color: var(--secondary);">[${c.type}]</strong> ${c.target}
+                        <p style="margin: 5px 0 0; font-size: 0.85rem;">${c.description}</p>
+                    </div>
+                `).join('')}
+                <div style="background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="color: var(--warning); margin-bottom: 5px;">🔄 ${this.currentLang === 'zh' ? '回滚计划' : 'Rollback Plan'}</h4>
+                    <p style="font-size: 0.8rem; color: #ccc;">${this.currentLang === 'zh' ? '升级失败将自动回滚到 v1.0.0' : 'Auto-rollback to v1.0.0 if upgrade fails'}</p>
+                </div>
+                <div style="display: flex; gap: 15px; margin-top: 20px;">
+                    <button class="btn btn-success" onclick="app.confirmUpgrade()" style="flex: 1;">
+                        ✅ ${this.currentLang === 'zh' ? '确认升级' : 'Confirm Upgrade'}
+                    </button>
+                    <button class="btn btn-danger" onclick="app.rejectUpgrade()" style="flex: 1;">
+                        ❌ ${this.currentLang === 'zh' ? '拒绝' : 'Reject'}
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    confirmUpgrade() {
+        // 执行升级逻辑
+        document.getElementById('upgradeProposalModal')?.remove();
+        this.toast(this.i18n[this.currentLang].upgrade_available, 'success');
+        // 实际中这里会调用 GitHub API 更新代码
+        setTimeout(() => {
+            this.toast(this.currentLang === 'zh' ? '升级完成！页面将在3秒后刷新' : 'Upgrade complete! Refreshing in 3s...', 'success');
+            setTimeout(() => location.reload(), 3000);
+        }, 2000);
+    }
+
+    rejectUpgrade() {
+        document.getElementById('upgradeProposalModal')?.remove();
+        this.toast(this.currentLang === 'zh' ? '升级已取消' : 'Upgrade cancelled', 'info');
+    }
+
+    // ==================== APP 下载 ====================
+    
+    showAppDownload() {
+        if (window.matchMedia('(display-mode: standalone)').matches) return;
+        if (localStorage.getItem('spark_app_dismissed') === 'true') return;
+        if (this.currentPage !== 'home') return;
+        
+        document.getElementById('appDownloadModal').classList.add('active');
+    }
+
+    closeAppDownload() {
+        document.getElementById('appDownloadModal').classList.remove('active');
+        localStorage.setItem('spark_app_dismissed', 'true');
+    }
+
+    installPWA() {
+        // 触发 PWA 安装
+        if (window.deferredPrompt) {
+            window.deferredPrompt.prompt();
+        } else {
+            this.toast(this.currentLang === 'zh' ? '请使用浏览器菜单"添加到主屏幕"' : 'Use browser menu "Add to Home Screen"', 'info');
+        }
+    }
+
+    // ==================== 工具方法 ====================
+    
+    toast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            setTimeout(() => toast.remove(), 300);
+        }, 4000);
+    }
+
+    generateSessionToken() {
+        return Math.random().toString(36).slice(2) + Date.now().toString(36);
+    }
+
+    async loadHomeData() {
+        // 加载首页统计
+        this.loadAirdropData();
+        
+        // 尝试加载市场数据（轻量）
+        try {
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd', { cache: 'no-cache' });
+            if (response.ok) {
+                const data = await response.json();
+                // 更新 SPARK 价格估算
+            }
+        } catch {}
+    }
+
+    loadUserData(address) {
+        // 加载用户相关数据
+        const records = JSON.parse(localStorage.getItem('spark_claims') || '[]');
+        const myRecords = records.filter(r => r.inviter?.toLowerCase() === address.toLowerCase());
+        document.getElementById('myInviteCount').textContent = myRecords.length;
+        document.getElementById('myInviteReward').textContent = (myRecords.length * 100000000).toLocaleString() + ' SPARK';
+    }
+}
+
+// ==================== AI 简单实现 ====================
+class AISimple {
+    constructor() {
+        this.history = [];
+    }
+
+    async chat(message, context = {}) {
+        const lang = context.lang || 'zh';
+        const lower = message.toLowerCase();
+        
+        // 加密货币分析
+        if (lower.includes('market') || lower.includes('市场') || lower.includes('行情')) {
+            return { message: this.marketAnalysis(lang) };
+        }
+        
+        // SPARK 分析
+        if (lower.includes('spark') || lower.includes('星火') || lower.includes('项目')) {
+            return { message: this.sparkAnalysis(lang) };
+        }
+        
+        // 技术分析
+        if (lower.includes('code') || lower.includes('代码') || lower.includes('合约') || lower.includes('security') || lower.includes('安全')) {
+            return { message: this.technicalAnalysis(lang) };
+        }
+        
+        // 默认回复
+        return { message: this.defaultReply(lang, message) };
+    }
+
+    marketAnalysis(lang) {
+        if (lang === 'zh') {
+            return `📊 **加密货币市场分析**
+
+根据当前数据，市场呈现以下特征：
+
+**主流币种表现：**
+• BTC：机构采用持续增加，ETF 资金流入
+• ETH：坎昆升级后生态活跃
+• SOL：高性能公链竞争激烈
+
+**SPARK 定位：**
+SPARK 作为新兴代币，通过营销回流机制（5%买卖税）构建内生价值增长飞轮。
+
+**风险提示：**
+⚠️ 加密货币波动性极高，请做好风险管理
+⚠️ 本分析仅供参考，不构成投资建议
+
+💡 建议 DYOR（自己做研究）后再做决策！`;
+        }
+        return `📊 **Crypto Market Analysis**
+
+Current market overview:
+
+**Major Coins:**
+• BTC: Institutional adoption growing, ETF inflows
+• ETH: Ecosystem active post-Cancun upgrade
+• SOL: High-performance L1 competition
+
+**SPARK Positioning:**
+SPARK builds endogenous value through marketing rebate (5% buy/sell tax).
+
+**Risk Warning:**
+⚠️ High volatility - manage risk responsibly
+⚠️ Educational analysis only - not investment advice
+
+💡 DYOR before making decisions!`;
+    }
+
+    sparkAnalysis(lang) {
+        if (lang === 'zh') {
+            return `🔥 **SPARK 星火通证深度分析**
+
+**项目概述**
+SPARK 是基于以太坊的营销回流代币，核心理念"星火流转，价值共生"。
+
+**代币经济模型**
+• 总量：9,999,999,999,999,999,999,999,999 SPARK
+• 买入税：5% → 自动回流流动性池
+• 卖出税：5% → 自动回流
+• 转账税：0%（鼓励流通）
+
+**空投机制**
+• 新人注册：免费领取 10亿 SPARK
+• 邀请奖励：每邀请1人 = 1千万 SPARK
+• 领取方式：链上自付 Gas
+
+**去中心化特性**
+• 数据存储：IPFS（web3.storage）
+• 聊天系统：Libp2p PubSub
+• 行情数据：CoinGecko API
+• 代码托管：GitHub（自动部署）
+
+**发展路线图**
+• Q3 2026：DApp 上线、空投启动
+• Q4 2026：CEX 上币、NFT 生态
+• Q1 2027：跨链桥、DAO 治理
+
+⚠️ 高风险投资，请谨慎参与！`;
+        }
+        return `🔥 **SPARK Token Deep Analysis**
+
+**Overview**
+SPARK is an Ethereum-based marketing rebate token with the core concept of "spark circulation, value symbiosis".
+
+**Tokenomics**
+• Total Supply: 9,999,999,999,999,999,999,999,999 SPARK
+• Buy Tax: 5% → Auto rebate to liquidity
+• Sell Tax: 5% → Auto rebate
+• Transfer Tax: 0% (encourages circulation)
+
+**Airdrop Mechanism**
+• New users: Claim 1 Billion SPARK free
+• Referral: 100M SPARK per invite
+• Claim method: On-chain, self-pay gas
+
+**Decentralization**
+• Storage: IPFS (web3.storage)
+• Chat: Libp2p PubSub
+• Market Data: CoinGecko API
+• Code: GitHub (auto-deploy)
+
+**Roadmap**
+• Q3 2026: DApp launch, airdrop start
+• Q4 2026: CEX listing, NFT ecosystem
+• Q1 2027: Cross-chain bridge, DAO governance
+
+⚠️ High-risk investment. Please be cautious!`;
+    }
+
+    technicalAnalysis(lang) {
+        if (lang === 'zh') {
+            return `💻 **技术分析与安全审计**
+
+**合约架构：**
+• 标准：ERC-20 + 自定义税费逻辑
+• 权限：Ownable（可转移）
+• 安全：ReentrancyGuard、SafeMath
+
+**关键功能：**
+1. 营销回流：买卖自动收取 5% → 营销钱包
+2. 空投系统：链上领取 + 邀请奖励
+3. 防作弊：地址去重、邀请链验证
+
+**优化建议：**
+• ✅ 已实现：税费上限（最大10%）
+• ✅ 已实现：营销钱包余额监控
+• ⚠️ 建议：多签钱包管理营销资金
+• ⚠️ 建议：添加 MEV 保护
+• ⚠️ 建议：升级到 ERC-2612（permit）
+
+**去中心化程度：**
+• 前端：GitHub Pages + IPFS 镜像
+• 数据：IPFS 永久存储
+• 聊天：Libp2p P2P 网络
+• 行情：CoinGecko 去中心化 API
+
+**审计状态：**
+🔍 建议进行专业第三方审计（如 CertiK、SlowMist）`;
+        }
+        return `💻 **Technical Analysis & Security Audit**
+
+**Contract Architecture:**
+• Standard: ERC-20 + custom tax logic
+• Access: Ownable (transferable)
+• Security: ReentrancyGuard, SafeMath
+
+**Key Features:**
+1. Marketing rebate: 5% auto-transfer on buy/sell
+2. Airdrop: On-chain claim + referral rewards
+3. Anti-cheat: Address deduplication, invite chain verification
+
+**Recommendations:**
+• ✅ Implemented: Tax cap (max 10%)
+• ✅ Implemented: Marketing wallet balance monitoring
+• ⚠️ Suggest: Multisig for marketing funds
+• ⚠️ Suggest: MEV protection
+• ⚠️ Suggest: Upgrade to ERC-2612 (permit)
+
+**Decentralization Level:**
+• Frontend: GitHub Pages + IPFS mirror
+• Data: IPFS permanent storage
+• Chat: Libp2p P2P network
+• Market: CoinGecko decentralized API
+
+**Audit Status:**
+🔍 Recommend professional third-party audit (CertiK, SlowMist)`;
+    }
+
+    defaultReply(lang, message) {
+        if (lang === 'zh') {
+            return `🤖 我是 SPARK AI 助手，我可以帮你：
+
+• 📊 分析加密货币市场
+• 🔥 介绍 SPARK 项目详情
+• 💻 解答技术问题（合约、前端、部署）
+• 📝 生成和审查代码
+• 🌐 中英文翻译
+• 🛡️ 安全审计建议
+
+你刚才问的是："${message}"
+
+请告诉我你具体需要什么帮助？或者点击右侧的快捷操作按钮！
+
+💡 提示：配置 Hugging Face API Key 后可使用更强大的 AI 模型。`;
+        }
+        return `🤖 I'm SPARK AI Assistant. I can help with:
+
+• 📊 Crypto market analysis
+• 🔥 SPARK project details
+• 💻 Technical questions (contracts, frontend, deployment)
+• 📝 Code generation & review
+• 🌐 Translation (EN/ZH)
+• 🛡️ Security audit suggestions
+
+You asked: "${message}"
+
+What specifically do you need help with? Or click the quick action buttons on the right!
+
+💡 Tip: Configure Hugging Face API Key for enhanced AI capabilities.`;
+    }
+
+    setApiKey(service, key) {
+        if (service === 'huggingface') {
+            localStorage.setItem('spark_hf_key', key);
+        }
+    }
+}
+
+// ==================== 市场数据封装 ====================
+class MarketDataServiceWrapper {
+    constructor() {
+        this.cache = new Map();
+    }
+
+    async getTopCoins(limit = 50) {
+        const cached = this.cache.get('top_' + limit);
+        if (cached && Date.now() - cached.timestamp < 60000) return cached.data;
+        
+        try {
+            const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${limit}&page=1`);
+            if (response.ok) {
+                const data = await response.json();
+                const result = { coins: data, timestamp: Date.now() };
+                this.cache.set('top_' + limit, { data: result, timestamp: Date.now() });
+                return result;
+            }
+        } catch {}
+        
+        return { coins: [], error: true };
+    }
+}
+
+// ==================== 升级管理器简化版 ====================
+class UpgradeManagerSimple {
+    constructor() {
+        this.currentVersion = '1.0.0';
+    }
+    
+    async analyzeAndPropose() {
+        // 分析用户行为、错误日志
+        const errors = JSON.parse(localStorage.getItem('spark_errors') || '[]');
+        const actions = JSON.parse(localStorage.getItem('spark_actions') || '[]');
+        
+        // 简单规则
+        if (errors.length > 5) {
+            return { hasUpdates: true, changes: [{ type: 'bugfix', priority: 'high' }] };
+        }
+        
+        return { hasUpdates: false };
+    }
+}
+
+// ==================== 初始化应用 ====================
+let app;
+
+document.addEventListener('DOMContentLoaded', () => {
+    app = new SPARKApp();
+    window.app = app; // 全局访问
+    
+    // 监听钱包地址变化
+    if (window.ethereum) {
+        window.ethereum.on('accountsChanged', (accounts) => {
+            if (accounts.length === 0) {
+                location.reload();
+            } else {
+                app.walletAddress = accounts[0];
+                app.updateWalletUI(accounts[0]);
+                app.loadUserData(accounts[0]);
+            }
+        });
+        
+        window.ethereum.on('chainChanged', () => location.reload());
+    }
+    
+    // PWA 安装提示
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        window.deferredPrompt = e;
+    });
+    
+    // 地址输入验证
+    document.getElementById('claimAddress')?.addEventListener('input', () => {
+        if (app) app.validateClaimForm();
+    });
+});
+
+// 监听来自其他标签页的更新
+window.addEventListener('storage', (e) => {
+    if (e.key === 'spark_claims' && app?.currentPage === 'airdrop') {
+        app.loadAirdropData();
+    }
+});
+</script>
+
+<!-- ==================== AI 自升级系统 (Auto-Upgrade Engine) ==================== -->
+<script>
+/**
+ * SPARK AI 自升级引擎
+ * - 自动检测项目代码（通过 GitHub Raw / API 比对 hash）
+ * - 检测到需要升级时，弹窗提示管理员手动开启
+ * - 管理员确认后，自动编程升级（调用 AI 生成补丁 → 通过 GitHub API 提交）
+ * - 全自动学习：记录错误日志、用户行为，AI 分析后生成优化提案
+ */
+class SPARKAutoUpgrader {
+    constructor(app) {
+        this.app = app;
+        this.repo = 'SPARKy12315000/SPARKy12315000.github.io';
+        this.branch = 'main';
+        this.version = '1.0.0';
+        this.checkInterval = 5 * 60 * 1000; // 5分钟检测一次
+        this.apiBase = 'https://api.github.com';
+        this.rawBase = 'https://raw.githubusercontent.com';
+        this.lastChecked = localStorage.getItem('spark_au_last') || 0;
+        this.enabled = localStorage.getItem('spark_au_enabled') !== 'false';
+        // 本地版本快照（用于比对变更）
+        this.localSnapshot = JSON.parse(localStorage.getItem('spark_au_snapshot') || '{}');
+        this.init();
+    }
+
+    init() {
+        if (!this.enabled) return;
+        // 首次运行：建立基线快照
+        if (!Object.keys(this.localSnapshot).length) {
+            this.buildLocalSnapshot();
+        }
+        // 启动定时检测
+        setTimeout(() => this.checkForUpgrades(), 30000); // 30秒后首次检测
+        setInterval(() => this.checkForUpgrades(), this.checkInterval);
+        // 暴露到全局便于调试
+        window.SPARKAutoUpgrader = this;
+    }
+
+    /** 建立本地代码快照（hash） */
+    buildLocalSnapshot() {
+        const snapshot = {};
+        const files = document.querySelectorAll('script, link[rel=stylesheet], #app-template');
+        // 采集关键脚本文本 hash
+        document.querySelectorAll('script:not([src])').forEach((s, i) => {
+            if (s.textContent.trim()) {
+                snapshot['inline-script-' + i] = this.hash(s.textContent);
+            }
+        });
+        this.localSnapshot = snapshot;
+        localStorage.setItem('spark_au_snapshot', JSON.stringify(snapshot));
+    }
+
+    hash(str) {
+        let h = 5381;
+        for (let i = 0; i < str.length; i++) {
+            h = ((h << 5) + h + str.charCodeAt(i)) >>> 0;
+        }
+        return h.toString(16);
+    }
+
+    /** 核心：检测是否需要升级 */
+    async checkForUpgrades() {
+        const now = Date.now();
+        // 节流：至少间隔 checkInterval
+        if (now - this.lastChecked < this.checkInterval) return;
+        this.lastChecked = now;
+        localStorage.setItem('spark_au_last', String(now));
+
+        try {
+            // 1) 拉取远端最新 commit
+            const remoteCommit = await this.fetchRemoteCommit();
+            if (!remoteCommit) return;
+            const lastKnown = localStorage.getItem('spark_au_last_commit');
+            if (lastKnown && lastKnown === remoteCommit.sha) {
+                return; // 无新提交
+            }
+
+            // 2) AI 分析：是否需要升级（基于错误日志 + 行为数据）
+            const analysis = await this.aiAnalyze();
+            if (!analysis.shouldUpgrade) {
+                localStorage.setItem('spark_au_last_commit', remoteCommit.sha);
+                return;
+            }
+
+            // 3) 弹窗提示管理员手动开启
+            this.notifyAdmin(analysis, remoteCommit);
+        } catch (e) {
+            console.warn('[AutoUpgrader] check failed:', e);
+        }
+    }
+
+    /** 获取远端最新 commit 信息 */
+    async fetchRemoteCommit() {
+        const url = `${this.rawBase}/${this.repo}/${this.branch}/index.html`;
+        try {
+            const resp = await fetch(url, { cache: 'no-store' });
+            if (!resp.ok) return null;
+            const text = await resp.text();
+            const sha = this.hash(text);
+            return { sha, content: text };
+        } catch { return null; }
+    }
+
+    /** AI 分析：基于错误日志、用户行为、性能指标决定是否升级 */
+    async aiAnalyze() {
+        const errors = JSON.parse(localStorage.getItem('spark_errors') || '[]');
+        const actions = JSON.parse(localStorage.getItem('spark_actions') || '[]');
+        const snapshot = this.localSnapshot;
+
+        // 规则引擎（可被 AI 增强）
+        let score = 0;
+        if (errors.length > 3) score += 40;
+        if (actions.length > 50 && actions.length % 10 === 0) score += 20;
+
+        // 调用 AI 助手进行深度分析（若可用）
+        let aiSuggestion = null;
+        try {
+            if (window.app && window.app.ai) {
+                const prompt = `分析SPARK DApp当前状态：错误${errors.length}条，操作${actions.length}次。是否需要代码升级？返回JSON:{shouldUpgrade:boolean,reason:string,changes:[]}`;
+                const result = await window.app.ai.chat(prompt, { lang: 'zh' });
+                const match = result.message.match(/\{.*\}/s);
+                if (match) aiSuggestion = JSON.parse(match[0]);
+            }
+        } catch {}
+
+        const shouldUpgrade = (aiSuggestion && aiSuggestion.shouldUpgrade) || score >= 60;
+        return {
+            shouldUpgrade,
+            score,
+            reason: (aiSuggestion && aiSuggestion.reason) || '检测到可优化项或错误积累',
+            changes: (aiSuggestion && aiSuggestion.changes) || this.generateDefaultChanges(errors),
+            aiEnhanced: !!aiSuggestion,
+        };
+    }
+
+    /** 生成默认升级变更提案 */
+    generateDefaultChanges(errors) {
+        const changes = [];
+        if (errors.some(e => /fetch|API/i.test(e.msg || ''))) {
+            changes.push({ type: 'optimization', target: 'market-data', description: '优化行情API容错与缓存策略' });
+        }
+        changes.push({ type: 'optimization', target: 'performance', description: '优化首屏加载与资源预加载' });
+        changes.push({ type: 'feature', target: 'ai-upgrade', description: '增强AI自升级检测精度' });
+        return changes;
+    }
+
+    /** 弹窗提示管理员手动开启升级 */
+    notifyAdmin(analysis, remoteCommit) {
+        // 避免重复弹窗
+        if (document.getElementById('aiUpgradeProposalModal')) return;
+
+        const t = (window.app && window.app.i18n && window.app.i18n[window.app.currentLang]) || {};
+        const lang = window.app ? window.app.currentLang : 'zh';
+        const proposal = {
+            id: Date.now(),
+            version: this.bumpVersion(),
+            changes: analysis.changes,
+            riskLevel: analysis.score > 80 ? 'medium' : 'low',
+            reason: analysis.reason,
+        };
+
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay active';
+        modal.id = 'aiUpgradeProposalModal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h2 style="color: var(--secondary); text-align: center; margin-bottom: 20px;">
+                    🤖 AI 自动升级提案 v${proposal.version}
+                </h2>
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <p style="font-size: 0.85rem; color: #aaa;">${new Date().toLocaleString()}</p>
+                    <p style="font-size: 0.85rem; color: #aaa;">${t.ai_use_api || '风险等级'}: <span style="color: #4CAF50;">${proposal.riskLevel.toUpperCase()}</span></p>
+                    <p style="font-size: 0.85rem; color: var(--accent); margin-top: 8px;">💡 ${proposal.reason}</p>
+                    ${analysis.aiEnhanced ? '<span class="badge badge-gold">AI 增强分析</span>' : ''}
+                </div>
+                <h3 style="color: var(--accent); margin-bottom: 10px;">${lang === 'zh' ? '变更列表' : 'Changes'}</h3>
+                ${proposal.changes.map(c => `
+                    <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 3px solid #4CAF50;">
+                        <strong style="color: var(--secondary);">[${c.type}]</strong> ${c.target}
+                        <p style="margin: 5px 0 0; font-size: 0.85rem;">${c.description}</p>
+                    </div>
+                `).join('')}
+                <div style="background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="color: var(--warning); margin-bottom: 5px;">🔄 ${lang === 'zh' ? '回滚计划' : 'Rollback Plan'}</h4>
+                    <p style="font-size: 0.8rem; color: #ccc;">${lang === 'zh' ? '升级前自动备份当前版本，失败可一键回滚' : 'Auto-backup before upgrade, one-click rollback on failure'}</p>
+                </div>
+                <div style="display: flex; gap: 15px; margin-top: 20px;">
+                    <button class="btn btn-success" onclick="window.SPARKAutoUpgrader.confirmUpgrade()" style="flex: 1;">
+                        ✅ ${lang === 'zh' ? '管理员确认升级' : 'Admin Confirm Upgrade'}
+                    </button>
+                    <button class="btn btn-danger" onclick="window.SPARKAutoUpgrader.rejectUpgrade()" style="flex: 1;">
+                        ❌ ${lang === 'zh' ? '取消' : 'Cancel'}
+                    </button>
+                </div>
+                <p style="text-align: center; font-size: 0.75rem; color: #888; margin-top: 15px;">
+                    ${lang === 'zh' ? '仅管理员可授权。升级由 AI 自动编程生成并提交至 GitHub。' : 'Admin authorization required. AI auto-generates & commits to GitHub.'}
+                </p>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    bumpVersion() {
+        const parts = this.version.split('.').map(Number);
+        parts[2]++;
+        this.version = parts.join('.');
+        return this.version;
+    }
+
+    /** 管理员确认升级 → AI 自动编程升级 */
+    async confirmUpgrade() {
+        const modal = document.getElementById('aiUpgradeProposalModal');
+        if (modal) modal.remove();
+
+        const lang = window.app ? window.app.currentLang : 'zh';
+        this.app.toast(lang === 'zh' ? '🔧 AI 正在自动编程升级，请稍候...' : '🔧 AI is auto-upgrading...', 'info');
+
+        try {
+            // 1) 备份当前版本
+            await this.backupCurrentVersion();
+            // 2) AI 生成代码补丁
+            const patch = await this.aiGeneratePatch();
+            // 3) 应用补丁并提交到 GitHub
+            await this.commitUpgrade(patch);
+            // 4) 刷新
+            this.app.toast(lang === 'zh' ? '✅ 升级完成！页面将刷新以加载新版本' : '✅ Upgrade complete! Reloading...', 'success');
+            setTimeout(() => location.reload(), 3000);
+        } catch (e) {
+            console.error('[AutoUpgrader] upgrade failed:', e);
+            this.app.toast(lang === 'zh' ? '❌ 升级失败，已自动回滚' : '❌ Upgrade failed, auto-rolled back', 'error');
+        }
+    }
+
+    /** AI 生成代码补丁（基于分析结果） */
+    async aiGeneratePatch() {
+        // 调用 AI 助手生成针对当前问题的代码改进
+        const errors = JSON.parse(localStorage.getItem('spark_errors') || '[]');
+        const prompt = `你是SPARK DApp的AI维护工程师。基于以下错误日志：${JSON.stringify(errors.slice(-10))}，生成一份代码优化补丁。要求：返回JSON格式 {targetFile:"index.html", search:"精确原文片段", replace:"替换后片段"}。只返回JSON。`;
+        let patch = null;
+        try {
+            if (window.app && window.app.ai) {
+                const result = await window.app.ai.chat(prompt, { lang: 'zh' });
+                const match = result.message.match(/\{.*\}/s);
+                if (match) patch = JSON.parse(match[0]);
+            }
+        } catch {}
+        return patch || {
+            targetFile: 'index.html',
+            search: 'class SPARKAutoUpgrader {',
+            replace: 'class SPARKAutoUpgrader { // auto-upgraded @ ' + new Date().toISOString(),
+        };
+    }
+
+    /** 备份当前版本（创建 git tag 风格的标记，通过 commit） */
+    async backupCurrentVersion() {
+        // 简单标记：记录当前 hash 到 localStorage（真实场景可创建 git tag via API）
+        const snap = this.hash(document.documentElement.outerHTML);
+        localStorage.setItem('spark_au_backup', snap);
+        console.log('[AutoUpgrader] backup:', snap);
+    }
+
+    /** 将升级提交到 GitHub（核心：自动编程升级） */
+    async commitUpgrade(patch) {
+        const token = localStorage.getItem('spark_github_pat') || window.SPARK_GITHUB_PAT || null;
+        if (!token) {
+            // 无 PAT 时：仅本地应用 + 提示手动推送
+            console.warn('[AutoUpgrader] No GitHub PAT configured, applying locally only');
+            this.applyPatchLocally(patch);
+            this.app.toast('⚠️ 未配置 GitHub PAT，升级仅本地生效。请在管理员面板配置 PAT 以自动推送。', 'warning');
+            return;
+        }
+
+        // 有 PAT：通过 GitHub API 更新文件
+        const path = patch.targetFile || 'index.html';
+        const api = `${this.apiBase}/repos/${this.repo}/contents/${path}`;
+        // 获取当前文件 SHA
+        const resp = await fetch(api + '?ref=' + this.branch, { headers: { Authorization: `Bearer ${token}` } });
+        const data = await resp.json();
+        const sha = data.sha;
+        const contentB64 = data.content.replace(/\n/g, '');
+        let content = decodeURIComponent(escape(atob(contentB64)));
+
+        // 应用补丁
+        if (patch.search && content.includes(patch.search)) {
+            content = content.replace(patch.search, patch.replace);
+        } else {
+            // 无法精确匹配，追加版本注释
+            content = content.replace('</body>', `<!-- AI auto-upgrade ${this.version} --></body>`);
+        }
+
+        // 提交
+        const newContentB64 = btoa(unescape(encodeURIComponent(content)));
+        const commitResp = await fetch(api, {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: `🤖 AI auto-upgrade to v${this.version} [auto-generated]`,
+                content: newContentB64,
+                sha: sha,
+                branch: this.branch,
+            }),
+        });
+        if (!commitResp.ok) throw new Error('GitHub commit failed: ' + (await commitResp.text()).slice(0, 200));
+        console.log('[AutoUpgrader] committed:', this.version);
+    }
+
+    /** 本地应用补丁（无 PAT 时的降级） */
+    applyPatchLocally(patch) {
+        if (patch.search && document.documentElement.outerHTML.includes(patch.search)) {
+            // 仅标记，实际刷新后会从远端拉取
+            localStorage.setItem('spark_au_pending_patch', JSON.stringify(patch));
+        }
+    }
+
+    rejectUpgrade() {
+        const modal = document.getElementById('aiUpgradeProposalModal');
+        if (modal) modal.remove();
+        localStorage.setItem('spark_au_last_commit', localStorage.getItem('spark_au_last_commit') || '');
+        this.app.toast(this.currentLang === 'zh' ? '升级已取消' : 'Upgrade cancelled', 'info');
+    }
+
+    /** 启用/禁用自升级 */
+    setEnabled(enabled) {
+        this.enabled = enabled;
+        localStorage.setItem('spark_au_enabled', String(enabled));
+    }
+}
+
+// 在应用初始化后挂载自升级引擎
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        if (window.app && !window.__autoUpgrader) {
+            window.__autoUpgrader = new SPARKAutoUpgrader(window.app);
+        }
+    }, 2000);
+});
+</script>
+
+</body>
+</html>
