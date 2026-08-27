@@ -188,8 +188,62 @@ const pairs = ['SPARK/ETH', 'SPARK/USDT', 'SPARK/BNB'];
 
 /* ============ 工具 ============ */
 function fmt(n, d=4){ return Number(n||0).toFixed(d); }
-async function get(path){ const r = await fetch(API+path); return r.json(); }
-async function post(path, body){ const r = await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})}); return r.json(); }
+
+// 后端可用性探测（同源部署的后端 /api/health）。GitHub Pages 为纯静态托管，无后端，
+// 此时自动降级为本地模拟数据驱动，保证页面开箱即用、UI 完整可交互。
+let backendAvailable = null; // null=未知, true/false
+async function probeBackend(){
+  if(backendAvailable!==null) return backendAvailable;
+  try{ const r=await fetch('/api/health',{cache:'no-store'}); backendAvailable = r.ok; }
+  catch(e){ backendAvailable = false; }
+  return backendAvailable;
+}
+function mockTicker(pair){
+  const base = { 'SPARK/ETH':0.00042,'SPARK/USDT':0.85,'SPARK/BNB':0.00135 }[pair]||1;
+  const change = (Math.random()-0.5)*8;
+  return { pair, price: base*(1+change/100), change24h:change, volume24h: Math.random()*50000+10000, high:base*1.05, low:base*0.95, time:Date.now() };
+}
+// 订单簿：对象数组 [{price,amount}]（对应后端 /api/orderbook）
+function mockOrderBook(pair){
+  const mid = { 'SPARK/ETH':0.00042,'SPARK/USDT':0.85,'SPARK/BNB':0.00135 }[pair]||1;
+  const asks=[], bids=[];
+  for(let i=0;i<10;i++){ asks.push({price:+(mid*(1+(i+1)*0.002)).toFixed(8), amount:+(Math.random()*2000+100).toFixed(2)}); bids.push({price:+(mid*(1-(i+1)*0.002)).toFixed(8), amount:+(Math.random()*2000+100).toFixed(2)}); }
+  return { pair, asks, bids };
+}
+// 深度：元组数组 [[price,amount],...]（对应后端 /api/depth，供 loadDepth 解构渲染）
+function mockDepth(pair){
+  const mid = { 'SPARK/ETH':0.00042,'SPARK/USDT':0.85,'SPARK/BNB':0.00135 }[pair]||1;
+  const asks=[], bids=[];
+  for(let i=0;i<10;i++){ asks.push([+(mid*(1+(i+1)*0.002)).toFixed(8), +(Math.random()*2000+100).toFixed(2)]); bids.push([+(mid*(1-(i+1)*0.002)).toFixed(8), +(Math.random()*2000+100).toFixed(2)]); }
+  return { pair, asks, bids };
+}
+async function get(path){
+  await probeBackend();
+  if(!backendAvailable){
+    // ---- 模拟数据兜底（静态托管 / 后端离线时 UI 仍完整）----
+    if(path==='/api/tickers') return pairs.map(mockTicker);
+    if(path==='/api/contract') return { address:'0xD580C7C9Cde5ce776fEed844310330A2a40078d9', symbol:'SPARK', name:'星火通证 SPARK', network:'ethereum', taxRate:0.05, decimals:18 };
+    if(path==='/api/pairs') return pairs;
+    if(path.startsWith('/api/ticker/')) return mockTicker(decodeURIComponent(path.slice('/api/ticker/'.length)));
+    if(path.startsWith('/api/orderbook/')) return mockOrderBook(decodeURIComponent(path.split('?')[0].slice('/api/orderbook/'.length)));
+    if(path.startsWith('/api/depth/')) return mockDepth(decodeURIComponent(path.split('?')[0].slice('/api/depth/'.length)));
+    if(path.startsWith('/api/trades/')){ const pair=decodeURIComponent(path.split('?')[0].slice('/api/trades/'.length)); const mid={ 'SPARK/ETH':0.00042,'SPARK/USDT':0.85,'SPARK/BNB':0.00135 }[pair]||1; const arr=[]; for(let i=0;i<20;i++){const buy=Math.random()>0.5;arr.push({id:i,side:buy?'buy':'sell',price:+(mid*(1+(Math.random()-0.5)*0.004)).toFixed(8),amount:+(Math.random()*500+10).toFixed(2),time:Date.now()-i*3000});} return arr; }
+    if(path.startsWith('/api/klines/')) return generateMockKlines();
+    if(path==='/api/upgrade/proposals') return [];
+    if(path==='/api/health') return {ok:true, service:'spark-dex', version:'1.0.0', time:Date.now(), mode:'mock'};
+  }
+  const r = await fetch(API+path); return r.json();
+}
+async function post(path, body){
+  await probeBackend();
+  if(!backendAvailable){
+    if(path==='/api/order') return { ok:true, trade:{ id:'MOCK-'+Math.random().toString(36).slice(2,8), ...body, time:Date.now() } };
+    if(path==='/api/upgrade/propose') return { id:'prop_'+Date.now(), status:'pending', approvals:[], ...body };
+    if(path.startsWith('/api/upgrade/approve/')) return { id:path.split('/').pop(), status:'approved', approvals:['admin'] };
+    if(path==='/api/admin/persist') return { ok:true, file:'storage.json', mode:'mock' };
+  }
+  const r = await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})}); return r.json();
+}
 
 /* ============ 行情 Tickers ============ */
 async function loadTickers(){
