@@ -399,13 +399,18 @@ $('#connectBtn').onclick = async ()=>{
 };
 
 /* ============ WebSocket 实时 ============ */
+let wsRetries = 0;
+const WS_MAX_RETRIES = 2; // GitHub Pages 为纯静态托管，无 WS 服务，限制重连次数避免控制台刷屏
 function connectWS(){
-  const ws = new WebSocket(WS_URL);
+  if(backendAvailable===false || wsRetries >= WS_MAX_RETRIES){ return; } // 后端不可用则不连
+  let ws;
+  try { ws = new WebSocket(WS_URL); } catch(e){ return; }
+  ws.onopen = ()=>{ wsRetries = 0; };
   ws.onmessage = (ev)=>{
-    const m = JSON.parse(ev.data);
-    if(m.type==='tickers'||m.type==='trade') refresh();
+    try{ const m = JSON.parse(ev.data); if(m.type==='tickers'||m.type==='trade') refresh(); }catch(e){}
   };
-  ws.onclose = ()=>setTimeout(connectWS,3000);
+  ws.onclose = ()=>{ if(backendAvailable!==false && wsRetries < WS_MAX_RETRIES){ wsRetries++; setTimeout(connectWS, 3000); } };
+  ws.onerror = ()=>{ ws.close(); };
 }
 
 /* ============ 刷新 ============ */
