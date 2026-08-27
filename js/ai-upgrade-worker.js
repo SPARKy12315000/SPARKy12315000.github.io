@@ -235,6 +235,7 @@
             `;
             document.body.appendChild(modal);
 
+            this._currentProposal = proposal; // 🆕 供 app.confirmUpgrade() 桥接取用
             document.getElementById('auConfirmBtn').onclick = () => this.confirmUpgrade(proposal);
             document.getElementById('auRejectBtn').onclick = () => this.rejectUpgrade(proposal);
         }
@@ -414,6 +415,101 @@
             history.unshift({ proposal, status, result, error, at: Date.now() });
             localStorage.setItem(STORAGE.history, JSON.stringify(history.slice(0, 50)));
         }
+
+        /* ============ 🆕 一键检测升级（对外入口） ============ */
+
+        /**
+         * 立即触发一次完整检测（供"一键检测升级"按钮调用）
+         * 不走定时器，立即执行，结果照常弹窗等待管理员授权
+         */
+        async scanNow({ silent = false } = {}) {
+            if (!this.app?.checkAdminSession || !this.app.checkAdminSession()) {
+                this.app?.toast('⚠️ 请先以管理员身份登录', 'error');
+                return;
+            }
+            if (!silent) this.app?.toast('🔍 正在扫描项目全部代码...', 'info');
+            try {
+                await this.runCheck();
+                if (!silent) this.app?.toast('✅ 扫描完成', 'success');
+            } catch (e) {
+                console.error('[AutoUpgrade] scanNow failed', e);
+                this.app?.toast('❌ 扫描失败：' + e.message, 'error');
+            }
+        }
+
+        /* ============ 🆕 手动输入问题/代码 → 检测升级 ============ */
+
+        /**
+         * 将管理员手动输入的问题描述 / 代码片段纳入分析，生成升级提案
+         * 走与自动检测完全相同的闭环：弹窗 → 管理员确认 → AI 补丁 → GitHub 提交
+         */
+        async runManualCheck(userInput) {
+            if (!this.app?.checkAdminSession || !this.app.checkAdminSession()) {
+                this.app?.toast('⚠️ 请先以管理员身份登录', 'error');
+                return;
+            }
+            const text = (userInput || '').trim();
+            if (!text) {
+                this.app?.toast('⚠️ 请输入问题描述或代码片段', 'warning');
+                return;
+            }
+
+            this.app?.toast('🤖 AI 正在分析你输入的代码/问题...', 'info');
+
+            // 复用现有提案结构，将手动输入作为一条明确 issue
+            const issues = [{
+                type: 'manual',
+                priority: 'medium',
+                target: 'manual-input',
+                desc: text.length > 120 ? text.slice(0, 120) + '…' : text,
+                raw: text,
+            }];
+
+            // AI 深度分析（复用现有 ai.chat）
+            let aiAnalysis = '';
+            try {
+                if (this.app?.ai?.chat) {
+                    const resp = await this.app.ai.chat(
+                        `针对以下 SPARK DApp 手动提交的问题/代码，给出具体可执行的修复方案：` +
+                        `\n\n${text}\n\n要求：1) 定位问题根因 2) 给出完整代码补丁 3) 评估风险`,
+                        { lang: this.app.currentLang || 'zh' }
+                    );
+                    aiAnalysis = resp.message;
+                } else {
+                    aiAnalysis = '（AI 助手未启用，已基于规则生成默认提案）';
+                }
+            } catch (e) {
+                aiAnalysis = 'AI 分析暂不可用，使用规则引擎默认提案';
+            }
+
+            const proposal = {
+                id: Date.now(),
+                version: this._nextVersion(),
+                source: 'manual',                  // 标记为手动来源
+                issues,
+                aiAnalysis,
+                riskLevel: 'medium',
+                createdAt: new Date().toISOString(),
+            };
+
+            this._showProposal(proposal);           // ③ 走同一套弹窗 + 授权 + 提交闭环
+        }
+
+        /* ============ 🆕 PAT 配置（管理员面板调用） ============ */
+
+        setPAT(token) {
+            if (!token || !token.trim()) {
+                localStorage.removeItem(STORAGE.pat);
+                this.app?.toast('已清除 GitHub PAT', 'info');
+                return;
+            }
+            localStorage.setItem(STORAGE.pat, token.trim());
+            this.app?.toast('✅ GitHub PAT 已保存（本地加密存储）', 'success');
+        }
+
+        getPATStatus() {
+            return localStorage.getItem(STORAGE.pat) ? 'configured' : 'missing';
+        }
     }
 
     // 挂载到全局，供主应用初始化
@@ -423,7 +519,23 @@
     window.addEventListener('DOMContentLoaded', () => {
         if (window.app && !window.__autoUpgrader) {
             window.__autoUpgrader = new SPARKAutoUpgrader(window.app);
+            // 🆕 管理员已登录时自动启动引擎
+            if (window.app.checkAdminSession && window.app.checkAdminSession()) {
+                window.__autoUpgrader.start();
+            }
         }
     });
+
+    // 🆕 便捷全局 API：
+    //   window.SPARK.scanNow()                —— 一键检测升级
+    //   window.SPARK.manualCheck('...')       —— 手动输入代码/问题检测
+    //   window.SPARK.setPAT('ghp_xxx')        —— 配置 GitHub PAT
+    //   window.SPARK.patStatus()              —— 查看 PAT 状态
+    global.SPARK = {
+        scanNow:  (opts) => window.__autoUpgrader?.scanNow(opts),
+        manualCheck: (text) => window.__autoUpgrader?.runManualCheck(text),
+        setPAT:   (t) => window.__autoUpgrader?.setPAT(t),
+        patStatus: () => window.__autoUpgrader?.getPATStatus(),
+    };
 
 })(window);
