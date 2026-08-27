@@ -1,0 +1,17 @@
+{
+  "name": "spark-dex",
+  "version": "1.0.0",
+  "description": "SPARK 星火通证 · 去中心化交易所 DApp（前端 + 后端 + 合约）",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "ws": "^8.18.0",
+    "ethers": "^6.13.2"
+  }
+}
