@@ -792,8 +792,17 @@
                 <button class="btn btn-secondary btn-sm" onclick="app.adminAction('export')">
                     <i class="fas fa-download"></i> <span data-i18n="export_data">导出数据</span>
                 </button>
+                <button class="btn btn-primary btn-sm" onclick="SPARK.scanNow()" id="btnScanNow" style="background: linear-gradient(135deg, #ff6a00, #ff3d00); border: none;">
+                    <i class="fas fa-bolt"></i> <span data-i18n="scan_now">一键检测升级</span>
+                </button>
+                <button class="btn btn-warning btn-sm" onclick="app.openManualCheck()" id="btnManualCheck" style="background: linear-gradient(135deg, #ffb300, #ff8f00); border: none; color: #1a1a1a;">
+                    <i class="fas fa-edit"></i> <span data-i18n="manual_check">手动输入问题检测</span>
+                </button>
                 <button class="btn btn-secondary btn-sm" onclick="app.adminAction('check_upgrade')">
                     <i class="fas fa-sync-alt"></i> <span data-i18n="check_upgrade">检查升级</span>
+                </button>
+                <button class="btn btn-info btn-sm" onclick="app.openPatConfig()" id="btnPatConfig" style="background: rgba(79,195,247,0.2); border: 1px solid #4fc3f7; color: #4fc3f7;">
+                    <i class="fas fa-key"></i> <span data-i18n="pat_config">配置 GitHub PAT</span>
                 </button>
                 <button class="btn btn-danger btn-sm" onclick="app.adminAction('logout')">
                     <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">退出</span>
@@ -927,7 +936,7 @@ class SPARKApp {
                 shop_title: 'SPARK 去中心化商城', cat_merch: '周边', cat_nft: 'NFT', cat_service: '服务', cat_digital: '数字',
                 admin_login: '管理员登录', admin_hint: '使用管理员密码登录（密码已哈希存储，安全无忧）',
                 admin_panel: '管理员控制面板', total_claims: '总领取', unique_users: '独立用户', total_invites: '总邀请',
-                activate_airdrop: '激活空投', pause_airdrop: '暂停空投', export_data: '导出数据', check_upgrade: '检查升级', logout: '退出',
+                activate_airdrop: '激活空投', pause_airdrop: '暂停空投', export_data: '导出数据', check_upgrade: '检查升级', scan_now: '一键检测升级', manual_check: '手动输入问题检测', pat_config: '配置 GitHub PAT', logout: '退出',
                 recent_activity: '最近活动', download_app: '下载 SPARK DApp', download_subtitle: '随时随地管理你的 SPARK 资产',
                 pwa_install: 'PWA 网页应用', pwa_hint: '添加到主屏幕，无需下载',
                 copyright: '© 2026 SPARK 星火通证. 去中心化应用. 仅供参考，不构成投资建议。',
@@ -986,7 +995,7 @@ class SPARKApp {
                 shop_title: 'SPARK Decentralized Shop', cat_merch: 'Merch', cat_nft: 'NFT', cat_service: 'Service', cat_digital: 'Digital',
                 admin_login: 'Admin Login', admin_hint: 'Login with admin password (hashed, secure)',
                 admin_panel: 'Admin Control Panel', total_claims: 'Total Claims', unique_users: 'Unique Users', total_invites: 'Total Invites',
-                activate_airdrop: 'Activate', pause_airdrop: 'Pause', export_data: 'Export', check_upgrade: 'Check Update', logout: 'Logout',
+                activate_airdrop: 'Activate', pause_airdrop: 'Pause', export_data: 'Export', check_upgrade: 'Check Update', scan_now: 'Scan Now', manual_check: 'Manual Check', pat_config: 'GitHub PAT', logout: 'Logout',
                 recent_activity: 'Recent Activity', download_app: 'Download SPARK DApp', download_subtitle: 'Manage your SPARK anytime, anywhere',
                 pwa_install: 'PWA Web App', pwa_hint: 'Add to Home Screen, no download',
                 copyright: '© 2026 SPARK Token. Decentralized App. Not financial advice.',
@@ -1900,6 +1909,64 @@ class SPARKApp {
         document.getElementById('adminPanelModal').classList.remove('active');
     }
 
+    /* ==================== 🆕 手动输入检测 / PAT 配置窗口控制 ==================== */
+
+    openManualCheck() {
+        if (!this.checkAdminSession()) { this.toast('⚠️ 请先以管理员身份登录', 'error'); return; }
+        document.getElementById('manualCheckModal').classList.add('active');
+        setTimeout(() => document.getElementById('manualCheckInput')?.focus(), 100);
+    }
+    closeManualCheck() {
+        document.getElementById('manualCheckModal').classList.remove('active');
+    }
+    async submitManualCheck() {
+        const text = document.getElementById('manualCheckInput').value;
+        this.closeManualCheck();
+        // 交给 worker 引擎：AI 分析 → 生成提案 → 弹窗确认 → 生成补丁 → GitHub 提交
+        if (window.SPARK?.manualCheck) {
+            await window.SPARK.manualCheck(text);
+        } else {
+            this.toast('⚠️ 自升级引擎未就绪，请刷新', 'error');
+        }
+    }
+
+    openPatConfig() {
+        if (!this.checkAdminSession()) { this.toast('⚠️ 请先以管理员身份登录', 'error'); return; }
+        document.getElementById('patConfigModal').classList.add('active');
+        this.renderPatStatus();
+    }
+    closePatConfig() {
+        document.getElementById('patConfigModal').classList.remove('active');
+    }
+    renderPatStatus() {
+        const box = document.getElementById('patStatusBox');
+        if (!box) return;
+        const st = window.SPARK?.patStatus ? window.SPARK.patStatus() : 'missing';
+        box.innerHTML = st === 'configured'
+            ? '<i class="fas fa-check-circle" style="color:#4CAF50;"></i> ' + (this.currentLang === 'zh' ? 'PAT 已配置，可自动推送至 GitHub' : 'PAT configured, auto-push enabled')
+            : '<i class="fas fa-times-circle" style="color:#f44336;"></i> ' + (this.currentLang === 'zh' ? '尚未配置 PAT，升级仅本地生效' : 'PAT missing, upgrades are local-only');
+    }
+    async savePat() {
+        const token = document.getElementById('patInput').value.trim();
+        if (!token) { this.toast('⚠️ 请输入 PAT', 'warning'); return; }
+        // 先验证有效性（调用 GitHub API 获取当前用户）
+        try {
+            const r = await fetch('https://api.github.com/user', { headers: { 'Authorization': 'Bearer ' + token } });
+            if (!r.ok) throw new Error('PAT 验证失败（权限不足或无效）');
+            const user = await r.json();
+            window.SPARK?.setPAT(token);
+            this.renderPatStatus();
+            this.toast('✅ PAT 有效 · 用户 ' + (user.login || ''), 'success');
+            document.getElementById('patInput').value = '';
+        } catch (e) {
+            this.toast('❌ ' + e.message, 'error');
+        }
+    }
+    clearPat() {
+        window.SPARK?.setPAT('');
+        this.renderPatStatus();
+    }
+
     loadAdminData() {
         const records = JSON.parse(localStorage.getItem('spark_claims') || '[]');
         const uniqueAddresses = new Set(records.map(r => r.address.toLowerCase()));
@@ -1938,7 +2005,9 @@ class SPARKApp {
                 this.exportAdminData();
                 break;
             case 'check_upgrade':
-                this.checkForUpgrades();
+                // 🆕 统一走 worker 引擎的一键检测（管理员确认 → AI 补丁 → GitHub 提交）
+                if (window.SPARK?.scanNow) window.SPARK.scanNow();
+                else this.toast('引擎初始化中，请稍后', 'info');
                 break;
             case 'logout':
                 localStorage.removeItem('spark_admin_session');
@@ -1986,89 +2055,62 @@ class SPARKApp {
     // ==================== 自动升级 ====================
     
     startUpgradeChecker() {
-        // 检查管理员会话
-        if (this.checkAdminSession()) {
-            console.log('[Upgrade] Admin session active');
+        // 🆕 统一委托给 worker 引擎（单一权威实现：自动检测 → 弹窗 → 授权 → AI 补丁 → GitHub 提交）
+        if (window.__autoUpgrader) {
+            window.__autoUpgrader.start();
+        } else {
+            // 引擎尚未挂载时等待一下再启动
+            setTimeout(() => window.__autoUpgrader?.start(), 1500);
         }
-        
-        // 每24小时检查一次（演示中改为5分钟）
-        setInterval(() => this.checkForUpgrades(), 5 * 60 * 1000);
-        
-        // 页面加载后30秒首次检查
-        setTimeout(() => this.checkForUpgrades(), 30000);
     }
 
     async checkForUpgrades() {
-        if (!this.isAdmin) return;
-        
-        // 模拟 AI 分析
-        const hasUpdates = Math.random() > 0.7; // 30% 概率有更新
-        
-        if (hasUpdates) {
-            this.showUpgradeProposal();
+        // 🆕 委托给一键检测（管理员已登录时立即扫描）
+        if (window.SPARK?.scanNow) window.SPARK.scanNow({ silent: true });
+    }
+
+    showUpgradeProposal(proposal) {
+        // 🆕 统一委托给 worker 引擎生成提案弹窗（同一闭环：管理员确认 → AI 补丁 → GitHub 提交）
+        if (window.__autoUpgrader) {
+            window.__autoUpgrader._showProposal(proposal || this._buildDefaultProposal());
+        } else {
+            this.toast('引擎初始化中，请稍后重试', 'info');
         }
     }
 
-    showUpgradeProposal() {
-        const t = this.i18n[this.currentLang];
-        const proposal = {
+    _buildDefaultProposal() {
+        return {
             id: Date.now(),
-            version: '1.1.0',
-            changes: [
-                { type: 'optimization', target: 'performance', description: this.currentLang === 'zh' ? '优化首屏加载速度（预计提升 40%）' : 'Optimize first paint speed (est. +40%)', priority: 'medium' },
-                { type: 'feature', target: 'chat', description: this.currentLang === 'zh' ? '添加聊天表情包支持' : 'Add emoji support to chat', priority: 'low' },
-            ],
+            version: this._nextProposalVersion(),
+            source: 'auto',
+            issues: [{ type: 'optimization', priority: 'medium', target: 'performance',
+                desc: this.currentLang === 'zh' ? '优化首屏加载速度' : 'Optimize first paint' }],
+            aiAnalysis: '',
             riskLevel: 'low',
+            createdAt: new Date().toISOString(),
         };
-        
-        const modal = document.createElement('div');
-        modal.className = 'modal-overlay active';
-        modal.id = 'upgradeProposalModal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <h2 style="color: var(--secondary); text-align: center; margin-bottom: 20px;">
-                    🤖 AI 升级提案 v${proposal.version}
-                </h2>
-                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                    <p style="font-size: 0.85rem; color: #aaa;">${new Date().toLocaleString()}</p>
-                    <p style="font-size: 0.85rem; color: #aaa;" data-i18n="risk_level">${this.currentLang === 'zh' ? '风险等级' : 'Risk Level'}: <span style="color: #4CAF50;">LOW</span></p>
-                </div>
-                <h3 style="color: var(--accent); margin-bottom: 10px;" data-i18n="changes">${this.currentLang === 'zh' ? '变更列表' : 'Changes'}</h3>
-                ${proposal.changes.map(c => `
-                    <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 3px solid #4CAF50;">
-                        <strong style="color: var(--secondary);">[${c.type}]</strong> ${c.target}
-                        <p style="margin: 5px 0 0; font-size: 0.85rem;">${c.description}</p>
-                    </div>
-                `).join('')}
-                <div style="background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 12px; border-radius: 8px; margin: 15px 0;">
-                    <h4 style="color: var(--warning); margin-bottom: 5px;">🔄 ${this.currentLang === 'zh' ? '回滚计划' : 'Rollback Plan'}</h4>
-                    <p style="font-size: 0.8rem; color: #ccc;">${this.currentLang === 'zh' ? '升级失败将自动回滚到 v1.0.0' : 'Auto-rollback to v1.0.0 if upgrade fails'}</p>
-                </div>
-                <div style="display: flex; gap: 15px; margin-top: 20px;">
-                    <button class="btn btn-success" onclick="app.confirmUpgrade()" style="flex: 1;">
-                        ✅ ${this.currentLang === 'zh' ? '确认升级' : 'Confirm Upgrade'}
-                    </button>
-                    <button class="btn btn-danger" onclick="app.rejectUpgrade()" style="flex: 1;">
-                        ❌ ${this.currentLang === 'zh' ? '拒绝' : 'Reject'}
-                    </button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
+    }
+
+    _nextProposalVersion() {
+        try {
+            const h = JSON.parse(localStorage.getItem('spark_au_history') || '[]');
+            const last = h[0]?.proposal?.version || '1.0.0';
+            const [a, b, c] = last.split('.').map(Number);
+            return `${a}.${b}.${c + 1}`;
+        } catch { return '1.1.0'; }
     }
 
     confirmUpgrade() {
-        // 执行升级逻辑
-        document.getElementById('upgradeProposalModal')?.remove();
-        this.toast(this.i18n[this.currentLang].upgrade_available, 'success');
-        // 实际中这里会调用 GitHub API 更新代码
-        setTimeout(() => {
-            this.toast(this.currentLang === 'zh' ? '升级完成！页面将在3秒后刷新' : 'Upgrade complete! Refreshing in 3s...', 'success');
-            setTimeout(() => location.reload(), 3000);
-        }, 2000);
+        // 🆕 委托给 worker 引擎：备份 → AI 生成补丁 → 提交 GitHub → 刷新
+        const eng = window.__autoUpgrader;
+        const proposal = eng?._currentProposal || this._buildDefaultProposal();
+        if (eng) eng.confirmUpgrade(proposal);
+        else this.toast('引擎初始化中，请稍后重试', 'info');
     }
 
     rejectUpgrade() {
+        // 🆕 委托给 worker 引擎关闭当前提案弹窗
+        window.__autoUpgrader?.rejectUpgrade?.(window.__autoUpgrader?._currentProposal);
         document.getElementById('upgradeProposalModal')?.remove();
         this.toast(this.currentLang === 'zh' ? '升级已取消' : 'Upgrade cancelled', 'info');
     }
@@ -2456,346 +2498,77 @@ window.addEventListener('storage', (e) => {
 });
 </script>
 
-<!-- ==================== AI 自升级系统 (Auto-Upgrade Engine) ==================== -->
-<script>
-/**
- * SPARK AI 自升级引擎
- * - 自动检测项目代码（通过 GitHub Raw / API 比对 hash）
- * - 检测到需要升级时，弹窗提示管理员手动开启
- * - 管理员确认后，自动编程升级（调用 AI 生成补丁 → 通过 GitHub API 提交）
- * - 全自动学习：记录错误日志、用户行为，AI 分析后生成优化提案
- */
-class SPARKAutoUpgrader {
-    constructor(app) {
-        this.app = app;
-        this.repo = 'SPARKy12315000/SPARKy12315000.github.io';
-        this.branch = 'main';
-        this.version = '1.0.0';
-        this.checkInterval = 5 * 60 * 1000; // 5分钟检测一次
-        this.apiBase = 'https://api.github.com';
-        this.rawBase = 'https://raw.githubusercontent.com';
-        this.lastChecked = localStorage.getItem('spark_au_last') || 0;
-        this.enabled = localStorage.getItem('spark_au_enabled') !== 'false';
-        // 本地版本快照（用于比对变更）
-        this.localSnapshot = JSON.parse(localStorage.getItem('spark_au_snapshot') || '{}');
-        this.init();
-    }
+<!-- AI 自升级引擎已统一移至 js/ai-upgrade-worker.js（单一权威实现，避免命名冲突） -->
 
-    init() {
-        if (!this.enabled) return;
-        // 首次运行：建立基线快照
-        if (!Object.keys(this.localSnapshot).length) {
-            this.buildLocalSnapshot();
-        }
-        // 启动定时检测
-        setTimeout(() => this.checkForUpgrades(), 30000); // 30秒后首次检测
-        setInterval(() => this.checkForUpgrades(), this.checkInterval);
-        // 暴露到全局便于调试
-        window.SPARKAutoUpgrader = this;
-    }
 
-    /** 建立本地代码快照（hash） */
-    buildLocalSnapshot() {
-        const snapshot = {};
-        const files = document.querySelectorAll('script, link[rel=stylesheet], #app-template');
-        // 采集关键脚本文本 hash
-        document.querySelectorAll('script:not([src])').forEach((s, i) => {
-            if (s.textContent.trim()) {
-                snapshot['inline-script-' + i] = this.hash(s.textContent);
-            }
-        });
-        this.localSnapshot = snapshot;
-        localStorage.setItem('spark_au_snapshot', JSON.stringify(snapshot));
-    }
+<!-- ==================== 🆕 手动输入问题/代码 检测升级窗口 ==================== -->
+<div id="manualCheckModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 620px;">
+        <button onclick="app.closeManualCheck()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:var(--secondary);font-size:1.5rem;cursor:pointer;">×</button>
+        <h3 style="color:var(--secondary);text-align:center;margin-bottom:6px;">
+            <i class="fas fa-edit"></i> <span data-i18n="manual_check_title">手动输入代码 / 问题描述</span>
+        </h3>
+        <p style="text-align:center;font-size:0.82rem;color:#aaa;margin-bottom:18px;" data-i18n="manual_check_desc">
+            输入你发现的 Bug、想新增的功能或粘贴需要修改的代码片段。AI 将分析并生成升级提案，经你确认后自动编程并提交至 GitHub。
+        </p>
 
-    hash(str) {
-        let h = 5381;
-        for (let i = 0; i < str.length; i++) {
-            h = ((h << 5) + h + str.charCodeAt(i)) >>> 0;
-        }
-        return h.toString(16);
-    }
+        <label style="font-size:0.8rem;color:var(--accent);display:block;margin-bottom:6px;" data-i18n="manual_input_label">
+            问题描述 / 代码（支持中文、英文、代码块）
+        </label>
+        <textarea id="manualCheckInput" rows="9" placeholder="示例：&#10;1. 聊天室在移动端输入框被键盘遮挡；&#10;2. 需要给空投增加 anti-bot 验证码；&#10;3. [粘贴你要修改的代码片段...]"
+            style="width:100%;box-sizing:border-box;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px;color:#fff;font-size:0.85rem;font-family:monospace;resize:vertical;"></textarea>
 
-    /** 核心：检测是否需要升级 */
-    async checkForUpgrades() {
-        const now = Date.now();
-        // 节流：至少间隔 checkInterval
-        if (now - this.lastChecked < this.checkInterval) return;
-        this.lastChecked = now;
-        localStorage.setItem('spark_au_last', String(now));
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="app.submitManualCheck()" style="flex:1;min-width:160px;background:linear-gradient(135deg,#ff6a00,#ff3d00);border:none;">
+                <i class="fas fa-bolt"></i> <span data-i18n="manual_analyze">🔍 AI 分析并生成升级提案</span>
+            </button>
+            <button class="btn btn-secondary" onclick="app.closeManualCheck()" style="flex:0 0 auto;">
+                <span data-i18n="cancel">取消</span>
+            </button>
+        </div>
 
-        try {
-            // 1) 拉取远端最新 commit
-            const remoteCommit = await this.fetchRemoteCommit();
-            if (!remoteCommit) return;
-            const lastKnown = localStorage.getItem('spark_au_last_commit');
-            if (lastKnown && lastKnown === remoteCommit.sha) {
-                return; // 无新提交
-            }
+        <p style="font-size:0.72rem;color:#888;text-align:center;margin-top:14px;" data-i18n="manual_check_note">
+            🔒 框架结构锁定不变，AI 仅修改 / 增补业务代码；任何推送到仓库的操作均需你（管理员）点「确认升级」授权。
+        </p>
+    </div>
+</div>
 
-            // 2) AI 分析：是否需要升级（基于错误日志 + 行为数据）
-            const analysis = await this.aiAnalyze();
-            if (!analysis.shouldUpgrade) {
-                localStorage.setItem('spark_au_last_commit', remoteCommit.sha);
-                return;
-            }
+<!-- ==================== 🆕 GitHub PAT 配置窗口 ==================== -->
+<div id="patConfigModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 520px;">
+        <button onclick="app.closePatConfig()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:var(--secondary);font-size:1.5rem;cursor:pointer;">×</button>
+        <h3 style="color:var(--secondary);text-align:center;margin-bottom:6px;">
+            <i class="fas fa-key"></i> <span data-i18n="pat_config_title">配置 GitHub PAT</span>
+        </h3>
+        <p style="text-align:center;font-size:0.82rem;color:#aaa;margin-bottom:18px;" data-i18n="pat_config_desc">
+            配置后，管理员确认升级时 AI 才能通过 GitHub API 自动提交代码。<br>PAT 仅本地存储，不上传任何服务器。
+        </p>
 
-            // 3) 弹窗提示管理员手动开启
-            this.notifyAdmin(analysis, remoteCommit);
-        } catch (e) {
-            console.warn('[AutoUpgrader] check failed:', e);
-        }
-    }
+        <label style="font-size:0.8rem;color:var(--accent);display:block;margin-bottom:6px;">GitHub Personal Access Token</label>
+        <input type="password" id="patInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="input-field" style="width:100%;box-sizing:border-box;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px;color:#fff;font-size:0.85rem;">
 
-    /** 获取远端最新 commit 信息 */
-    async fetchRemoteCommit() {
-        const url = `${this.rawBase}/${this.repo}/${this.branch}/index.html`;
-        try {
-            const resp = await fetch(url, { cache: 'no-store' });
-            if (!resp.ok) return null;
-            const text = await resp.text();
-            const sha = this.hash(text);
-            return { sha, content: text };
-        } catch { return null; }
-    }
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+            <button class="btn btn-success" onclick="app.savePat()" style="flex:1;min-width:140px;">
+                <i class="fas fa-save"></i> <span data-i18n="pat_save">保存并验证</span>
+            </button>
+            <button class="btn btn-danger" onclick="app.clearPat()" style="flex:0 0 auto;">
+                <span data-i18n="pat_clear">清除</span>
+            </button>
+            <button class="btn btn-secondary" onclick="app.closePatConfig()" style="flex:0 0 auto;">
+                <span data-i18n="cancel">取消</span>
+            </button>
+        </div>
 
-    /** AI 分析：基于错误日志、用户行为、性能指标决定是否升级 */
-    async aiAnalyze() {
-        const errors = JSON.parse(localStorage.getItem('spark_errors') || '[]');
-        const actions = JSON.parse(localStorage.getItem('spark_actions') || '[]');
-        const snapshot = this.localSnapshot;
+        <div id="patStatusBox" style="margin-top:14px;padding:10px;border-radius:8px;font-size:0.8rem;text-align:center;background:rgba(0,0,0,0.3);color:#aaa;">
+            <span data-i18n="pat_status_idle">点击下方「保存并验证」检查 PAT 是否有效</span>
+        </div>
 
-        // 规则引擎（可被 AI 增强）
-        let score = 0;
-        if (errors.length > 3) score += 40;
-        if (actions.length > 50 && actions.length % 10 === 0) score += 20;
+        <p style="font-size:0.72rem;color:#888;margin-top:12px;line-height:1.6;" data-i18n="pat_hint">
+            💡 创建路径：GitHub → Settings → Developer settings → Personal access tokens → 勾选 <b>repo</b>（整库读写）。建议使用 fine-grained token 并限定到此仓库。
+        </p>
+    </div>
+</div>
 
-        // 调用 AI 助手进行深度分析（若可用）
-        let aiSuggestion = null;
-        try {
-            if (window.app && window.app.ai) {
-                const prompt = `分析SPARK DApp当前状态：错误${errors.length}条，操作${actions.length}次。是否需要代码升级？返回JSON:{shouldUpgrade:boolean,reason:string,changes:[]}`;
-                const result = await window.app.ai.chat(prompt, { lang: 'zh' });
-                const match = result.message.match(/\{.*\}/s);
-                if (match) aiSuggestion = JSON.parse(match[0]);
-            }
-        } catch {}
-
-        const shouldUpgrade = (aiSuggestion && aiSuggestion.shouldUpgrade) || score >= 60;
-        return {
-            shouldUpgrade,
-            score,
-            reason: (aiSuggestion && aiSuggestion.reason) || '检测到可优化项或错误积累',
-            changes: (aiSuggestion && aiSuggestion.changes) || this.generateDefaultChanges(errors),
-            aiEnhanced: !!aiSuggestion,
-        };
-    }
-
-    /** 生成默认升级变更提案 */
-    generateDefaultChanges(errors) {
-        const changes = [];
-        if (errors.some(e => /fetch|API/i.test(e.msg || ''))) {
-            changes.push({ type: 'optimization', target: 'market-data', description: '优化行情API容错与缓存策略' });
-        }
-        changes.push({ type: 'optimization', target: 'performance', description: '优化首屏加载与资源预加载' });
-        changes.push({ type: 'feature', target: 'ai-upgrade', description: '增强AI自升级检测精度' });
-        return changes;
-    }
-
-    /** 弹窗提示管理员手动开启升级 */
-    notifyAdmin(analysis, remoteCommit) {
-        // 避免重复弹窗
-        if (document.getElementById('aiUpgradeProposalModal')) return;
-
-        const t = (window.app && window.app.i18n && window.app.i18n[window.app.currentLang]) || {};
-        const lang = window.app ? window.app.currentLang : 'zh';
-        const proposal = {
-            id: Date.now(),
-            version: this.bumpVersion(),
-            changes: analysis.changes,
-            riskLevel: analysis.score > 80 ? 'medium' : 'low',
-            reason: analysis.reason,
-        };
-
-        const modal = document.createElement('div');
-        modal.className = 'modal-overlay active';
-        modal.id = 'aiUpgradeProposalModal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <h2 style="color: var(--secondary); text-align: center; margin-bottom: 20px;">
-                    🤖 AI 自动升级提案 v${proposal.version}
-                </h2>
-                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                    <p style="font-size: 0.85rem; color: #aaa;">${new Date().toLocaleString()}</p>
-                    <p style="font-size: 0.85rem; color: #aaa;">${t.ai_use_api || '风险等级'}: <span style="color: #4CAF50;">${proposal.riskLevel.toUpperCase()}</span></p>
-                    <p style="font-size: 0.85rem; color: var(--accent); margin-top: 8px;">💡 ${proposal.reason}</p>
-                    ${analysis.aiEnhanced ? '<span class="badge badge-gold">AI 增强分析</span>' : ''}
-                </div>
-                <h3 style="color: var(--accent); margin-bottom: 10px;">${lang === 'zh' ? '变更列表' : 'Changes'}</h3>
-                ${proposal.changes.map(c => `
-                    <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 3px solid #4CAF50;">
-                        <strong style="color: var(--secondary);">[${c.type}]</strong> ${c.target}
-                        <p style="margin: 5px 0 0; font-size: 0.85rem;">${c.description}</p>
-                    </div>
-                `).join('')}
-                <div style="background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 12px; border-radius: 8px; margin: 15px 0;">
-                    <h4 style="color: var(--warning); margin-bottom: 5px;">🔄 ${lang === 'zh' ? '回滚计划' : 'Rollback Plan'}</h4>
-                    <p style="font-size: 0.8rem; color: #ccc;">${lang === 'zh' ? '升级前自动备份当前版本，失败可一键回滚' : 'Auto-backup before upgrade, one-click rollback on failure'}</p>
-                </div>
-                <div style="display: flex; gap: 15px; margin-top: 20px;">
-                    <button class="btn btn-success" onclick="window.SPARKAutoUpgrader.confirmUpgrade()" style="flex: 1;">
-                        ✅ ${lang === 'zh' ? '管理员确认升级' : 'Admin Confirm Upgrade'}
-                    </button>
-                    <button class="btn btn-danger" onclick="window.SPARKAutoUpgrader.rejectUpgrade()" style="flex: 1;">
-                        ❌ ${lang === 'zh' ? '取消' : 'Cancel'}
-                    </button>
-                </div>
-                <p style="text-align: center; font-size: 0.75rem; color: #888; margin-top: 15px;">
-                    ${lang === 'zh' ? '仅管理员可授权。升级由 AI 自动编程生成并提交至 GitHub。' : 'Admin authorization required. AI auto-generates & commits to GitHub.'}
-                </p>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    }
-
-    bumpVersion() {
-        const parts = this.version.split('.').map(Number);
-        parts[2]++;
-        this.version = parts.join('.');
-        return this.version;
-    }
-
-    /** 管理员确认升级 → AI 自动编程升级 */
-    async confirmUpgrade() {
-        const modal = document.getElementById('aiUpgradeProposalModal');
-        if (modal) modal.remove();
-
-        const lang = window.app ? window.app.currentLang : 'zh';
-        this.app.toast(lang === 'zh' ? '🔧 AI 正在自动编程升级，请稍候...' : '🔧 AI is auto-upgrading...', 'info');
-
-        try {
-            // 1) 备份当前版本
-            await this.backupCurrentVersion();
-            // 2) AI 生成代码补丁
-            const patch = await this.aiGeneratePatch();
-            // 3) 应用补丁并提交到 GitHub
-            await this.commitUpgrade(patch);
-            // 4) 刷新
-            this.app.toast(lang === 'zh' ? '✅ 升级完成！页面将刷新以加载新版本' : '✅ Upgrade complete! Reloading...', 'success');
-            setTimeout(() => location.reload(), 3000);
-        } catch (e) {
-            console.error('[AutoUpgrader] upgrade failed:', e);
-            this.app.toast(lang === 'zh' ? '❌ 升级失败，已自动回滚' : '❌ Upgrade failed, auto-rolled back', 'error');
-        }
-    }
-
-    /** AI 生成代码补丁（基于分析结果） */
-    async aiGeneratePatch() {
-        // 调用 AI 助手生成针对当前问题的代码改进
-        const errors = JSON.parse(localStorage.getItem('spark_errors') || '[]');
-        const prompt = `你是SPARK DApp的AI维护工程师。基于以下错误日志：${JSON.stringify(errors.slice(-10))}，生成一份代码优化补丁。要求：返回JSON格式 {targetFile:"index.html", search:"精确原文片段", replace:"替换后片段"}。只返回JSON。`;
-        let patch = null;
-        try {
-            if (window.app && window.app.ai) {
-                const result = await window.app.ai.chat(prompt, { lang: 'zh' });
-                const match = result.message.match(/\{.*\}/s);
-                if (match) patch = JSON.parse(match[0]);
-            }
-        } catch {}
-        return patch || {
-            targetFile: 'index.html',
-            search: 'class SPARKAutoUpgrader {',
-            replace: 'class SPARKAutoUpgrader { // auto-upgraded @ ' + new Date().toISOString(),
-        };
-    }
-
-    /** 备份当前版本（创建 git tag 风格的标记，通过 commit） */
-    async backupCurrentVersion() {
-        // 简单标记：记录当前 hash 到 localStorage（真实场景可创建 git tag via API）
-        const snap = this.hash(document.documentElement.outerHTML);
-        localStorage.setItem('spark_au_backup', snap);
-        console.log('[AutoUpgrader] backup:', snap);
-    }
-
-    /** 将升级提交到 GitHub（核心：自动编程升级） */
-    async commitUpgrade(patch) {
-        const token = localStorage.getItem('spark_github_pat') || window.SPARK_GITHUB_PAT || null;
-        if (!token) {
-            // 无 PAT 时：仅本地应用 + 提示手动推送
-            console.warn('[AutoUpgrader] No GitHub PAT configured, applying locally only');
-            this.applyPatchLocally(patch);
-            this.app.toast('⚠️ 未配置 GitHub PAT，升级仅本地生效。请在管理员面板配置 PAT 以自动推送。', 'warning');
-            return;
-        }
-
-        // 有 PAT：通过 GitHub API 更新文件
-        const path = patch.targetFile || 'index.html';
-        const api = `${this.apiBase}/repos/${this.repo}/contents/${path}`;
-        // 获取当前文件 SHA
-        const resp = await fetch(api + '?ref=' + this.branch, { headers: { Authorization: `Bearer ${token}` } });
-        const data = await resp.json();
-        const sha = data.sha;
-        const contentB64 = data.content.replace(/\n/g, '');
-        let content = decodeURIComponent(escape(atob(contentB64)));
-
-        // 应用补丁
-        if (patch.search && content.includes(patch.search)) {
-            content = content.replace(patch.search, patch.replace);
-        } else {
-            // 无法精确匹配，追加版本注释
-            content = content.replace('</body>', `<!-- AI auto-upgrade ${this.version} --></body>`);
-        }
-
-        // 提交
-        const newContentB64 = btoa(unescape(encodeURIComponent(content)));
-        const commitResp = await fetch(api, {
-            method: 'PUT',
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                message: `🤖 AI auto-upgrade to v${this.version} [auto-generated]`,
-                content: newContentB64,
-                sha: sha,
-                branch: this.branch,
-            }),
-        });
-        if (!commitResp.ok) throw new Error('GitHub commit failed: ' + (await commitResp.text()).slice(0, 200));
-        console.log('[AutoUpgrader] committed:', this.version);
-    }
-
-    /** 本地应用补丁（无 PAT 时的降级） */
-    applyPatchLocally(patch) {
-        if (patch.search && document.documentElement.outerHTML.includes(patch.search)) {
-            // 仅标记，实际刷新后会从远端拉取
-            localStorage.setItem('spark_au_pending_patch', JSON.stringify(patch));
-        }
-    }
-
-    rejectUpgrade() {
-        const modal = document.getElementById('aiUpgradeProposalModal');
-        if (modal) modal.remove();
-        localStorage.setItem('spark_au_last_commit', localStorage.getItem('spark_au_last_commit') || '');
-        this.app.toast(this.currentLang === 'zh' ? '升级已取消' : 'Upgrade cancelled', 'info');
-    }
-
-    /** 启用/禁用自升级 */
-    setEnabled(enabled) {
-        this.enabled = enabled;
-        localStorage.setItem('spark_au_enabled', String(enabled));
-    }
-}
-
-// 在应用初始化后挂载自升级引擎
-window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        if (window.app && !window.__autoUpgrader) {
-            window.__autoUpgrader = new SPARKAutoUpgrader(window.app);
-        }
-    }, 2000);
-});
-</script>
 
 </body>
 </html>
