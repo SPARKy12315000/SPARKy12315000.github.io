@@ -58,10 +58,12 @@ class MatchingEngine {
 
   getDepth(pair) {
     const { bids, asks } = this.getOrderBook(pair);
-    const agg = (arr, key) => {
+    const agg = (arr) => {
       const map = {};
       for (const o of arr) map[o.price] = (map[o.price] || 0) + o.amount;
-      return Object.entries(map).map(([p, a]) => [+p, +a.toFixed(6)]);
+      const entries = Object.entries(map).map(([p, a]) => [+p, +a.toFixed(6)]);
+      // 空盘口返回占位档，保证结构稳定（前端解构 [p,a] 不崩、深度图不断层）
+      return entries.length ? entries : [[0, 0]];
     };
     return { bids: agg(bids), asks: agg(asks) };
   }
