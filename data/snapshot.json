@@ -1,0 +1,135 @@
+{
+  "time": 1787830316098,
+  "version": "2.0.0",
+  "data": {
+    "ai-rules.json": [
+      {
+        "pattern": {},
+        "response": "自定义回答OK",
+        "learned": true
+      },
+      {
+        "pattern": {},
+        "response": "自定义回答OK",
+        "learned": true
+      },
+      {
+        "pattern": {},
+        "response": "你好！我是 SPARK 星火通证 AI 助手 🔥 有什么可以帮你？"
+      },
+      {
+        "pattern": {},
+        "response": "星火通证 (SPARK) 是基于以太坊的创新型营销回流代币，合约地址 0xD580...78d9，采用 5%/5% 税费自动回流资金池模型，构建透明、公平、可持续的社区价值生态。"
+      },
+      {
+        "pattern": {},
+        "response": "SPARK 合约地址（以太坊主网）：0xD580C7C9Cde5ce776fEed844310330A2a40078d9，这是本项目唯一通证。"
+      },
+      {
+        "pattern": {},
+        "response": "空投活动请前往 DApp「空投」页面，连接钱包并输入邀请码即可领取。"
+      },
+      {
+        "pattern": {},
+        "response": "实时行情请查看 DApp「行情」页面，数据由链上与 Coingecko 双重校验。"
+      },
+      {
+        "pattern": {},
+        "response": ""
+      }
+    ],
+    "ai_knowledge.json": {},
+    "ai_memory.json": {
+      "t1": [
+        {
+          "role": "user",
+          "text": "SPARK是什么",
+          "t": 1787829703903
+        },
+        {
+          "role": "assistant",
+          "text": "我已记录你的问题, 会继续学习 📚 你可以试试问我: SPARK 是什么 / 合约地址 / 空投怎么领 / 怎么下载 APP。",
+          "engine": "fallback",
+          "t": 1787829703903
+        }
+      ],
+      "v1": [
+        {
+          "role": "user",
+          "text": "SPARK是什么",
+          "t": 1787829737051
+        },
+        {
+          "role": "assistant",
+          "text": "我已记录你的问题, 会继续学习 📚 你可以试试问我: SPARK 是什么 / 合约地址 / 空投怎么领 / 怎么下载 APP。",
+          "engine": "fallback",
+          "t": 1787829737051
+        }
+      ]
+    },
+    "airdrop_claims.json": {},
+    "airdrop_invites.json": {},
+    "chat.json": [
+      {
+        "id": "1787829737515_xu4l",
+        "name": "tester",
+        "text": "hello spark",
+        "wallet": "",
+        "isAdmin": false,
+        "t": 1787829737516
+      },
+      {
+        "id": 1787830286303,
+        "user": "alice",
+        "text": "hello spark",
+        "time": "2026-08-27T11:31:26.303Z"
+      },
+      {
+        "id": 1787830307965,
+        "user": "alice",
+        "text": "hello spark",
+        "time": "2026-08-27T11:31:47.965Z"
+      }
+    ],
+    "orders.json": {},
+    "products.json": [
+      {
+        "id": "spark-tee",
+        "name": "SPARK 限量 T 恤",
+        "price": 120,
+        "currency": "SPARK",
+        "image": "https://ivory-cautious-stoat-562.mypinata.cloud/ipfs/bafkreig7xhotcsvptfcf7ipogm6wr3u3xikmfxaktcmw5xzzgvqu6xednm",
+        "stock": 100,
+        "desc": "星火流转 价值共生 — 社区限量款"
+      },
+      {
+        "id": "spark-mug",
+        "name": "SPARK 马克杯",
+        "price": 60,
+        "currency": "SPARK",
+        "image": "",
+        "stock": 200,
+        "desc": "每一天从一杯咖啡 + SPARK 开始"
+      },
+      {
+        "id": "spark-cap",
+        "name": "SPARK 棒球帽",
+        "price": 90,
+        "currency": "SPARK",
+        "image": "",
+        "stock": 150,
+        "desc": "潮流 Web3 穿搭"
+      },
+      {
+        "id": "spark-nft",
+        "name": "SPARK 创世 NFT 勋章",
+        "price": 500,
+        "currency": "SPARK",
+        "image": "",
+        "stock": 50,
+        "desc": "链上唯一身份标识, 社区治理投票权"
+      }
+    ],
+    "upgrade_proposals.json": {}
+  }
+}
