@@ -1,0 +1,8 @@
+node_modules/
+.port
+*.log
+.DS_Store
+.env
+.env.local
+package-lock.json
+storage-snapshot.json
