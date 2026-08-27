@@ -792,16 +792,16 @@
                 <button class="btn btn-secondary btn-sm" onclick="app.adminAction('export')">
                     <i class="fas fa-download"></i> <span data-i18n="export_data">导出数据</span>
                 </button>
-                <button class="btn btn-primary btn-sm" onclick="SPARK.scanNow()" id="btnScanNow" style="background: linear-gradient(135deg, #ff6a00, #ff3d00); border: none;">
+                <button class="btn btn-primary btn-sm" onclick="(typeof SPARK!=='undefined'&&SPARK.scanNow)?SPARK.scanNow():alert('引擎加载中，请稍后')" id="btnScanNow" style="background: linear-gradient(135deg, #ff6a00, #ff3d00); border: none;">
                     <i class="fas fa-bolt"></i> <span data-i18n="scan_now">一键检测升级</span>
                 </button>
-                <button class="btn btn-warning btn-sm" onclick="app.openManualCheck()" id="btnManualCheck" style="background: linear-gradient(135deg, #ffb300, #ff8f00); border: none; color: #1a1a1a;">
+                <button class="btn btn-warning btn-sm" onclick="(typeof SPARK!=='undefined'&&SPARK.manualCheck)?SPARK.manualCheck():prompt&&prompt('请输入要检测的问题:')" id="btnManualCheck" style="background: linear-gradient(135deg, #ffb300, #ff8f00); border: none; color: #1a1a1a;">
                     <i class="fas fa-edit"></i> <span data-i18n="manual_check">手动输入问题检测</span>
                 </button>
                 <button class="btn btn-secondary btn-sm" onclick="app.adminAction('check_upgrade')">
                     <i class="fas fa-sync-alt"></i> <span data-i18n="check_upgrade">检查升级</span>
                 </button>
-                <button class="btn btn-info btn-sm" onclick="app.openPatConfig()" id="btnPatConfig" style="background: rgba(79,195,247,0.2); border: 1px solid #4fc3f7; color: #4fc3f7;">
+                <button class="btn btn-info btn-sm" onclick="(typeof SPARK!=='undefined'&&SPARK.setPAT)?SPARK.setPAT():alert('引擎加载中，请稍后')" id="btnPatConfig" style="background: rgba(79,195,247,0.2); border: 1px solid #4fc3f7; color: #4fc3f7;">
                     <i class="fas fa-key"></i> <span data-i18n="pat_config">配置 GitHub PAT</span>
                 </button>
                 <button class="btn btn-danger btn-sm" onclick="app.adminAction('logout')">
@@ -2569,6 +2569,38 @@ window.addEventListener('storage', (e) => {
     </div>
 </div>
 
+
+
+<script>
+(function(){
+  function log(msg){
+    console.log('[SPARK]', msg);
+    var box = document.getElementById('recent-activity');
+    if(!box) return;
+    var time = new Date().toLocaleTimeString();
+    var div = document.createElement('div');
+    div.style.cssText = 'padding:6px 0;border-bottom:1px solid #333;font-size:12px;';
+    div.textContent = '[' + time + '] ' + msg;
+    box.prepend(div);
+    while(box.children.length > 20) box.removeChild(box.lastChild);
+  }
+  function bind(id, fn){
+    var el = document.getElementById(id);
+    if(el){ el.style.cursor='pointer'; el.onclick=function(ev){ try{ var r=fn(); if(r) log(r); }catch(e){ log('错误: '+e.message); } }; }
+  }
+  function ready(){
+    bind('btn-scan-now',      function(){ return window.SPARK && window.SPARK.scanNow(); });
+    bind('btn-manual-check',  function(){ return window.SPARK && window.SPARK.manualCheck(); });
+    bind('btn-check-upgrade', function(){ return window.SPARK && window.SPARK.scanNow(); });
+    bind('btn-set-pat',       function(){ return window.SPARK && window.SPARK.setPAT(); });
+    log('管理面板按钮已就绪' + (window.SPARK ? '' : '（等待引擎加载）'));
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', ready);
+  else ready();
+  // 引擎就绪后若延迟加载，再绑一次
+  window.addEventListener('load', ready);
+})();
+</script>
 
 </body>
 </html>
